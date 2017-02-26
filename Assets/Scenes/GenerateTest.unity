@@ -120,8 +120,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 87eebf8b4754c044f9e8c5fa0da510a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  autoUpdate: 1
   useRandomSeed: 1
-  seed: 1.63276
+  seed: 52.16875
   noiseData: {fileID: 11400000, guid: 2fb03d926254f7f488070424dd457ef2, type: 2}
   islandData: {fileID: 11400000, guid: c0278bf7eceb716418b6579299190034, type: 2}
 --- !u!4 &988232023

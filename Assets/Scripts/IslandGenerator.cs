@@ -6,7 +6,7 @@ using UnityEngine;
 [RequireComponent (typeof (IslandMeshGenerator))]
 public class IslandGenerator : MonoBehaviour {
 
-    //public bool autoUpdate = true;
+    public bool autoUpdate = true;
 
     [Header("Randomness")]
     public bool useRandomSeed;
@@ -47,7 +47,7 @@ public class IslandGenerator : MonoBehaviour {
         PartitionIslands ();
 
         ElevationGenerator elevGen = GetComponent<ElevationGenerator> ();
-        elevGen.GenerateElevation (islands);
+        elevGen.GenerateElevation (islands, islandData.altitude, noiseData, seed.GetHashCode());
     }
 
     void RandomFillMap () {

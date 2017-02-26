@@ -9,6 +9,7 @@ public class IslandData : UpdatableData {
 
     public float tileSize = 1;
     public float depth = 5;
+    public float altitude = 5;
 
     [Range (0, 100)]
     public float randomFillPercent = 50;

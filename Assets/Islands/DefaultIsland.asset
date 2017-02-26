@@ -15,7 +15,8 @@ MonoBehaviour:
   maxWidth: 100
   maxHeight: 100
   tileSize: 1
-  depth: 5
+  depth: 2
+  altitude: 5
   randomFillPercent: 53
   dirtMaterial: {fileID: 2100000, guid: fd5f754234b3fd24e88b57a9882692c6, type: 2}
   grassMaterial: {fileID: 2100000, guid: 686e427da029ffa45b53948ecca1a944, type: 2}
