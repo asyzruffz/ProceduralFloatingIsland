@@ -19,7 +19,7 @@ public class IslandGenerator : MonoBehaviour {
 
     int[,] map;
     int[,] regionMap;
-    List<GameObject> islands = new List<GameObject>();
+    List<IsleInfo> islands = new List<IsleInfo>();
 
     void Start () {
         GenerateIsland ();
@@ -43,8 +43,11 @@ public class IslandGenerator : MonoBehaviour {
             SmoothMap ();
         }
 
-        // Create
+        // Create separate islands
         PartitionIslands ();
+
+        ElevationGenerator elevGen = GetComponent<ElevationGenerator> ();
+        elevGen.GenerateElevation (islands);
     }
 
     void RandomFillMap () {
@@ -105,49 +108,59 @@ public class IslandGenerator : MonoBehaviour {
         // Based on regions, create separate child GameObject for each island
 
         // Destroy all the previous islands
+        islands.Clear ();
         var childList = transform.Cast<Transform> ().ToList ();
         foreach (Transform island in childList) {
-            if(!Application.isPlaying) {
-                DestroyImmediate (island.gameObject);
-            } else {
+            ////////////////////////////////////////////////////////////  for debugging, onnly for in editor
+            if (!Application.isPlaying) {                           ////
+                UnityEditor.EditorApplication.delayCall += () =>    ////
+                {                                                   ////
+                    DestroyImmediate (island.gameObject);           ////
+                };                                                  ////
+            } else {                                                ////
+            ////////////////////////////////////////////////////////////
                 Destroy (island.gameObject);
-            }
+            ////////////////////////////////////////////////////////////
+            }                                                       ////
+            ////////////////////////////////////////////////////////////
         }
-        islands.Clear ();
 
         List<List<Coord>> islandRegions = GetRegions (1);
         IslandMeshGenerator meshGen = GetComponent<IslandMeshGenerator> ();
 
         int islandCount = 1;
         foreach(List<Coord> region in islandRegions) {
+            IsleInfo isle = new IsleInfo ();
+            isle.id = islandCount;
+
             // Create each isle game object
-            GameObject isle = new GameObject ("Island " + islandCount);
-            isle.transform.parent = transform;
-            isle.transform.localRotation = Quaternion.identity;
-            Vector3 offsetToCentre = GetRegionCentre (region);
-            isle.transform.localPosition = offsetToCentre * islandData.tileSize;
+            isle.gameObject = new GameObject ("Island " + isle.id);
+            isle.gameObject.transform.parent = transform;
+            isle.gameObject.transform.localRotation = Quaternion.identity;
+            isle.offset = GetRegionCentre (region);
+            isle.gameObject.transform.localPosition = isle.offset * islandData.tileSize;
             
             // Child game object of isle to store surface
-            GameObject surface = AddChildMesh ("Surface", isle.transform);
+            GameObject surface = AddChildMesh ("Surface", isle.gameObject.transform);
             // Child game object of isle to store wall
-            GameObject wall = AddChildMesh ("Wall", isle.transform);
+            GameObject wall = AddChildMesh ("Wall", isle.gameObject.transform);
             // Child game object of isle to store underside
-            GameObject underside = AddChildMesh ("Underside", isle.transform);
+            GameObject underside = AddChildMesh ("Underside", isle.gameObject.transform);
             underside.transform.position += Vector3.up * -islandData.depth;
 
-            List<Mesh> meshes = meshGen.GenerateMesh (regionMap, islandCount, offsetToCentre, islandData.tileSize, islandData.depth);
+            List<Mesh> meshes = meshGen.GenerateMesh (regionMap, isle, islandData.tileSize, islandData.depth);
 
             // Mesh for surface
             surface.GetComponent<MeshFilter> ().mesh = meshes[0];
-            surface.GetComponent<MeshRenderer> ().material = islandData.material;
+            surface.GetComponent<MeshRenderer> ().material = islandData.grassMaterial;
 
             // Mesh for wall
             wall.GetComponent<MeshFilter> ().mesh = meshes[1];
-            wall.GetComponent<MeshRenderer> ().material = islandData.material;
+            wall.GetComponent<MeshRenderer> ().material = islandData.dirtMaterial;
 
             // Mesh for underside
             underside.GetComponent<MeshFilter> ().mesh = meshes[2];
-            underside.GetComponent<MeshRenderer> ().material = islandData.material;
+            underside.GetComponent<MeshRenderer> ().material = islandData.dirtMaterial;
 
             islands.Add (isle);
             islandCount++;

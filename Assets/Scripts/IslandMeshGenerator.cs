@@ -8,16 +8,16 @@ public class IslandMeshGenerator : MonoBehaviour {
     List<Vector3> vertices = new List<Vector3> ();
     List<int> triangles = new List<int> ();
     Dictionary<int, List<Triangle>> triangleDictionary = new Dictionary<int, List<Triangle>>();
-    List<List<int>> outlines = new List<List<int>> ();
+    List<List<int>> outlines;
     HashSet<int> checkedVertices = new HashSet<int> ();
 
-    public List<Mesh> GenerateMesh (int[,] map, int islandId, Vector3 offset, float squareSize, float depth) {
+    public List<Mesh> GenerateMesh (int[,] map, IsleInfo info, float squareSize, float depth) {
         
-        squareGrid = new SquareGrid (map, islandId, squareSize, offset);
+        squareGrid = new SquareGrid (map, info.id, squareSize, info.offset);
         vertices.Clear ();
         triangles.Clear ();
         triangleDictionary.Clear ();
-        outlines.Clear ();
+        outlines = new List<List<int>> ();
         checkedVertices.Clear ();
 
         for (int x = 0; x < squareGrid.squares.GetLength (0); x++) {
@@ -44,6 +44,7 @@ public class IslandMeshGenerator : MonoBehaviour {
         meshList.Add (CreateWallMesh (depth));
         meshList.Add (undersideMesh);
 
+        info.outlines = outlines;
         return meshList;
     }
 
