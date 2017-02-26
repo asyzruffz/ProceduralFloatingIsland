@@ -28,13 +28,21 @@ public class IslandMeshGenerator : MonoBehaviour {
 
         List<Mesh> meshList = new List<Mesh> ();
 
-        Mesh mesh = new Mesh ();
-        mesh.vertices = vertices.ToArray ();
-        mesh.triangles = triangles.ToArray ();
-        mesh.RecalculateNormals ();
+        Mesh surfaceMesh = new Mesh ();
+        surfaceMesh.vertices = vertices.ToArray ();
+        surfaceMesh.triangles = triangles.ToArray ();
+        surfaceMesh.RecalculateNormals ();
 
-        meshList.Add (mesh);
+
+        Mesh undersideMesh = new Mesh ();
+        triangles.Reverse ();
+        undersideMesh.vertices = vertices.ToArray ();
+        undersideMesh.triangles = triangles.ToArray ();
+        undersideMesh.RecalculateNormals ();
+
+        meshList.Add (surfaceMesh);
         meshList.Add (CreateWallMesh (depth));
+        meshList.Add (undersideMesh);
 
         return meshList;
     }

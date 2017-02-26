@@ -120,38 +120,50 @@ public class IslandGenerator : MonoBehaviour {
 
         int islandCount = 1;
         foreach(List<Coord> region in islandRegions) {
-            // Create each isle
+            // Create each isle game object
             GameObject isle = new GameObject ("Island " + islandCount);
             isle.transform.parent = transform;
             isle.transform.localRotation = Quaternion.identity;
             Vector3 offsetToCentre = GetRegionCentre (region);
             isle.transform.localPosition = offsetToCentre * islandData.tileSize;
-
-            MeshFilter isleMfilter = isle.AddComponent<MeshFilter> ();
-            MeshRenderer isleMrenderer = isle.AddComponent<MeshRenderer> ();
-
+            
+            // Child game object of isle to store surface
+            GameObject surface = AddChildMesh ("Surface", isle.transform);
             // Child game object of isle to store wall
-            GameObject wall = new GameObject ("Wall");
-            wall.transform.parent = isle.transform;
-            wall.transform.localRotation = Quaternion.identity;
-            wall.transform.localPosition = Vector3.zero;
-
-            MeshFilter wallMfilter = wall.AddComponent<MeshFilter> ();
-            MeshRenderer wallMrenderer = wall.AddComponent<MeshRenderer> ();
+            GameObject wall = AddChildMesh ("Wall", isle.transform);
+            // Child game object of isle to store underside
+            GameObject underside = AddChildMesh ("Underside", isle.transform);
+            underside.transform.position += Vector3.up * -islandData.depth;
 
             List<Mesh> meshes = meshGen.GenerateMesh (regionMap, islandCount, offsetToCentre, islandData.tileSize, islandData.depth);
 
             // Mesh for surface
-            isleMfilter.mesh = meshes[0];
-            isleMrenderer.material = islandData.material;
+            surface.GetComponent<MeshFilter> ().mesh = meshes[0];
+            surface.GetComponent<MeshRenderer> ().material = islandData.material;
 
-            // Mesh for walls
-            wallMfilter.mesh = meshes[1];
-            wallMrenderer.material = islandData.material;
+            // Mesh for wall
+            wall.GetComponent<MeshFilter> ().mesh = meshes[1];
+            wall.GetComponent<MeshRenderer> ().material = islandData.material;
+
+            // Mesh for underside
+            underside.GetComponent<MeshFilter> ().mesh = meshes[2];
+            underside.GetComponent<MeshRenderer> ().material = islandData.material;
 
             islands.Add (isle);
             islandCount++;
         }
+    }
+
+    GameObject AddChildMesh(string name, Transform parent) {
+        GameObject child = new GameObject (name);
+        child.transform.parent = parent;
+        child.transform.localRotation = Quaternion.identity;
+        child.transform.localPosition = Vector3.zero;
+
+        child.AddComponent<MeshFilter> ();
+        child.AddComponent<MeshRenderer> ();
+
+        return child;
     }
 
     List<List<Coord>> GetRegions(int tileType) {
