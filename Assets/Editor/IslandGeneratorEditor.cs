@@ -8,9 +8,9 @@ public class IslandGeneratorEditor : Editor {
         IslandGenerator islandGen = target as IslandGenerator;
 
         if(DrawDefaultInspector ()) {
-            if(islandGen.autoUpdate) {
+            /*if(islandGen.autoUpdate) {
                 islandGen.GenerateIsland ();
-            }
+            }*/
         }
 
         if(GUILayout.Button("Generate")) {

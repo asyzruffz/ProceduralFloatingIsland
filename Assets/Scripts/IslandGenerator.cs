@@ -6,11 +6,11 @@ using UnityEngine;
 [RequireComponent (typeof (IslandMeshGenerator))]
 public class IslandGenerator : MonoBehaviour {
 
-    public bool autoUpdate = true;
+    //public bool autoUpdate = true;
 
     [Header("Randomness")]
     public bool useRandomSeed;
-    [ConditionalHide ("useRandomSeed", true, true)]
+    [ConditionalHide ("useRandomSeed", false, true)]
     public string seed;
 
     [Header ("Data")]
@@ -74,7 +74,7 @@ public class IslandGenerator : MonoBehaviour {
             for (int y = 0; y < islandData.maxHeight; y++) {
                 int neighbourLandTile = GetSurroundingLandCount (x, y);
 
-                if (neighbourLandTile >= 4) {
+                if (neighbourLandTile > 4) {
                     map[x, y] = 1;
                 } else if (neighbourLandTile < 4) {
                     map[x, y] = 0;
@@ -120,17 +120,34 @@ public class IslandGenerator : MonoBehaviour {
 
         int islandCount = 1;
         foreach(List<Coord> region in islandRegions) {
+            // Create each isle
             GameObject isle = new GameObject ("Island " + islandCount);
             isle.transform.parent = transform;
             isle.transform.localRotation = Quaternion.identity;
             Vector3 offsetToCentre = GetRegionCentre (region);
             isle.transform.localPosition = offsetToCentre * islandData.tileSize;
 
-            MeshFilter mf = isle.AddComponent<MeshFilter> ();
-            MeshRenderer mr = isle.AddComponent<MeshRenderer> ();
+            MeshFilter isleMfilter = isle.AddComponent<MeshFilter> ();
+            MeshRenderer isleMrenderer = isle.AddComponent<MeshRenderer> ();
 
-            mf.mesh = meshGen.GenerateMesh (regionMap, islandCount, offsetToCentre, islandData.tileSize);
-            mr.material = islandData.material;
+            // Child game object of isle to store wall
+            GameObject wall = new GameObject ("Wall");
+            wall.transform.parent = isle.transform;
+            wall.transform.localRotation = Quaternion.identity;
+            wall.transform.localPosition = Vector3.zero;
+
+            MeshFilter wallMfilter = wall.AddComponent<MeshFilter> ();
+            MeshRenderer wallMrenderer = wall.AddComponent<MeshRenderer> ();
+
+            List<Mesh> meshes = meshGen.GenerateMesh (regionMap, islandCount, offsetToCentre, islandData.tileSize, islandData.depth);
+
+            // Mesh for surface
+            isleMfilter.mesh = meshes[0];
+            isleMrenderer.material = islandData.material;
+
+            // Mesh for walls
+            wallMfilter.mesh = meshes[1];
+            wallMrenderer.material = islandData.material;
 
             islands.Add (isle);
             islandCount++;
