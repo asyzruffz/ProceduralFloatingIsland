@@ -9,7 +9,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 680d863eef139f9488672a3d2e1f1196, type: 3}
-  m_Name: DefaultNoise
+  m_Name: PrototypeNoise
   m_EditorClassIdentifier: 
   autoUpdate: 1
   scale: 20
