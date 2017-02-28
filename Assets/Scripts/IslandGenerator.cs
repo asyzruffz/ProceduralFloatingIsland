@@ -111,21 +111,27 @@ public class IslandGenerator : MonoBehaviour {
         islands.Clear ();
         var childList = transform.Cast<Transform> ().ToList ();
         foreach (Transform island in childList) {
-            ////////////////////////////////////////////////////////////  for debugging, onnly for in editor
-            if (!Application.isPlaying) {                           ////
+#if UNITY_EDITOR
+			////////////////////////////////////////////////////////////  for debugging, onnly for in editor
+			if (!Application.isPlaying) {                           ////
                 UnityEditor.EditorApplication.delayCall += () =>    ////
                 {                                                   ////
-                    DestroyImmediate (island.gameObject);           ////
+					if (island) {									////
+						DestroyImmediate (island.gameObject);       ////
+					}												////
                 };                                                  ////
             } else {                                                ////
-            ////////////////////////////////////////////////////////////
-                Destroy (island.gameObject);
-            ////////////////////////////////////////////////////////////
-            }                                                       ////
-            ////////////////////////////////////////////////////////////
-        }
+			////////////////////////////////////////////////////////////
+#endif
+				Destroy (island.gameObject);
+#if UNITY_EDITOR
+			////////////////////////////////////////////////////////////
+			}                                                       ////
+			////////////////////////////////////////////////////////////
+#endif
+		}
 
-        List<List<Coord>> islandRegions = GetRegions (1);
+		List<List<Coord>> islandRegions = GetRegions (1);
         IslandMeshGenerator meshGen = GetComponent<IslandMeshGenerator> ();
 
         int islandCount = 1;
