@@ -25,12 +25,6 @@ public class IslandGenerator : MonoBehaviour {
         GenerateIsland ();
     }
 	
-	void Update () {
-		if(Input.GetButtonDown("Fire1")) {
-            GenerateIsland ();
-        }
-	}
-
     public void GenerateIsland () {
         map = new int[islandData.maxWidth, islandData.maxHeight];
         regionMap = new int[islandData.maxWidth, islandData.maxHeight];
