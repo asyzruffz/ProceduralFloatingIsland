@@ -17,6 +17,8 @@ public class IslandGenerator : MonoBehaviour {
     public NoiseData noiseData;
     public IslandData islandData;
 
+    public bool flatShading;
+
     int[,] map;
     int[,] regionMap;
     List<IsleInfo> islands = new List<IsleInfo>();
@@ -48,6 +50,17 @@ public class IslandGenerator : MonoBehaviour {
 
         ElevationGenerator elevGen = GetComponent<ElevationGenerator> ();
         elevGen.GenerateElevation (islands, islandData.altitude, noiseData, seed.GetHashCode());
+
+        if(flatShading) {
+            MeshFilter[] meshFilters = GetComponentsInChildren<MeshFilter> ();
+            Debug.Log (meshFilters.Length + " meshes!");
+            for (int i = 0; i < meshFilters.Length; i++) {
+                float oldVertCount = meshFilters[i].sharedMesh.vertexCount;
+                meshFilters[i].sharedMesh = FlatShade.DuplicateSharedVertex (meshFilters[i].sharedMesh);
+                float newVertCount = meshFilters[i].sharedMesh.vertexCount;
+                Debug.Log (meshFilters[i].transform.parent.name + "." + meshFilters[i].transform.name + " new vertices are at " + (newVertCount / oldVertCount * 100) + "% with " + newVertCount + " verts.");
+            }
+        }
     }
 
     void RandomFillMap () {

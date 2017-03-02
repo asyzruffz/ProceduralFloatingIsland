@@ -122,9 +122,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   autoUpdate: 1
   useRandomSeed: 1
-  seed: 52.16875
+  seed: 0.3733333
   noiseData: {fileID: 11400000, guid: 2fb03d926254f7f488070424dd457ef2, type: 2}
   islandData: {fileID: 11400000, guid: c0278bf7eceb716418b6579299190034, type: 2}
+  flatShading: 1
 --- !u!4 &988232023
 Transform:
   m_ObjectHideFlags: 0
