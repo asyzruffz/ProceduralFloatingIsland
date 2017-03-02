@@ -13,13 +13,14 @@ public class IslandGenerator : MonoBehaviour {
     [ConditionalHide ("useRandomSeed", false, true)]
     public string seed;
 
-    [Header ("Data")]
-    public NoiseData noiseData;
-    public IslandData islandData;
-
-	[Header ("Settings")]
-	public bool withCollider;
+    [Header ("Settings")]
+    public bool withCollider;
     public bool flatShading;
+
+    [Header ("Data")]
+    public IslandData islandData;
+    public NoiseData surfaceNoiseData;
+    public NoiseData undersideNoiseData;
 
     int[,] map;
     int[,] regionMap;
@@ -51,18 +52,20 @@ public class IslandGenerator : MonoBehaviour {
         PartitionIslands ();
 
         ElevationGenerator elevGen = GetComponent<ElevationGenerator> ();
-        elevGen.GenerateElevation (islands, islandData.altitude, noiseData, seed.GetHashCode());
+        elevGen.elevateSurface (islands, islandData.altitude, surfaceNoiseData, seed.GetHashCode(), 0);
+        elevGen.elevateSurface (islands, -islandData.stalactite, undersideNoiseData, seed.GetHashCode(), 2);
 
         SetColliders ();
         
         if(flatShading) {
-            MeshFilter[] meshFilters = GetComponentsInChildren<MeshFilter> ();
-            Debug.Log (meshFilters.Length + " meshes!");
-            for (int i = 0; i < meshFilters.Length; i++) {
-                float oldVertCount = meshFilters[i].sharedMesh.vertexCount;
-                meshFilters[i].sharedMesh = FlatShade.DuplicateSharedVertex (meshFilters[i].sharedMesh);
-                float newVertCount = meshFilters[i].sharedMesh.vertexCount;
-                Debug.Log (meshFilters[i].transform.parent.name + "." + meshFilters[i].transform.name + " new vertices are at " + (newVertCount / oldVertCount * 100) + "% with " + newVertCount + " verts.");
+            for(int surfaceIndex = 0; surfaceIndex < 3; surfaceIndex++) {
+                List<MeshFilter> meshFilters = IsleInfo.GetSurfaceMeshes (islands, surfaceIndex);
+                for (int i = 0; i < meshFilters.Count; i++) {
+                    float oldVertCount = meshFilters[i].sharedMesh.vertexCount;
+                    meshFilters[i].sharedMesh = FlatShade.DuplicateSharedVertex (meshFilters[i].sharedMesh);
+                    float newVertCount = meshFilters[i].sharedMesh.vertexCount;
+                    Debug.Log (meshFilters[i].transform.parent.name + "." + meshFilters[i].transform.name + " new vertices are at " + (newVertCount / oldVertCount * 100) + "% with " + newVertCount + " verts.");
+                }
             }
         }
     }
@@ -71,7 +74,7 @@ public class IslandGenerator : MonoBehaviour {
         // Fill the map randomly with 0s and 1s based on percentage fill
 
         if (useRandomSeed) {
-            seed = Time.time.ToString ();
+            seed = System.DateTime.Now.ToString ();
         }
 
         System.Random pseudoRandom = new System.Random (seed.GetHashCode());
@@ -179,7 +182,7 @@ public class IslandGenerator : MonoBehaviour {
 
             // Mesh for wall
             wall.GetComponent<MeshFilter> ().mesh = meshes[1];
-            wall.GetComponent<MeshRenderer> ().material = islandData.dirtMaterial;
+            wall.GetComponent<MeshRenderer> ().material = islandData.wallMaterial;
 
             // Mesh for underside
             underside.GetComponent<MeshFilter> ().mesh = meshes[2];
@@ -211,7 +214,13 @@ public class IslandGenerator : MonoBehaviour {
 			MeshCollider[] colliders = isle.gameObject.GetComponentsInChildren<MeshCollider> ();
 			for (int i = 0; i < colliders.Length; i++) {
 				MeshFilter meshFilter = colliders[i].GetComponent<MeshFilter> ();
-				colliders[i].sharedMesh = meshFilter.sharedMesh;
+
+                Mesh collMesh = new Mesh ();
+                collMesh.vertices = meshFilter.sharedMesh.vertices;
+                collMesh.triangles = meshFilter.sharedMesh.triangles;
+                collMesh.RecalculateNormals ();
+
+                colliders[i].sharedMesh = collMesh;
 			}
 		}
 	}
@@ -296,9 +305,9 @@ public class IslandGenerator : MonoBehaviour {
     }
 
     void OnValidate () {
-        if (noiseData != null) {
-            noiseData.OnValuesUpdated -= OnValuesUpdated;
-            noiseData.OnValuesUpdated += OnValuesUpdated;
+        if (surfaceNoiseData != null) {
+            surfaceNoiseData.OnValuesUpdated -= OnValuesUpdated;
+            surfaceNoiseData.OnValuesUpdated += OnValuesUpdated;
         }
         if (islandData != null) {
             islandData.OnValuesUpdated -= OnValuesUpdated;

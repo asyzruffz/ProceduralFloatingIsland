@@ -6,27 +6,16 @@ public class ElevationGenerator : MonoBehaviour {
 
     List<IsleInfo> islands;
 
-    public void GenerateElevation (List<IsleInfo> islandInfos, float altitude, NoiseData noiseData, int seed) {
+    public void elevateSurface (List<IsleInfo> islandInfos, float altitude, NoiseData noiseData, int seed, int surfaceIndex) {
         islands = islandInfos;
 
-        List<MeshFilter> surfaceMeshes = GetSurfaceMeshes ();
+        List<MeshFilter> surfaceMeshes = IsleInfo.GetSurfaceMeshes (islands, surfaceIndex);
         for(int i = 0; i < surfaceMeshes.Count; i++) {
             List<Vector3> verts = ApplyHeight (surfaceMeshes[i].sharedMesh.vertices, altitude, noiseData, seed);
             verts = FlattenAtBorder (verts, i);
             surfaceMeshes[i].sharedMesh.vertices = verts.ToArray ();
             surfaceMeshes[i].sharedMesh.RecalculateNormals();
         }
-    }
-
-    List<MeshFilter> GetSurfaceMeshes () {
-        List<MeshFilter> meshes = new List<MeshFilter> ();
-
-        foreach(IsleInfo island in islands) {
-            MeshFilter[] meshFilter = island.gameObject.GetComponentsInChildren<MeshFilter> ();
-            meshes.Add (meshFilter[0]);
-        }
-
-        return meshes;
     }
 
     List<Vector3> ApplyHeight (Vector3[] vertices, float altitude, NoiseData noiseData, int seed) {
