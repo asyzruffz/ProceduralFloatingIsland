@@ -8,8 +8,8 @@ public class IslandGenerator : MonoBehaviour {
 
     public bool autoUpdate = true;
 
-    [Header("Randomness")]
-    public bool useRandomSeed;
+	[Header ("Randomness")]
+	public bool useRandomSeed;
     [ConditionalHide ("useRandomSeed", false, true)]
     public string seed;
 
@@ -17,6 +17,8 @@ public class IslandGenerator : MonoBehaviour {
     public NoiseData noiseData;
     public IslandData islandData;
 
+	[Header ("Settings")]
+	public bool withCollider;
     public bool flatShading;
 
     int[,] map;
@@ -51,6 +53,7 @@ public class IslandGenerator : MonoBehaviour {
         ElevationGenerator elevGen = GetComponent<ElevationGenerator> ();
         elevGen.GenerateElevation (islands, islandData.altitude, noiseData, seed.GetHashCode());
 
+<<<<<<< HEAD
         if(flatShading) {
             MeshFilter[] meshFilters = GetComponentsInChildren<MeshFilter> ();
             Debug.Log (meshFilters.Length + " meshes!");
@@ -61,6 +64,9 @@ public class IslandGenerator : MonoBehaviour {
                 Debug.Log (meshFilters[i].transform.parent.name + "." + meshFilters[i].transform.name + " new vertices are at " + (newVertCount / oldVertCount * 100) + "% with " + newVertCount + " verts.");
             }
         }
+=======
+		SetColliders ();
+>>>>>>> origin/island
     }
 
     void RandomFillMap () {
@@ -160,7 +166,7 @@ public class IslandGenerator : MonoBehaviour {
             isle.gameObject.transform.localPosition = isle.offset * islandData.tileSize;
             
             // Child game object of isle to store surface
-            GameObject surface = AddChildMesh ("Surface", isle.gameObject.transform);
+            GameObject surface = AddChildMesh ("Surface", isle.gameObject.transform, true);
             // Child game object of isle to store wall
             GameObject wall = AddChildMesh ("Wall", isle.gameObject.transform);
             // Child game object of isle to store underside
@@ -180,13 +186,13 @@ public class IslandGenerator : MonoBehaviour {
             // Mesh for underside
             underside.GetComponent<MeshFilter> ().mesh = meshes[2];
             underside.GetComponent<MeshRenderer> ().material = islandData.dirtMaterial;
-
+			
             islands.Add (isle);
             islandCount++;
         }
     }
 
-    GameObject AddChildMesh(string name, Transform parent) {
+    GameObject AddChildMesh(string name, Transform parent, bool addCollider = false) {
         GameObject child = new GameObject (name);
         child.transform.parent = parent;
         child.transform.localRotation = Quaternion.identity;
@@ -195,9 +201,23 @@ public class IslandGenerator : MonoBehaviour {
         child.AddComponent<MeshFilter> ();
         child.AddComponent<MeshRenderer> ();
 
+		if(addCollider) {
+			child.AddComponent<MeshCollider> ();
+		}
+
         return child;
     }
 
+	void SetColliders () {
+		foreach (IsleInfo isle in islands) {
+			MeshCollider[] colliders = isle.gameObject.GetComponentsInChildren<MeshCollider> ();
+			for (int i = 0; i < colliders.Length; i++) {
+				MeshFilter meshFilter = colliders[i].GetComponent<MeshFilter> ();
+				colliders[i].sharedMesh = meshFilter.sharedMesh;
+			}
+		}
+	}
+	
     List<List<Coord>> GetRegions(int tileType) {
         // Get all regions of a tile type
 
