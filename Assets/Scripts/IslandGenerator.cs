@@ -53,7 +53,8 @@ public class IslandGenerator : MonoBehaviour {
         ElevationGenerator elevGen = GetComponent<ElevationGenerator> ();
         elevGen.GenerateElevation (islands, islandData.altitude, noiseData, seed.GetHashCode());
 
-<<<<<<< HEAD
+        SetColliders ();
+        
         if(flatShading) {
             MeshFilter[] meshFilters = GetComponentsInChildren<MeshFilter> ();
             Debug.Log (meshFilters.Length + " meshes!");
@@ -64,9 +65,6 @@ public class IslandGenerator : MonoBehaviour {
                 Debug.Log (meshFilters[i].transform.parent.name + "." + meshFilters[i].transform.name + " new vertices are at " + (newVertCount / oldVertCount * 100) + "% with " + newVertCount + " verts.");
             }
         }
-=======
-		SetColliders ();
->>>>>>> origin/island
     }
 
     void RandomFillMap () {
@@ -166,7 +164,7 @@ public class IslandGenerator : MonoBehaviour {
             isle.gameObject.transform.localPosition = isle.offset * islandData.tileSize;
             
             // Child game object of isle to store surface
-            GameObject surface = AddChildMesh ("Surface", isle.gameObject.transform, true);
+            GameObject surface = AddChildMesh ("Surface", isle.gameObject.transform, withCollider);
             // Child game object of isle to store wall
             GameObject wall = AddChildMesh ("Wall", isle.gameObject.transform);
             // Child game object of isle to store underside
