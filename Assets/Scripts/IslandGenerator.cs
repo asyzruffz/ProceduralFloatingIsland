@@ -72,6 +72,11 @@ public class IslandGenerator : MonoBehaviour {
                 }
             }
         }
+
+		PlacementGenerator placement = GetComponent<PlacementGenerator> ();
+		if (placement) {
+			placement.GeneratePlacement (islands);
+		}
     }
 	
     void PartitionIslands() {
