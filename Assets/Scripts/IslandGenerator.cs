@@ -70,7 +70,7 @@ public class IslandGenerator : MonoBehaviour {
 
 		PlacementGenerator placement = GetComponent<PlacementGenerator> ();
 		if (placement && decorateTerrain) {
-			placement.GeneratePlacement (islands);
+			placement.GeneratePlacement (islands, ref pseudoRandom);
 		}
     }
 	

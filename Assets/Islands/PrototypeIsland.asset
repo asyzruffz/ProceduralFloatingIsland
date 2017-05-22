@@ -15,8 +15,10 @@ MonoBehaviour:
   maxWidth: 100
   maxHeight: 100
   tileSize: 1
-  depth: 2
+  depth: 0.5
   altitude: 5
-  randomFillPercent: 53
-  dirtMaterial: {fileID: 2100000, guid: fd5f754234b3fd24e88b57a9882692c6, type: 2}
-  grassMaterial: {fileID: 2100000, guid: 686e427da029ffa45b53948ecca1a944, type: 2}
+  stalactite: 8
+  randomFillPercent: 51.571434
+  grassMaterial: {fileID: 2100000, guid: bc6af6cb203edf64eb6deed573069006, type: 2}
+  wallMaterial: {fileID: 2100000, guid: e4b3c816f92980847a1f693051ed2b32, type: 2}
+  dirtMaterial: {fileID: 2100000, guid: 16e13b2712122104fbc36cce44b59899, type: 2}
