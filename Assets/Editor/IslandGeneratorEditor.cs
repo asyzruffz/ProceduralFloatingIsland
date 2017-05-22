@@ -13,7 +13,8 @@ public class IslandGeneratorEditor : Editor {
             }
         }
 
-        if(GUILayout.Button("Generate")) {
+		GUILayout.Space (10);
+		if (GUILayout.Button("Generate")) {
             islandGen.GenerateIsland ();
         }
     }
