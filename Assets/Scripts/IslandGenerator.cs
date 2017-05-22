@@ -16,6 +16,7 @@ public class IslandGenerator : MonoBehaviour {
     [Header ("Settings")]
     public bool withCollider;
     public bool flatShading;
+    public bool decorateTerrain;
 
     [Header ("Data")]
     public IslandData islandData;
@@ -74,7 +75,7 @@ public class IslandGenerator : MonoBehaviour {
         }
 
 		PlacementGenerator placement = GetComponent<PlacementGenerator> ();
-		if (placement) {
+		if (placement && decorateTerrain) {
 			placement.GeneratePlacement (islands);
 		}
     }
