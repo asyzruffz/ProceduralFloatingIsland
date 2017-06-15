@@ -9,11 +9,11 @@ public class IslandMeshGenerator : MonoBehaviour {
     List<int> triangles = new List<int> ();
     Dictionary<int, List<Triangle>> triangleDictionary = new Dictionary<int, List<Triangle>>();
     List<List<int>> outlines;
-    HashSet<int> checkedVertices = new HashSet<int> ();
+    HashSet<int> checkedVertices = new HashSet<int> (); // for outlines
 
-    public List<Mesh> GenerateMesh (int[,] map, IsleInfo info, float squareSize, float depth) {
+    public List<Mesh> GenerateMesh (MapRegion region, IsleInfo info, float squareSize, float depth) {
         
-        squareGrid = new SquareGrid (map, info.id, squareSize, info.offset);
+        squareGrid = new SquareGrid (region, squareSize, info.offset);
         vertices.Clear ();
         triangles.Clear ();
         triangleDictionary.Clear ();

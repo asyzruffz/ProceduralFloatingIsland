@@ -3,6 +3,7 @@ using System.Collections.Generic;
 
 public class LandMap {
 
+    // The 2-dimensional array to store the map data as MapPoint struct
 	public MapPoint[,] spots;
 
 	int width;
@@ -66,7 +67,7 @@ public class LandMap {
 		return landCount;
 	}
 
-	public List<MapRegion> GetRegions (int tileType) {
+	public List<MapRegion> GetRegions () {
 		// Get all regions of a tile type
 
 		List<MapRegion> regions = new List<MapRegion> ();
@@ -75,7 +76,7 @@ public class LandMap {
 		int regionId = 1;
 		for (int x = 0; x < width; x++) {
 			for (int y = 0; y < length; y++) {
-				if (mapFlags[x, y] == 0 && spots[x, y].fillValue == tileType) {
+				if (mapFlags[x, y] == 0 && spots[x, y].fillValue == 1) {
 					MapRegion newRegion = new MapRegion(GetRegionTiles (x, y), width, length);
 					newRegion.id = regionId;
 

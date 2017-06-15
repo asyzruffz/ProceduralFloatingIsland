@@ -15,8 +15,7 @@ public class ControlNode : Node {
 	public bool active;
 	public Node above, right;
 
-	public ControlNode (Vector3 pos, bool activated, float squareSize) : base (pos) {
-		active = activated;
+	public ControlNode (Vector3 pos, float squareSize) : base (pos) {
 		above = new Node (position + Vector3.forward * squareSize / 2f);
 		right = new Node (position + Vector3.right * squareSize / 2f);
 	}

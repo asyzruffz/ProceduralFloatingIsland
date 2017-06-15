@@ -16,6 +16,7 @@ public class IslandGenerator : MonoBehaviour {
     [Header ("Settings")]
     public bool withCollider;
     public bool flatShading;
+    public bool shouldElevate;
 
     [Header ("Data")]
     public IslandData islandData;
@@ -55,9 +56,11 @@ public class IslandGenerator : MonoBehaviour {
         // Create separate islands
         PartitionIslands ();
 
-        ElevationGenerator elevGen = GetComponent<ElevationGenerator> ();
-        elevGen.elevateSurface (islands, islandData.altitude, surfaceNoiseData, seed.GetHashCode(), 0); // elevate hills on the surface
-        elevGen.elevateSurface (islands, -islandData.stalactite, undersideNoiseData, seed.GetHashCode(), 2); // extend stakes at surface below
+        if (shouldElevate) {
+            ElevationGenerator elevGen = GetComponent<ElevationGenerator> ();
+            elevGen.elevateSurface (islands, islandData.altitude, surfaceNoiseData, seed.GetHashCode (), 0); // elevate hills on the surface
+            elevGen.elevateSurface (islands, -islandData.stalactite, undersideNoiseData, seed.GetHashCode (), 2); // extend stakes at surface below
+        }
 
         SetColliders ();
         
@@ -101,7 +104,7 @@ public class IslandGenerator : MonoBehaviour {
 #endif
 		}
 
-		List<MapRegion> islandRegions = map.GetRegions (1);
+		List<MapRegion> islandRegions = map.GetRegions ();
         IslandMeshGenerator meshGen = GetComponent<IslandMeshGenerator> ();
 
         int islandCount = 1;
@@ -123,9 +126,9 @@ public class IslandGenerator : MonoBehaviour {
             // Child game object of isle to store underside
             GameObject underside = AddChildMesh ("Underside", isle.gameObject.transform);
             underside.transform.position += Vector3.up * -islandData.depth;
-
-            List<Mesh> meshes = meshGen.GenerateMesh (map.GetRegionMap (), isle, islandData.tileSize, islandData.depth);
-
+            
+            List<Mesh> meshes = meshGen.GenerateMesh (region, isle, islandData.tileSize, islandData.depth);
+            
             // Mesh for surface
             surface.GetComponent<MeshFilter> ().mesh = meshes[0];
             surface.GetComponent<MeshRenderer> ().material = islandData.grassMaterial;
