@@ -8,8 +8,8 @@ public class IsleInfo {
     public GameObject gameObject;
 
     public Vector3 offset;
-
-    public List<List<int>> outlines;
+    
+    public MeshRegion surfaceMeshRegion;
 
     public static List<MeshFilter> GetSurfaceMeshes (List<IsleInfo> islandInfos, int index) {
         List<MeshFilter> meshes = new List<MeshFilter> ();

@@ -40,7 +40,7 @@ public class ElevationGenerator : MonoBehaviour {
     }
 
     List<Vector3> FlattenAtBorder (List<Vector3> vertices, int index) {
-        foreach (List<int> outline in islands[index].outlines) {
+        foreach (List<int> outline in islands[index].surfaceMeshRegion.outlines) {
             for (int i = 0; i < outline.Count; i++) {
                 vertices[outline[i]] = new Vector3(vertices[outline[i]].x, 0, vertices[outline[i]].z);
             }

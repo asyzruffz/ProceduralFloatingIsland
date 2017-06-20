@@ -8,8 +8,6 @@ public class SquareGrid {
 	public SquareGrid (MapRegion region, float squareSize, Vector3 gridCentre) {
 		int nodeCountX = region.GetRangeInfo (Ranges.FullX) + 2; // +2 for padding empty node each side
 		int nodeCountY = region.GetRangeInfo (Ranges.FullY) + 2;
-        float mapWidth = nodeCountX * squareSize;
-		float mapHeight = nodeCountY * squareSize;
 
 		ControlNode[,] controlNodes = new ControlNode[nodeCountX, nodeCountY];
 		for (int x = 0; x < nodeCountX; x++) {
