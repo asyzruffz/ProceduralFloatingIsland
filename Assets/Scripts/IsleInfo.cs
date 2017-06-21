@@ -10,15 +10,9 @@ public class IsleInfo {
     public Vector3 offset;
     
     public MeshRegion surfaceMeshRegion;
-
-    public static List<MeshFilter> GetSurfaceMeshes (List<IsleInfo> islandInfos, int index) {
-        List<MeshFilter> meshes = new List<MeshFilter> ();
-
-        foreach (IsleInfo island in islandInfos) {
-            MeshFilter[] meshFilter = island.gameObject.GetComponentsInChildren<MeshFilter> ();
-            meshes.Add (meshFilter[index]);
-        }
-
-        return meshes;
+    
+    public MeshFilter GetSurfaceMesh (int index) {
+        MeshFilter[] meshFilter = gameObject.GetComponentsInChildren<MeshFilter> ();
+        return meshFilter[index];
     }
 }

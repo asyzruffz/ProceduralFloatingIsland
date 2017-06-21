@@ -32,20 +32,22 @@ public class LandMap {
 		}
 	}
 
-	public void SmoothMap () {
-		// Change the state in each cell within the cellular automaton based on its neighbour
+	public void SmoothMap (int passes) {
+        // Change the state in each cell within the cellular automaton based on its neighbour
 
-		for (int x = 0; x < width; x++) {
-			for (int y = 0; y < length; y++) {
-				int neighbourLandTile = GetSurroundingLandCount (x, y);
+        for (int i = 0; i < passes; i++) {
+            for (int x = 0; x < width; x++) {
+                for (int y = 0; y < length; y++) {
+                    int neighbourLandTile = GetSurroundingLandCount (x, y);
 
-				if (neighbourLandTile > 4) {
-					spots[x, y].fillValue = 1;
-				} else if (neighbourLandTile < 4) {
-					spots[x, y].fillValue = 0;
-				}
-			}
-		}
+                    if (neighbourLandTile > 4) {
+                        spots[x, y].fillValue = 1;
+                    } else if (neighbourLandTile < 4) {
+                        spots[x, y].fillValue = 0;
+                    }
+                }
+            }
+        }
 	}
 
 	// Called by SmoothMap ()

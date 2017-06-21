@@ -10,24 +10,22 @@ public class MeshRegion {
     Dictionary<int, List<Triangle>> triangleDictionary = new Dictionary<int, List<Triangle>> ();
     HashSet<int> checkedVertices = new HashSet<int> ();
 
-    public void SetVertices (List<Vector3> verts) {
-        vertices = new List<Vector3> (verts);
+    public List<Vector3> Vertices {
+        get { return vertices; }
+        set { vertices = new List<Vector3> (value); }
     }
 
-    public void CheckVertex (int vertexIndex) {
-        checkedVertices.Add (vertexIndex);
-    }
-
-    public void AddTriangleToDictionary (int vertexIndexKey, Triangle triangle) {
-        if (triangleDictionary.ContainsKey (vertexIndexKey)) {
-            triangleDictionary[vertexIndexKey].Add (triangle);
-        } else {
-            List<Triangle> triangleList = new List<Triangle> ();
-            triangleList.Add (triangle);
-            triangleDictionary.Add (vertexIndexKey, triangleList);
+    public void FillTriangleDictionary (int[] tris) {
+        for (int i = 0; i < tris.Length; i += 3) {
+            Triangle triangle = new Triangle (i, i + 1, i + 2);
+            AddTriangleToDictionary (triangle.vertices[0], triangle);
+            AddTriangleToDictionary (triangle.vertices[1], triangle);
+            AddTriangleToDictionary (triangle.vertices[2], triangle);
         }
+
     }
 
+    #region Outline functions
     public void CalculateMeshOutlines () {
         for (int vertexIndex = 0; vertexIndex < vertices.Count; vertexIndex++) {
             if (!checkedVertices.Contains (vertexIndex)) {
@@ -52,6 +50,20 @@ public class MeshRegion {
         int nextOutlineVertex = GetConnectedOutlineVertex (vertexIndex);
         if (nextOutlineVertex != -1) {
             FollowOutline (nextOutlineVertex, outlineIndex);
+        }
+    }
+
+    public void CheckVertex (int vertexIndex) { // made public so it can be called in IslandMeshGenerator.cs for optimization
+        checkedVertices.Add (vertexIndex);
+    }
+
+    public void AddTriangleToDictionary (int vertexIndexKey, Triangle triangle) {
+        if (triangleDictionary.ContainsKey (vertexIndexKey)) {
+            triangleDictionary[vertexIndexKey].Add (triangle);
+        } else {
+            List<Triangle> triangleList = new List<Triangle> ();
+            triangleList.Add (triangle);
+            triangleDictionary.Add (vertexIndexKey, triangleList);
         }
     }
 
@@ -89,5 +101,30 @@ public class MeshRegion {
         }
 
         return sharedTriangleCount == 1;
+    }
+    #endregion
+
+    // Get the rectangle surround the vertices
+    public Rect GetRectContainingVertices () {
+        float minX = float.MaxValue;
+        float maxX = float.MinValue;
+        float minY = float.MaxValue;
+        float maxY = float.MinValue;
+
+        for (int i = 0; i < vertices.Count; i++) {
+            if (vertices[i].x > maxX) {
+                maxX = vertices[i].x;
+            } else if (vertices[i].x < minX) {
+                minX = vertices[i].x;
+            }
+
+            if (vertices[i].z > maxY) {
+                maxY = vertices[i].z;
+            } else if (vertices[i].z < minY) {
+                minY = vertices[i].z;
+            }
+        }
+
+        return new Rect (minX, minY, maxX - minX, maxY - minY);
     }
 }

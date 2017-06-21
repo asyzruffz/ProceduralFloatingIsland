@@ -45,7 +45,7 @@ public class IslandMeshGenerator : MonoBehaviour {
     }
 
     Mesh CreateWallMesh(float wallHeight) {
-        meshRegion.SetVertices (vertices);
+        meshRegion.Vertices = vertices;
         meshRegion.CalculateMeshOutlines ();
 
         List<Vector3> wallVertices = new List<Vector3> ();
@@ -134,6 +134,8 @@ public class IslandMeshGenerator : MonoBehaviour {
             // 4 points
             case 15:
                 MeshFromPoints (square.topLeft, square.topRight, square.bottomRight, square.bottomLeft);
+
+                // for optimization of MeshRegion calculating outlines
                 meshRegion.CheckVertex (square.topLeft.vertexIndex);
                 meshRegion.CheckVertex (square.topRight.vertexIndex);
                 meshRegion.CheckVertex (square.bottomRight.vertexIndex);
