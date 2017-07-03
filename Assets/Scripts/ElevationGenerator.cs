@@ -13,7 +13,7 @@ public class ElevationGenerator : MonoBehaviour {
             MeshFilter mf = island.GetSurfaceMesh (surfaceIndex);
 
             List<Vector3> verts = ApplyHeight (island.surfaceMeshRegion, altitude, noiseData, seed);
-            verts = FlattenAtBorder (verts, island.surfaceMeshRegion.outlines);
+            //verts = FlattenAtBorder (verts, island.surfaceMeshRegion.outlines);
 
             mf.sharedMesh.vertices = verts.ToArray ();
             mf.sharedMesh.RecalculateNormals ();
@@ -26,8 +26,11 @@ public class ElevationGenerator : MonoBehaviour {
         // Get the rectangle region of the island
         Rect lot = meshReg.GetRectContainingVertices ();
 
+        Dictionary<int, int> gradientMap = meshReg.gradientMap;
+
         float[,] noiseMap = Noise.GenerateNoiseMap (Mathf.RoundToInt (lot.width + 1), Mathf.RoundToInt (lot.height + 1), noiseData, seed);
 
+        Debug.Log ("GradMap size " + gradientMap.Count + ", Verts size " + meshReg.Vertices.Count);
         for (int i = 0; i < meshReg.Vertices.Count; i++) {
             Vector3 vertexPos = meshReg.Vertices[i];
 
@@ -35,6 +38,13 @@ public class ElevationGenerator : MonoBehaviour {
             int mapY = Mathf.RoundToInt (Mathf.InverseLerp (lot.yMin, lot.yMax, vertexPos.z) * lot.height);
 
             vertexPos.y = noiseMap[mapX, mapY] * altitude;
+
+            if (gradientMap.ContainsKey(i)) {
+                vertexPos.y *= gradientMap[i];
+            } else {
+                vertexPos.y *= 20;
+            }
+
             newVertices.Add(vertexPos);
         }
 

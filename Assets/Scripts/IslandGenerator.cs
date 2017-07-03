@@ -56,6 +56,10 @@ public class IslandGenerator : MonoBehaviour {
         PartitionIslands ();
 
         if (shouldElevate) {
+            foreach (IsleInfo island in islands) {
+                island.surfaceMeshRegion.CalculateGradientMap ();
+            }
+
             ElevationGenerator elevGen = GetComponent<ElevationGenerator> ();
             elevGen.elevateSurface (islands, islandData.altitude, surfaceNoiseData, seedHash, 0); // elevate hills on the surface
             elevGen.elevateSurface (islands, -islandData.stalactite, undersideNoiseData, seedHash, 2); // extend stakes at surface below
