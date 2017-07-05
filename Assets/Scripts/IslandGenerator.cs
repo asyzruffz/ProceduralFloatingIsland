@@ -119,8 +119,8 @@ public class IslandGenerator : MonoBehaviour {
             isle.gameObject = new GameObject ("Island " + isle.id);
             isle.gameObject.transform.parent = transform;
             isle.gameObject.transform.localRotation = Quaternion.identity;
-            isle.offset = region.GetCentre ();
-            isle.gameObject.transform.localPosition = isle.offset * islandData.tileSize;
+            isle.offset = region.GetCentre () * islandData.tileSize;
+            isle.gameObject.transform.localPosition = isle.offset;
             
             // Child game object of isle to store surface
             GameObject surface = AddChildMesh ("Surface", isle.gameObject.transform, withCollider);

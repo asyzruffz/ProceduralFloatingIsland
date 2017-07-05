@@ -11,7 +11,7 @@ public class IslandMeshGenerator : MonoBehaviour {
 
     public List<Mesh> GenerateMesh (MapRegion region, IsleInfo info, float squareSize, float depth) {
         
-        squareGrid = new SquareGrid (region, squareSize, info.offset);
+        squareGrid = new SquareGrid (region, squareSize);
         vertices.Clear ();
         triangles.Clear ();
 

@@ -25,7 +25,7 @@ public class ElevationGenerator : MonoBehaviour {
 		// Get the rectangle region of the island
 		Rect lot = meshReg.GetRectContainingVertices ();
 
-		float[,] noiseMap = Noise.GenerateNoiseMap (Mathf.RoundToInt (lot.width + 1), Mathf.RoundToInt (lot.height + 1), noiseData, seed);
+		float[,] noiseMap = Noise.GenerateNoiseMap (Mathf.RoundToInt (lot.width + 2), Mathf.RoundToInt (lot.height + 2), noiseData, seed);
 
 		for (int i = 0; i < meshReg.Vertices.Count; i++) {
 			Vector3 vertexPos = meshReg.Vertices[i];

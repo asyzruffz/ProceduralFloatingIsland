@@ -5,16 +5,17 @@ using UnityEngine;
 public class SquareGrid {
 	public Square[,] squares;
 
-	public SquareGrid (MapRegion region, float squareSize, Vector3 gridCentre) {
+	public SquareGrid (MapRegion region, float squareSize) {
 		int nodeCountX = region.GetRangeInfo (Ranges.FullX) + 2; // +2 for padding empty node each side
 		int nodeCountY = region.GetRangeInfo (Ranges.FullY) + 2;
 
 		ControlNode[,] controlNodes = new ControlNode[nodeCountX, nodeCountY];
 		for (int x = 0; x < nodeCountX; x++) {
 			for (int y = 0; y < nodeCountY; y++) {
-				Vector3 pos = new Vector3 ((x * squareSize) - (nodeCountX - 1) / 2.0f,
+				Vector3 pos = new Vector3 (x - (nodeCountX - 1) / 2.0f,
 											0,
-										   (y * squareSize) - (nodeCountY - 1) / 2.0f);
+										   y - (nodeCountY - 1) / 2.0f);
+				pos *= squareSize;
 				controlNodes[x, y] = new ControlNode (pos, squareSize);
 			}
 		}
