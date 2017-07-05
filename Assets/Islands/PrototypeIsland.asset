@@ -16,8 +16,50 @@ MonoBehaviour:
   maxHeight: 100
   tileSize: 1
   depth: 0.5
-  altitude: 5
-  stalactite: 8
+  altitude: 20
+  mountainCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 0.80119836
+      value: 0.31164962
+      inSlope: 1.0429728
+      outSlope: 1.0429728
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
+  stalactite: 15
+  bellyCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 0
+      inSlope: 2
+      outSlope: 2
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
   randomFillPercent: 51.571434
   grassMaterial: {fileID: 2100000, guid: bc6af6cb203edf64eb6deed573069006, type: 2}
   wallMaterial: {fileID: 2100000, guid: e4b3c816f92980847a1f693051ed2b32, type: 2}

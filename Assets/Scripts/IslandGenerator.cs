@@ -61,8 +61,13 @@ public class IslandGenerator : MonoBehaviour {
         }
 
         SetColliders ();
-        
-        if(flatShading) {
+
+		PlacementGenerator placement = GetComponent<PlacementGenerator> ();
+		if (placement && decorateTerrain) {
+			placement.GeneratePlacement (islands, ref pseudoRandom);
+		}
+
+		if (flatShading) {
             foreach (IsleInfo island in islands) {
                 for (int surfaceIndex = 0; surfaceIndex < 3; surfaceIndex++) {
                     MeshFilter mf = island.GetSurfaceMesh (surfaceIndex);
@@ -73,11 +78,6 @@ public class IslandGenerator : MonoBehaviour {
                 }
             }
         }
-
-		PlacementGenerator placement = GetComponent<PlacementGenerator> ();
-		if (placement && decorateTerrain) {
-			placement.GeneratePlacement (islands, ref pseudoRandom);
-		}
     }
 	
     void PartitionIslands() {

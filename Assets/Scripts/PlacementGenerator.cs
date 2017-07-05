@@ -12,11 +12,10 @@ public class PlacementGenerator : MonoBehaviour {
         GameObject holder = new GameObject ("Decor");
         holder.transform.parent = transform;
 
-        List<MeshFilter> meshFilters = IsleInfo.GetSurfaceMeshes (islands, 0);
+        foreach (IsleInfo island in islands) {
+			MeshFilter mf = island.GetSurfaceMesh (0);
 
-        foreach (MeshFilter mf in meshFilters) {
-
-            Vector3[] verts = mf.sharedMesh.vertices;
+			Vector3[] verts = mf.sharedMesh.vertices;
             int[] indices = mf.sharedMesh.triangles;
 
             int i = 0;
