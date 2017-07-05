@@ -105,7 +105,7 @@ public class MeshRegion {
     }
     #endregion
 
-    public void CalculateGradientMap () {
+    public int CalculateGradientMap () {
         HashSet<int> checkedGradientVertices = new HashSet<int> ();
 
         // Start with the gradient being zero at the outlines
@@ -143,12 +143,7 @@ public class MeshRegion {
             }
         }
 
-		// Normalize the gradient to (0 - 1)
-		for (int i = 0; i < gradientMap.Count; i++) {
-			if (gradientMap.ContainsKey (i)) {
-				gradientMap[i] = Mathf.InverseLerp (0, gradient, gradientMap[i]);
-			}
-		}
+		return gradient;
 	}
 
     int GetConnectedRingVertex (int vertexIndex, ref HashSet<int> check, int ringNum) {
@@ -206,8 +201,17 @@ public class MeshRegion {
         return isOnTheRing;
     }
 
-    // Get the rectangle surround the vertices region
-    public Rect GetRectContainingVertices () {
+	public void NormalizeGradientMap (float maxHeight) {
+		// Normalize the gradient to (0 - 1)
+		for (int i = 0; i < gradientMap.Count; i++) {
+			if (gradientMap.ContainsKey (i)) {
+				gradientMap[i] = Mathf.InverseLerp (0, maxHeight, gradientMap[i]);
+			}
+		}
+	}
+
+	// Get the rectangle surround the vertices region
+	public Rect GetRectContainingVertices () {
         float minX = float.MaxValue;
         float maxX = float.MinValue;
         float minY = float.MaxValue;

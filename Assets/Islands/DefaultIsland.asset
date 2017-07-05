@@ -48,8 +48,8 @@ MonoBehaviour:
     - serializedVersion: 2
       time: 0
       value: 0
-      inSlope: 2
-      outSlope: 2
+      inSlope: 2.8499997
+      outSlope: 2.8499997
       tangentMode: 0
     - serializedVersion: 2
       time: 1

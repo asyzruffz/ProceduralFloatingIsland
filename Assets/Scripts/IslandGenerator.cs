@@ -56,11 +56,16 @@ public class IslandGenerator : MonoBehaviour {
         PartitionIslands ();
 
         if (shouldElevate) {
+			int highestPeak = 0;
             foreach (IsleInfo island in islands) {
-                island.surfaceMeshRegion.CalculateGradientMap ();
+				int peak = island.surfaceMeshRegion.CalculateGradientMap ();
+				highestPeak = peak > highestPeak ? peak : highestPeak;
             }
+			foreach (IsleInfo island in islands) {
+				island.surfaceMeshRegion.NormalizeGradientMap (highestPeak);
+			}
 
-            ElevationGenerator elevGen = GetComponent<ElevationGenerator> ();
+			ElevationGenerator elevGen = GetComponent<ElevationGenerator> ();
             elevGen.elevateSurface (islands, islandData.altitude, islandData.mountainCurve, surfaceNoiseData, seedHash, 0); // elevate hills on the surface
             elevGen.elevateSurface (islands, -islandData.stalactite, islandData.bellyCurve, undersideNoiseData, seedHash, 2); // extend stakes at surface below
         }
