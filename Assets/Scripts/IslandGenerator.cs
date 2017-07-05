@@ -61,8 +61,8 @@ public class IslandGenerator : MonoBehaviour {
             }
 
             ElevationGenerator elevGen = GetComponent<ElevationGenerator> ();
-            elevGen.elevateSurface (islands, islandData.altitude, surfaceNoiseData, seedHash, 0); // elevate hills on the surface
-            elevGen.elevateSurface (islands, -islandData.stalactite, undersideNoiseData, seedHash, 2); // extend stakes at surface below
+            elevGen.elevateSurface (islands, islandData.altitude, islandData.mountainCurve, surfaceNoiseData, seedHash, 0); // elevate hills on the surface
+            elevGen.elevateSurface (islands, -islandData.stalactite, islandData.bellyCurve, undersideNoiseData, seedHash, 2); // extend stakes at surface below
         }
 
         SetColliders ();
@@ -74,7 +74,7 @@ public class IslandGenerator : MonoBehaviour {
                     float oldVertCount = mf.sharedMesh.vertexCount;
                     mf.sharedMesh = FlatShade.DuplicateSharedVertex (mf.sharedMesh);
                     float newVertCount = mf.sharedMesh.vertexCount;
-                    Debug.Log (mf.transform.parent.name + "." + mf.transform.name + " new vertices are at " + (newVertCount / oldVertCount * 100) + "% with " + newVertCount + " verts.");
+                    //Debug.Log (mf.transform.parent.name + "." + mf.transform.name + " new vertices are at " + (newVertCount / oldVertCount * 100) + "% with " + newVertCount + " verts.");
                 }
             }
         }

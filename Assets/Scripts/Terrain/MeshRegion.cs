@@ -5,7 +5,7 @@ using UnityEngine;
 public class MeshRegion {
 
     public List<List<int>> outlines = new List<List<int>> ();
-    public Dictionary<int, int> gradientMap = new Dictionary<int, int> ();
+    public Dictionary<int, float> gradientMap = new Dictionary<int, float> ();
 
     List<Vector3> vertices;
     Dictionary<int, List<Triangle>> triangleDictionary = new Dictionary<int, List<Triangle>> ();
@@ -118,30 +118,38 @@ public class MeshRegion {
             }
         }
 
-        int progress = 0;
-
-        // Loop each gradient gradient ring until all vertices are done
-        for (int gradient = 1; checkedGradientVertices.Count < vertices.Count && progress != gradientMap.Count; gradient++) {
-            Debug.Log ("Gradient " + gradient);
-            progress = gradientMap.Count;
-            Debug.Log ("Mapped " + gradientMap.Count + "/" + vertices.Count);
+		// Loop each gradient gradient ring until all vertices are done
+		int gradient;
+		int mappingProgress = 0;
+		for (gradient = 1; checkedGradientVertices.Count < vertices.Count && mappingProgress != gradientMap.Count; gradient++) {
+            mappingProgress = gradientMap.Count;
 
             for (int vertexIndex = 0; vertexIndex < vertices.Count; vertexIndex++) {
                 // Iterate all vertices that has not been checked
                 if (!checkedGradientVertices.Contains (vertexIndex)) {
 
-                    int nextRingVertex = GetConnectedRingVertex (vertexIndex, ref checkedGradientVertices, gradient);
-                    if (nextRingVertex != -1) {
-                        checkedGradientVertices.Add (vertexIndex);
-                        gradientMap.Add (vertexIndex, gradient);
+					if (IsRingEdge (vertexIndex, gradient)) {
+						checkedGradientVertices.Add (vertexIndex);
+						gradientMap.Add (vertexIndex, gradient);
 
-                        // If there are connected vertices forming outer ring, follow the ring and fill the gradient
-                        FollowRing (nextRingVertex, gradient, ref checkedGradientVertices);
-                    }
+						// Check if there is a connected vertex forming outer ring
+						int nextRingVertex = GetConnectedRingVertex (vertexIndex, ref checkedGradientVertices, gradient);
+						if (nextRingVertex != -1) {
+							// Follow the ring and fill the gradient
+							FollowRing (nextRingVertex, gradient, ref checkedGradientVertices);
+						}
+					}
                 }
             }
         }
-    }
+
+		// Normalize the gradient to (0 - 1)
+		for (int i = 0; i < gradientMap.Count; i++) {
+			if (gradientMap.ContainsKey (i)) {
+				gradientMap[i] = Mathf.InverseLerp (0, gradient, gradientMap[i]);
+			}
+		}
+	}
 
     int GetConnectedRingVertex (int vertexIndex, ref HashSet<int> check, int ringNum) {
         // Get all triangles made up off this vertex
@@ -156,8 +164,7 @@ public class MeshRegion {
 
                 // Exclude this vertex and vertices that has been checked
                 if (vertexIndex != nextVertex && !check.Contains (nextVertex)) {
-
-                    if (IsRingEdge (vertexIndex, nextVertex, ringNum)) {
+                    if (IsRingEdge (nextVertex, ringNum)) {
                         return nextVertex;
                     }
                 }
@@ -181,31 +188,22 @@ public class MeshRegion {
         }
     }
 
-    bool IsRingEdge (int vertexA, int vertexB, int ringNum) {
-        bool isRingAtA = false;
-        bool isRingAtB = false;
+    bool IsRingEdge (int vertex, int ringNum) {
+        bool isOnTheRing = false;
 
-        // Check vertices connected to vertexA whether already gradient-mapped
-        List<Triangle> trianglesContainingVertexA = triangleDictionary[vertexA];
-        for (int i = 0; !isRingAtA && i < trianglesContainingVertexA.Count; i++) {
-            for (int vert = 0; !isRingAtA && vert < 3; vert++) {
-                if (gradientMap.ContainsKey(trianglesContainingVertexA[i].vertices[vert])) {
-                    isRingAtA = gradientMap[trianglesContainingVertexA[i].vertices[vert]] == (ringNum - 1);
+        // Check vertices connected to param vertex ...
+        List<Triangle> trianglesContainingVertex = triangleDictionary[vertex];
+        for (int i = 0; !isOnTheRing && i < trianglesContainingVertex.Count; i++) {
+            for (int vert = 0; !isOnTheRing && vert < 3; vert++) {
+				// ... whether already gradient-mapped ...
+				if (gradientMap.ContainsKey(trianglesContainingVertex[i].vertices[vert])) {
+					// ... and on the previous ring
+					isOnTheRing = gradientMap[trianglesContainingVertex[i].vertices[vert]] == (ringNum - 1);
                 }
             }
         }
-
-        // Check vertices connected to vertexB whether already gradient-mapped
-        List<Triangle> trianglesContainingVertexB = triangleDictionary[vertexB];
-        for (int i = 0; !isRingAtB && i < trianglesContainingVertexB.Count; i++) {
-            for (int vert = 0; !isRingAtB && vert < 3; vert++) {
-                if (gradientMap.ContainsKey (trianglesContainingVertexB[i].vertices[vert])) {
-                    isRingAtB = gradientMap[trianglesContainingVertexB[i].vertices[vert]] == (ringNum - 1);
-                }
-            }
-        }
-
-        return isRingAtA && isRingAtB;
+		
+        return isOnTheRing;
     }
 
     // Get the rectangle surround the vertices region

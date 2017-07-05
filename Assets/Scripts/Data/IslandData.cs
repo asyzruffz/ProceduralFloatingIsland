@@ -10,9 +10,11 @@ public class IslandData : UpdatableData {
     public float tileSize = 1;
     public float depth = 5;
     public float altitude = 5;
-    public float stalactite = 8;
+	public AnimationCurve mountainCurve;
+	public float stalactite = 8;
+	public AnimationCurve bellyCurve;
 
-    [Range (0, 100)]
+	[Range (0, 100)]
     public float randomFillPercent = 50;
 
     [Header ("Materials")]
