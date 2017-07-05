@@ -3,6 +3,7 @@ using System.Collections.Generic;
 
 public class LandMap {
 
+    // The 2-dimensional array to store the map data as MapPoint struct
 	public MapPoint[,] spots;
 
 	int width;
@@ -31,20 +32,22 @@ public class LandMap {
 		}
 	}
 
-	public void SmoothMap () {
-		// Change the state in each cell within the cellular automaton based on its neighbour
+	public void SmoothMap (int passes) {
+        // Change the state in each cell within the cellular automaton based on its neighbour
 
-		for (int x = 0; x < width; x++) {
-			for (int y = 0; y < length; y++) {
-				int neighbourLandTile = GetSurroundingLandCount (x, y);
+        for (int i = 0; i < passes; i++) {
+            for (int x = 0; x < width; x++) {
+                for (int y = 0; y < length; y++) {
+                    int neighbourLandTile = GetSurroundingLandCount (x, y);
 
-				if (neighbourLandTile > 4) {
-					spots[x, y].fillValue = 1;
-				} else if (neighbourLandTile < 4) {
-					spots[x, y].fillValue = 0;
-				}
-			}
-		}
+                    if (neighbourLandTile > 4) {
+                        spots[x, y].fillValue = 1;
+                    } else if (neighbourLandTile < 4) {
+                        spots[x, y].fillValue = 0;
+                    }
+                }
+            }
+        }
 	}
 
 	// Called by SmoothMap ()
@@ -66,7 +69,7 @@ public class LandMap {
 		return landCount;
 	}
 
-	public List<MapRegion> GetRegions (int tileType) {
+	public List<MapRegion> GetRegions () {
 		// Get all regions of a tile type
 
 		List<MapRegion> regions = new List<MapRegion> ();
@@ -75,7 +78,7 @@ public class LandMap {
 		int regionId = 1;
 		for (int x = 0; x < width; x++) {
 			for (int y = 0; y < length; y++) {
-				if (mapFlags[x, y] == 0 && spots[x, y].fillValue == tileType) {
+				if (mapFlags[x, y] == 0 && spots[x, y].fillValue == 1) {
 					MapRegion newRegion = new MapRegion(GetRegionTiles (x, y), width, length);
 					newRegion.id = regionId;
 
