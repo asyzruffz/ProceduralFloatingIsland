@@ -8,15 +8,14 @@ public class PlacementGenerator : MonoBehaviour {
     public float probability = 50;
 	public GameObject[] items;
 
-	public void GeneratePlacement (List<IsleInfo> islands) {
+	public void GeneratePlacement (List<IsleInfo> islands, ref System.Random randomizer) {
         GameObject holder = new GameObject ("Decor");
         holder.transform.parent = transform;
 
-        List<MeshFilter> meshFilters = IsleInfo.GetSurfaceMeshes (islands, 0);
+        foreach (IsleInfo island in islands) {
+			MeshFilter mf = island.GetSurfaceMesh (0);
 
-        foreach (MeshFilter mf in meshFilters) {
-
-            Vector3[] verts = mf.sharedMesh.vertices;
+			Vector3[] verts = mf.sharedMesh.vertices;
             int[] indices = mf.sharedMesh.triangles;
 
             int i = 0;
@@ -34,8 +33,8 @@ public class PlacementGenerator : MonoBehaviour {
 
                 //Vector3 rot = mf.transform.TransformDirection ((n1 + n2 + n3) / 3);
 
-                if (Random.Range(0f, 100f) < probability) {
-                    GameObject objPlaced = Instantiate (items[Random.Range (0, items.Length)], holder.transform);
+                if (randomizer.NextDouble() * 100 < probability) {
+                    GameObject objPlaced = Instantiate (items[randomizer.Next(0, items.Length)], holder.transform);
 
                     objPlaced.transform.position = pos;
                     objPlaced.transform.localRotation = Quaternion.identity;

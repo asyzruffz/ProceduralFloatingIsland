@@ -16,6 +16,7 @@ public class IslandGenerator : MonoBehaviour {
     [Header ("Settings")]
     public bool withCollider;
     public bool flatShading;
+    public bool shouldElevate;
     public bool decorateTerrain;
 
     [Header ("Data")]
@@ -30,18 +31,13 @@ public class IslandGenerator : MonoBehaviour {
         GenerateIsland ();
     }
 	
-	void Update () {
-		if(Input.GetButtonDown("Fire1")) {
-            GenerateIsland ();
-        }
-	}
-
     public void GenerateIsland () {
 		if (useRandomSeed) {
 			seed = System.DateTime.Now.ToString ();
 		}
 
-		System.Random pseudoRandom = new System.Random (seed.GetHashCode ());
+        int seedHash = seed.GetHashCode ();
+        System.Random pseudoRandom = new System.Random (seedHash);
 
 		map = new LandMap (islandData.maxWidth, islandData.maxHeight);
 
@@ -49,35 +45,39 @@ public class IslandGenerator : MonoBehaviour {
 		map.RandomFillMap (ref pseudoRandom, islandData.randomFillPercent);
 
         // Smooth the map 5 times
-        for(int i = 0; i < 5; i++) {
-			map.SmoothMap ();
-        }
+		map.SmoothMap (5);
 
         // Create separate islands
         PartitionIslands ();
 
-        ElevationGenerator elevGen = GetComponent<ElevationGenerator> ();
-        elevGen.elevateSurface (islands, islandData.altitude, surfaceNoiseData, seed.GetHashCode(), 0); // elevate hills on the surface
-        elevGen.elevateSurface (islands, -islandData.stalactite, undersideNoiseData, seed.GetHashCode(), 2); // extend stakes at surface below
+        if (shouldElevate) {
+            foreach (IsleInfo island in islands) {
+                island.surfaceMeshRegion.CalculateGradientMap ();
+            }
+
+            ElevationGenerator elevGen = GetComponent<ElevationGenerator> ();
+            elevGen.elevateSurface (islands, islandData.altitude, islandData.mountainCurve, surfaceNoiseData, seedHash, 0); // elevate hills on the surface
+            elevGen.elevateSurface (islands, -islandData.stalactite, islandData.bellyCurve, undersideNoiseData, seedHash, 2); // extend stakes at surface below
+        }
 
         SetColliders ();
-        
-        if(flatShading) {
-            for(int surfaceIndex = 0; surfaceIndex < 3; surfaceIndex++) {
-                List<MeshFilter> meshFilters = IsleInfo.GetSurfaceMeshes (islands, surfaceIndex);
-                for (int i = 0; i < meshFilters.Count; i++) {
-                    float oldVertCount = meshFilters[i].sharedMesh.vertexCount;
-                    meshFilters[i].sharedMesh = FlatShade.DuplicateSharedVertex (meshFilters[i].sharedMesh);
-                    float newVertCount = meshFilters[i].sharedMesh.vertexCount;
-                    Debug.Log (meshFilters[i].transform.parent.name + "." + meshFilters[i].transform.name + " new vertices are at " + (newVertCount / oldVertCount * 100) + "% with " + newVertCount + " verts.");
-                }
-            }
-        }
 
 		PlacementGenerator placement = GetComponent<PlacementGenerator> ();
 		if (placement && decorateTerrain) {
-			placement.GeneratePlacement (islands);
+			placement.GeneratePlacement (islands, ref pseudoRandom);
 		}
+
+		if (flatShading) {
+            foreach (IsleInfo island in islands) {
+                for (int surfaceIndex = 0; surfaceIndex < 3; surfaceIndex++) {
+                    MeshFilter mf = island.GetSurfaceMesh (surfaceIndex);
+                    float oldVertCount = mf.sharedMesh.vertexCount;
+                    mf.sharedMesh = FlatShade.DuplicateSharedVertex (mf.sharedMesh);
+                    float newVertCount = mf.sharedMesh.vertexCount;
+                    //Debug.Log (mf.transform.parent.name + "." + mf.transform.name + " new vertices are at " + (newVertCount / oldVertCount * 100) + "% with " + newVertCount + " verts.");
+                }
+            }
+        }
     }
 	
     void PartitionIslands() {
@@ -107,7 +107,7 @@ public class IslandGenerator : MonoBehaviour {
 #endif
 		}
 
-		List<MapRegion> islandRegions = map.GetRegions (1);
+		List<MapRegion> islandRegions = map.GetRegions ();
         IslandMeshGenerator meshGen = GetComponent<IslandMeshGenerator> ();
 
         int islandCount = 1;
@@ -119,8 +119,8 @@ public class IslandGenerator : MonoBehaviour {
             isle.gameObject = new GameObject ("Island " + isle.id);
             isle.gameObject.transform.parent = transform;
             isle.gameObject.transform.localRotation = Quaternion.identity;
-            isle.offset = region.GetCentre ();
-            isle.gameObject.transform.localPosition = isle.offset * islandData.tileSize;
+            isle.offset = region.GetCentre () * islandData.tileSize;
+            isle.gameObject.transform.localPosition = isle.offset;
             
             // Child game object of isle to store surface
             GameObject surface = AddChildMesh ("Surface", isle.gameObject.transform, withCollider);
@@ -129,9 +129,9 @@ public class IslandGenerator : MonoBehaviour {
             // Child game object of isle to store underside
             GameObject underside = AddChildMesh ("Underside", isle.gameObject.transform);
             underside.transform.position += Vector3.up * -islandData.depth;
-
-            List<Mesh> meshes = meshGen.GenerateMesh (map.GetRegionMap (), isle, islandData.tileSize, islandData.depth);
-
+            
+            List<Mesh> meshes = meshGen.GenerateMesh (region, isle, islandData.tileSize, islandData.depth);
+            
             // Mesh for surface
             surface.GetComponent<MeshFilter> ().mesh = meshes[0];
             surface.GetComponent<MeshRenderer> ().material = islandData.grassMaterial;

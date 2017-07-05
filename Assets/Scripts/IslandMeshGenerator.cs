@@ -7,18 +7,15 @@ public class IslandMeshGenerator : MonoBehaviour {
     SquareGrid squareGrid;
     List<Vector3> vertices = new List<Vector3> ();
     List<int> triangles = new List<int> ();
-    Dictionary<int, List<Triangle>> triangleDictionary = new Dictionary<int, List<Triangle>>();
-    List<List<int>> outlines;
-    HashSet<int> checkedVertices = new HashSet<int> ();
+    MeshRegion meshRegion;
 
-    public List<Mesh> GenerateMesh (int[,] map, IsleInfo info, float squareSize, float depth) {
+    public List<Mesh> GenerateMesh (MapRegion region, IsleInfo info, float squareSize, float depth) {
         
-        squareGrid = new SquareGrid (map, info.id, squareSize, info.offset);
+        squareGrid = new SquareGrid (region, squareSize);
         vertices.Clear ();
         triangles.Clear ();
-        triangleDictionary.Clear ();
-        outlines = new List<List<int>> ();
-        checkedVertices.Clear ();
+
+        meshRegion = new MeshRegion ();
 
         for (int x = 0; x < squareGrid.squares.GetLength (0); x++) {
             for (int y = 0; y < squareGrid.squares.GetLength (1); y++) {
@@ -32,8 +29,7 @@ public class IslandMeshGenerator : MonoBehaviour {
         surfaceMesh.vertices = vertices.ToArray ();
         surfaceMesh.triangles = triangles.ToArray ();
         surfaceMesh.RecalculateNormals ();
-
-
+        
         Mesh undersideMesh = new Mesh ();
         triangles.Reverse ();
         undersideMesh.vertices = vertices.ToArray ();
@@ -43,19 +39,20 @@ public class IslandMeshGenerator : MonoBehaviour {
         meshList.Add (surfaceMesh);
         meshList.Add (CreateWallMesh (depth));
         meshList.Add (undersideMesh);
-
-        info.outlines = outlines;
+        
+        info.surfaceMeshRegion = meshRegion;
         return meshList;
     }
 
     Mesh CreateWallMesh(float wallHeight) {
+        meshRegion.Vertices = vertices;
+        meshRegion.CalculateMeshOutlines ();
+
         List<Vector3> wallVertices = new List<Vector3> ();
         List<int> wallTriangles = new List<int> ();
         Mesh wallMesh = new Mesh ();
 
-        CalculateMeshOutlines ();
-
-        foreach (List<int> outline in outlines) {
+        foreach (List<int> outline in meshRegion.outlines) {
             for (int i = 0; i < outline.Count - 1; i++) {
                 int startIndex = wallVertices.Count;
                 wallVertices.Add (vertices[outline[i]]);        // left
@@ -137,10 +134,12 @@ public class IslandMeshGenerator : MonoBehaviour {
             // 4 points
             case 15:
                 MeshFromPoints (square.topLeft, square.topRight, square.bottomRight, square.bottomLeft);
-                checkedVertices.Add (square.topLeft.vertexIndex);
-                checkedVertices.Add (square.topRight.vertexIndex);
-                checkedVertices.Add (square.bottomRight.vertexIndex);
-                checkedVertices.Add (square.bottomLeft.vertexIndex);
+
+                // for optimization of MeshRegion calculating outlines
+                meshRegion.CheckVertex (square.topLeft.vertexIndex);
+                meshRegion.CheckVertex (square.topRight.vertexIndex);
+                meshRegion.CheckVertex (square.bottomRight.vertexIndex);
+                meshRegion.CheckVertex (square.bottomLeft.vertexIndex);
                 break;
         }
     }
@@ -177,81 +176,8 @@ public class IslandMeshGenerator : MonoBehaviour {
         triangles.Add (c.vertexIndex);
 
         Triangle triangle = new Triangle (a.vertexIndex, b.vertexIndex, c.vertexIndex);
-        AddTriangleToDictionary (triangle.vertices[0], triangle);
-        AddTriangleToDictionary (triangle.vertices[1], triangle);
-        AddTriangleToDictionary (triangle.vertices[2], triangle);
-    }
-
-    void AddTriangleToDictionary (int vertexIndexKey, Triangle triangle) {
-        if(triangleDictionary.ContainsKey(vertexIndexKey)) {
-            triangleDictionary[vertexIndexKey].Add (triangle);
-        } else {
-            List<Triangle> triangleList = new List<Triangle> ();
-            triangleList.Add (triangle);
-            triangleDictionary.Add (vertexIndexKey, triangleList);
-        }
-    }
-
-    void CalculateMeshOutlines() {
-        for(int vertexIndex = 0; vertexIndex < vertices.Count; vertexIndex++) {
-            if(!checkedVertices.Contains(vertexIndex)) {
-                int nextOutlineVertex = GetConnectedOutlineVertex (vertexIndex);
-                if(nextOutlineVertex != -1) {
-                    checkedVertices.Add (vertexIndex);
-
-                    List<int> newOutline = new List<int> ();
-                    newOutline.Add (vertexIndex);
-                    outlines.Add (newOutline);
-                    FollowOutline (nextOutlineVertex, outlines.Count - 1);
-                    outlines[outlines.Count - 1].Add (vertexIndex);
-                }
-            }
-        }
-    }
-
-    void FollowOutline(int vertexIndex, int outlineIndex) {
-        outlines[outlineIndex].Add (vertexIndex);
-        checkedVertices.Add (vertexIndex);
-
-        int nextOutlineVertex = GetConnectedOutlineVertex (vertexIndex);
-        if (nextOutlineVertex != -1) {
-            FollowOutline (nextOutlineVertex, outlineIndex);
-        }
-    }
-
-    int GetConnectedOutlineVertex(int vertexIndex) {
-        List<Triangle> trianglesContainingVertex = triangleDictionary[vertexIndex];
-
-        for (int i = 0; i < trianglesContainingVertex.Count; i++) {
-            Triangle triangle = trianglesContainingVertex[i];
-
-            for(int vert = 0; vert < 3; vert++) {
-                int nextVertex = triangle.vertices[vert];
-                if (vertexIndex != nextVertex && !checkedVertices.Contains(nextVertex)) {
-                    if (IsOutlineEdge (vertexIndex, nextVertex)) {
-                        return nextVertex;
-                    }
-                }
-            }
-        }
-
-        return -1;
-    }
-
-    bool IsOutlineEdge(int vertexA, int vertexB) {
-        // Check whether an edge from vertexA and vertexB shared more than one triangle
-        List<Triangle> trianglesContainingVertexA = triangleDictionary[vertexA];
-        int sharedTriangleCount = 0;
-
-        for(int i = 0; i < trianglesContainingVertexA.Count; i++) {
-            if(trianglesContainingVertexA[i].Contains(vertexB)) {
-                sharedTriangleCount++;
-                if(sharedTriangleCount > 1) {
-                    break;
-                }
-            }
-        }
-
-        return sharedTriangleCount == 1;
+        meshRegion.AddTriangleToDictionary (triangle.vertices[0], triangle);
+        meshRegion.AddTriangleToDictionary (triangle.vertices[1], triangle);
+        meshRegion.AddTriangleToDictionary (triangle.vertices[2], triangle);
     }
 }
