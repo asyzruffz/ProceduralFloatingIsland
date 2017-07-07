@@ -58,7 +58,7 @@ public class IslandGenerator : MonoBehaviour {
         if (shouldElevate) {
 			int highestPeak = 0;
             foreach (IsleInfo island in islands) {
-				int peak = island.surfaceMeshRegion.CalculateGradientMap ();
+				int peak = island.surfaceMeshRegion.localPeak;
 				highestPeak = peak > highestPeak ? peak : highestPeak;
             }
 			foreach (IsleInfo island in islands) {
