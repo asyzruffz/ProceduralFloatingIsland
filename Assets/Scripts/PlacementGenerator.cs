@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class PlacementGenerator : MonoBehaviour {
@@ -8,7 +9,25 @@ public class PlacementGenerator : MonoBehaviour {
     public float probability = 50;
 	public GameObject[] items;
 
-	public void GeneratePlacement (List<IsleInfo> islands, ref System.Random randomizer) {
+    public void GeneratePlacements (List<IsleInfo> islands) {
+        foreach (IsleInfo island in islands) {
+            List<int> outline = island.surfaceMeshRegion.outlines.First ();
+
+            int skip = 10;
+            if (outline.Count > skip) {
+                for (int node = 0; node < outline.Count; node += skip) {
+                    int randPosIndex = Random.Range (node, Mathf.Min(node + skip, outline.Count));
+
+                    int vertIndex = outline[randPosIndex];
+                    Vector3 pos = island.surfaceMeshRegion.Vertices[vertIndex];
+                    GameObject objPlaced = Instantiate (items[0], island.gameObject.transform);
+                    objPlaced.transform.localPosition = pos;
+                }
+            }
+        }
+    }
+
+    public void GenerateTrees (List<IsleInfo> islands, ref System.Random randomizer) {
         GameObject holder = new GameObject ("Decor");
         holder.transform.parent = transform;
 
@@ -27,9 +46,9 @@ public class PlacementGenerator : MonoBehaviour {
 
                 Vector3 pos = mf.transform.TransformPoint ((p1 + p2 + p3) / 3);
 
-                Vector3 n1 = verts[indices[i++]];
-                Vector3 n2 = verts[indices[i++]];
-                Vector3 n3 = verts[indices[i++]];
+                //Vector3 n1 = verts[indices[i++]];
+                //Vector3 n2 = verts[indices[i++]];
+                //Vector3 n3 = verts[indices[i++]];
 
                 //Vector3 rot = mf.transform.TransformDirection ((n1 + n2 + n3) / 3);
 

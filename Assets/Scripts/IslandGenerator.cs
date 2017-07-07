@@ -69,8 +69,10 @@ public class IslandGenerator : MonoBehaviour {
 
 		PlacementGenerator placement = GetComponent<PlacementGenerator> ();
 		if (placement && decorateTerrain) {
-			placement.GeneratePlacement (islands, ref pseudoRandom);
-		}
+			placement.GenerateTrees (islands, ref pseudoRandom);
+		} else if (placement) {
+            placement.GeneratePlacements (islands);
+        }
 
 		if (flatShading) {
             foreach (IsleInfo island in islands) {
@@ -93,7 +95,7 @@ public class IslandGenerator : MonoBehaviour {
         var childList = transform.Cast<Transform> ().ToList ();
         foreach (Transform island in childList) {
 #if UNITY_EDITOR
-			////////////////////////////////////////////////////////////  for debugging, onnly for in editor
+			////////////////////////////////////////////////////////////  for debugging, only for in editor
 			if (!Application.isPlaying) {                           ////
                 UnityEditor.EditorApplication.delayCall += () =>    ////
                 {                                                   ////
