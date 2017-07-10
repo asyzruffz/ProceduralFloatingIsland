@@ -206,4 +206,19 @@ public class IslandGenerator : MonoBehaviour {
             islandData.OnValuesUpdated += OnValuesUpdated;
         }
     }
+
+    void OnDrawGizmos() {
+        if (map != null) {
+            int width = map.spots.GetLength (0);
+            int length = map.spots.GetLength (1);
+
+            for (int x = 0; x < width; x++) {
+                for (int y = 0; y < length; y++) {
+                    Gizmos.color = (map.spots[x, y].fillValue == 1) ? Color.black : Color.white;
+                    Vector3 pos = new Vector3 (-width / 2.0f + x + 0.5f, 150, -length / 2.0f + y + 0.5f) * islandData.tileSize;
+                    Gizmos.DrawCube (pos, Vector3.one * islandData.tileSize);
+                }
+            }
+        }
+    }
 }
