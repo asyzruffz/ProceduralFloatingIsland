@@ -47,8 +47,11 @@ public class IslandGenerator : MonoBehaviour {
         // Smooth the map 5 times
 		map.SmoothMap (5);
 
-        // Create separate islands
-        PartitionIslands ();
+		// Find strategic locations
+		List<MapRegion> regions = map.GetRegions ();
+
+		// Create separate islands
+		PartitionIslands (regions);
 
         if (shouldElevate) {
 			int highestPeak = 0;
@@ -87,7 +90,7 @@ public class IslandGenerator : MonoBehaviour {
         }
     }
 	
-    void PartitionIslands() {
+    void PartitionIslands (List<MapRegion> islandRegions) {
         // Based on regions, create separate child GameObject for each island
 
         // Destroy all the previous islands
@@ -114,8 +117,7 @@ public class IslandGenerator : MonoBehaviour {
 #endif
 		}
 
-		List<MapRegion> islandRegions = map.GetRegions ();
-        IslandMeshGenerator meshGen = GetComponent<IslandMeshGenerator> ();
+		IslandMeshGenerator meshGen = GetComponent<IslandMeshGenerator> ();
 
         int islandCount = 1;
         foreach(MapRegion region in islandRegions) {
