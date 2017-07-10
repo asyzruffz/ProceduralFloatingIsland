@@ -39,7 +39,11 @@ public class IslandGenerator : MonoBehaviour {
         int seedHash = seed.GetHashCode ();
         System.Random pseudoRandom = new System.Random (seedHash);
 
-		map = new LandMap (islandData.maxWidth, islandData.maxHeight);
+        for (int i = 0; i < randCol.Length; i++) {
+            randCol[i] = Random.ColorHSV (0, 1, 0, 1, 0.5f, 1);
+        }
+
+        map = new LandMap (islandData.maxWidth, islandData.maxHeight);
 
 		// Fill the map randomly with 0s and 1s based on percentage fill
 		map.RandomFillMap (ref pseudoRandom, islandData.randomFillPercent);
@@ -207,6 +211,8 @@ public class IslandGenerator : MonoBehaviour {
         }
     }
 
+    Color[] randCol = new Color[20];
+
     void OnDrawGizmos() {
         if (map != null) {
             int width = map.spots.GetLength (0);
@@ -214,7 +220,7 @@ public class IslandGenerator : MonoBehaviour {
 
             for (int x = 0; x < width; x++) {
                 for (int y = 0; y < length; y++) {
-                    Gizmos.color = (map.spots[x, y].fillValue == 1) ? Color.black : Color.white;
+                    Gizmos.color = map.spots[x, y].areaValue == 0 ? Color.white : randCol[Mathf.Max(0, (map.spots[x, y].areaValue - 1) % 20)];
                     Vector3 pos = new Vector3 (-width / 2.0f + x + 0.5f, 150, -length / 2.0f + y + 0.5f) * islandData.tileSize;
                     Gizmos.DrawCube (pos, Vector3.one * islandData.tileSize);
                 }

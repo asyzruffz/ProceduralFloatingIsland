@@ -133,17 +133,19 @@ public class LandMap {
 		// K-means cluster algorithm to separate locations in the regions
 
 		foreach (MapRegion region in regions) {
-			int k = Mathf.RoundToInt (Mathf.Sqrt (region.turf.Count / 8.0f));
+			int k = Mathf.RoundToInt (Mathf.Sqrt (region.turf.Count / 16.0f));
+            k = Mathf.Max (1, k);
 			Debug.Log (k + " centroid(s)");
 			
 			Vector2[] centroids = new Vector2[k];
 			for (int i = 0; i < k; i++) {
 				// Assign centroid to first three data points
-				centroids[i] = region.turf[i].ToVector2 ();
+				centroids[i] = region.turf[i * (region.turf.Count / k)].ToVector2 ();
 			}
 
 			// Loop until converged
 			int changes = -1;
+            int iter = 0;
 			while (changes != 0) {
 				changes = 0;
 
@@ -169,14 +171,16 @@ public class LandMap {
 				Vector2[] cumulativeCentroids = new Vector2[k];
 				int[] frequency = new int[k];
 				foreach (Coord tile in region.turf) {
-					cumulativeCentroids[spots[tile.x, tile.y].areaValue - 1] += tile.ToVector2 ();
-					frequency[spots[tile.x, tile.y].areaValue - 1]++;
+					cumulativeCentroids[Mathf.Max (0, spots[tile.x, tile.y].areaValue - 1)] += tile.ToVector2 ();
+					frequency[Mathf.Max(0, spots[tile.x, tile.y].areaValue - 1)]++;
 				}
 
 				for (int i = 0; i < k; i++) {
 					centroids[i] = cumulativeCentroids[i] / frequency[i];
 				}
+                iter++;
 			}
+            Debug.Log ("Iteration: " + iter);
 		}
 	}
 	
