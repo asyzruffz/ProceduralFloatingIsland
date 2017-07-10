@@ -131,9 +131,11 @@ public class LandMap {
 	// Called by GetRegions ()
 	void ClusterLocationsInRegions (ref List<MapRegion> regions) {
 		// K-means cluster algorithm to separate locations in the regions
-		int k = 3;
 
 		foreach (MapRegion region in regions) {
+			int k = Mathf.RoundToInt (Mathf.Sqrt (region.turf.Count / 8.0f));
+			Debug.Log (k + " centroid(s)");
+			
 			Vector2[] centroids = new Vector2[k];
 			for (int i = 0; i < k; i++) {
 				// Assign centroid to first three data points
@@ -155,7 +157,7 @@ public class LandMap {
 						float currDistToCentroid = Vector2.SqrMagnitude (centroids[i] - tilePos);
 						if (currDistToCentroid < distanceToCentroid) {
 							distanceToCentroid = currDistToCentroid;
-							spots[tile.x, tile.y].areaValue = i;
+							spots[tile.x, tile.y].areaValue = i + 1;
 						}
 					}
 
@@ -167,8 +169,8 @@ public class LandMap {
 				Vector2[] cumulativeCentroids = new Vector2[k];
 				int[] frequency = new int[k];
 				foreach (Coord tile in region.turf) {
-					cumulativeCentroids[spots[tile.x, tile.y].areaValue] += tile.ToVector2 ();
-					frequency[spots[tile.x, tile.y].areaValue]++;
+					cumulativeCentroids[spots[tile.x, tile.y].areaValue - 1] += tile.ToVector2 ();
+					frequency[spots[tile.x, tile.y].areaValue - 1]++;
 				}
 
 				for (int i = 0; i < k; i++) {
