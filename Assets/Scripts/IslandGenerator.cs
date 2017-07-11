@@ -18,6 +18,7 @@ public class IslandGenerator : MonoBehaviour {
     public bool flatShading;
     public bool shouldElevate;
     public bool decorateTerrain;
+    public bool debug;
 
     [Header ("Data")]
     public IslandData islandData;
@@ -214,7 +215,7 @@ public class IslandGenerator : MonoBehaviour {
     Color[] randCol = new Color[20];
 
     void OnDrawGizmos() {
-        if (map != null) {
+        if (debug && map != null) {
             int width = map.spots.GetLength (0);
             int length = map.spots.GetLength (1);
 

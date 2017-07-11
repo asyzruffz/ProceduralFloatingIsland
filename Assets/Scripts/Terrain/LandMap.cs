@@ -135,7 +135,7 @@ public class LandMap {
 		foreach (MapRegion region in regions) {
 			int k = Mathf.RoundToInt (Mathf.Sqrt (region.turf.Count / 16.0f));
             k = Mathf.Max (1, k);
-			Debug.Log (k + " centroid(s)");
+			//Debug.Log (k + " centroid(s)");
 			
 			Vector2[] centroids = new Vector2[k];
 			for (int i = 0; i < k; i++) {
@@ -156,7 +156,8 @@ public class LandMap {
 					float distanceToCentroid = float.MaxValue;
 
 					for (int i = 0; i < k; i++) {
-						float currDistToCentroid = Vector2.SqrMagnitude (centroids[i] - tilePos);
+                        float currDistToCentroid = Vector2.SqrMagnitude (centroids[i] - tilePos);
+                        //currDistToCentroid += ObtainDistancePenalty (tile, new Coord (Mathf.RoundToInt(centroids[i].x), Mathf.RoundToInt (centroids[i].y)), 2);
 						if (currDistToCentroid < distanceToCentroid) {
 							distanceToCentroid = currDistToCentroid;
 							spots[tile.x, tile.y].areaValue = i + 1;
@@ -180,10 +181,42 @@ public class LandMap {
 				}
                 iter++;
 			}
-            Debug.Log ("Iteration: " + iter);
+            //Debug.Log ("Iteration: " + iter);
 		}
 	}
-	
+
+    // Called by ClusterLocationsInRegions ()
+    float ObtainDistancePenalty (Coord a, Coord b, float penalty) {
+        // Using line drawing algorithm to find obstacle along the line
+
+        int h = b.y - a.y;
+        int w = b.x - a.x;
+
+        int incrIfFNegative = 2 * h;
+        int incrIfFNotNegative = 2 * (h - w);
+
+        int F = 2 * h - w;
+        float totalPenalty = 0;
+
+        int y = a.y;
+        for (int x = a.x; x <= b.x; x++) {
+            // Add penalty if there is a hole along the line
+            if (!spots[x, y].filled) {
+                totalPenalty += penalty;
+            }
+
+            if (F < 0)
+                F += incrIfFNegative;
+            else {
+                y++;
+                F += incrIfFNotNegative;
+            }
+        }
+
+        if (totalPenalty > 0) Debug.Log ("Penalty: " + totalPenalty);
+        return totalPenalty;
+    }
+
 	public bool IsInMapRange (int x, int y) {
 		return x >= 0 && y >= 0 && x < width && y < length;
 	}
