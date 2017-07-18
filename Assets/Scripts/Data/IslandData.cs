@@ -21,4 +21,5 @@ public class IslandData : UpdatableData {
     public Material grassMaterial;
     public Material wallMaterial;
     public Material dirtMaterial;
+    public Material invisibleMaterial;
 }

@@ -9,7 +9,7 @@ public class IslandMeshGenerator : MonoBehaviour {
     List<int> triangles = new List<int> ();
     IsleMeshDetail meshDetail;
 
-    public List<Mesh> GenerateMesh (MapRegion region, IsleInfo info, float squareSize, float depth) {
+    public List<Mesh> GenerateIslandMesh (MapRegion region, IsleInfo info, float squareSize, float depth) {
         
         squareGrid = new SquareGrid (region, squareSize);
         vertices.Clear ();
@@ -42,6 +42,26 @@ public class IslandMeshGenerator : MonoBehaviour {
         
         info.surfaceMeshDetail = meshDetail;
         return meshList;
+    }
+
+    public Mesh GenerateRegionMesh (MapRegion region, float squareSize) {
+
+        squareGrid = new SquareGrid (region, squareSize);
+        vertices.Clear ();
+        triangles.Clear ();
+
+        for (int x = 0; x < squareGrid.squares.GetLength (0); x++) {
+            for (int y = 0; y < squareGrid.squares.GetLength (1); y++) {
+                TriangulateSquare (squareGrid.squares[x, y]);
+            }
+        }
+
+        Mesh regionMesh = new Mesh ();
+        regionMesh.vertices = vertices.ToArray ();
+        regionMesh.triangles = triangles.ToArray ();
+        regionMesh.RecalculateNormals ();
+
+        return regionMesh;
     }
 
     Mesh CreateWallMesh(float wallHeight) {

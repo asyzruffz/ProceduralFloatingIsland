@@ -24,8 +24,9 @@ public class IslandGenerator : MonoBehaviour {
     public IslandData islandData;
     public NoiseData surfaceNoiseData;
     public NoiseData undersideNoiseData;
-	
-	LandMap map;
+
+    IslandMeshGenerator meshGen;
+    LandMap map;
     List<IsleInfo> islands = new List<IsleInfo>();
 
     void Start () {
@@ -52,11 +53,13 @@ public class IslandGenerator : MonoBehaviour {
         // Smooth the map 5 times
 		map.SmoothMap (5);
 
-		// Find strategic locations
-		List<MapRegion> regions = map.GetRegions ();
+        meshGen = GetComponent<IslandMeshGenerator> ();
+
+        // Find separated regions to form an island
+        List<MapRegion> regions = map.GetRegions ();
 
 		// Create separate islands
-		PartitionIslands (regions);
+		SeparateIslands (regions);
 
         if (shouldElevate) {
 			int highestPeak = 0;
@@ -72,6 +75,10 @@ public class IslandGenerator : MonoBehaviour {
             elevGen.elevateSurface (islands, islandData.altitude, islandData.mountainCurve, surfaceNoiseData, seedHash, 0); // elevate hills on the surface
             elevGen.elevateSurface (islands, -islandData.stalactite, islandData.bellyCurve, undersideNoiseData, seedHash, 2); // extend stakes at surface below
         }
+
+        // Find strategic locations in each region
+        List<MapRegion> subRegions = map.GetSubRegions (regions);
+        SpliceTerritory (subRegions);
 
         SetColliders ();
 
@@ -95,7 +102,7 @@ public class IslandGenerator : MonoBehaviour {
         }
     }
 	
-    void PartitionIslands (List<MapRegion> islandRegions) {
+    void SeparateIslands (List<MapRegion> islandRegions) {
         // Based on regions, create separate child GameObject for each island
 
         // Destroy all the previous islands
@@ -122,8 +129,6 @@ public class IslandGenerator : MonoBehaviour {
 #endif
 		}
 
-		IslandMeshGenerator meshGen = GetComponent<IslandMeshGenerator> ();
-
         int islandCount = 1;
         foreach(MapRegion region in islandRegions) {
             IsleInfo isle = new IsleInfo ();
@@ -144,7 +149,7 @@ public class IslandGenerator : MonoBehaviour {
             GameObject underside = AddChildMesh ("Underside", isle.gameObject.transform);
             underside.transform.position += Vector3.up * -islandData.depth;
             
-            List<Mesh> meshes = meshGen.GenerateMesh (region, isle, islandData.tileSize, islandData.depth);
+            List<Mesh> meshes = meshGen.GenerateIslandMesh (region, isle, islandData.tileSize, islandData.depth);
             
             // Mesh for surface
             surface.GetComponent<MeshFilter> ().mesh = meshes[0];
@@ -166,8 +171,8 @@ public class IslandGenerator : MonoBehaviour {
     GameObject AddChildMesh(string name, Transform parent, bool addCollider = false) {
         GameObject child = new GameObject (name);
         child.transform.parent = parent;
-        child.transform.localRotation = Quaternion.identity;
         child.transform.localPosition = Vector3.zero;
+        child.transform.localRotation = Quaternion.identity;
 
         child.AddComponent<MeshFilter> ();
         child.AddComponent<MeshRenderer> ();
@@ -179,7 +184,31 @@ public class IslandGenerator : MonoBehaviour {
         return child;
     }
 
-	void SetColliders () {
+    void SpliceTerritory (List<MapRegion> subRegions) {
+        GameObject territories = new GameObject ("Territories");
+        territories.transform.parent = transform;
+        territories.transform.localPosition = Vector3.zero;
+        territories.transform.localRotation = Quaternion.identity;
+
+        int regionCount = 1;
+        foreach (MapRegion region in subRegions) {
+            GameObject regionObject = AddChildMesh ("Region " + regionCount, territories.transform);
+            regionObject.transform.localPosition = region.GetCentre () * islandData.tileSize;
+
+            regionObject.GetComponent<MeshFilter> ().mesh = meshGen.GenerateRegionMesh (region, islandData.tileSize);
+            // TODO  Elevate region mesh
+            regionObject.GetComponent<MeshRenderer> ().material = islandData.invisibleMaterial;
+
+            cakeslice.Outline outlineComponent = regionObject.AddComponent<cakeslice.Outline> ();
+            outlineComponent.color = regionCount % 3;
+
+            regionCount++;
+        }
+
+        territories.AddComponent<CycleRegionOutline> ();
+    }
+
+    void SetColliders () {
 		foreach (IsleInfo isle in islands) {
 			MeshCollider[] colliders = isle.gameObject.GetComponentsInChildren<MeshCollider> ();
 			for (int i = 0; i < colliders.Length; i++) {
@@ -221,7 +250,7 @@ public class IslandGenerator : MonoBehaviour {
 
             for (int x = 0; x < width; x++) {
                 for (int y = 0; y < length; y++) {
-                    Gizmos.color = map.spots[x, y].areaValue == 0 ? Color.white : randCol[Mathf.Max(0, (map.spots[x, y].areaValue - 1) % 20)];
+                    Gizmos.color = !map.spots[x, y].filled ? Color.white : randCol[(map.spots[x, y].areaValue % 20)];
                     Vector3 pos = new Vector3 (-width / 2.0f + x + 0.5f, 150, -length / 2.0f + y + 0.5f) * islandData.tileSize;
                     Gizmos.DrawCube (pos, Vector3.one * islandData.tileSize);
                 }

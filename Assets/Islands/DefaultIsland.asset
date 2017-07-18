@@ -70,3 +70,4 @@ MonoBehaviour:
   grassMaterial: {fileID: 2100000, guid: bc6af6cb203edf64eb6deed573069006, type: 2}
   wallMaterial: {fileID: 2100000, guid: 16e13b2712122104fbc36cce44b59899, type: 2}
   dirtMaterial: {fileID: 2100000, guid: 16e13b2712122104fbc36cce44b59899, type: 2}
+  invisibleMaterial: {fileID: 2100000, guid: 8c59477d3c3621c45aa71d78df162759, type: 2}

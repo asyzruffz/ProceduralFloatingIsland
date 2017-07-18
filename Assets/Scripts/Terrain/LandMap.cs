@@ -9,7 +9,6 @@ public class LandMap {
 
 	int width;
 	int length;
-	int regionId = 1;
 
 	public LandMap (int width, int length) {
 		this.width = width;
@@ -79,20 +78,16 @@ public class LandMap {
 			for (int y = 0; y < length; y++) {
 				if (!mapFlags[x, y] && spots[x, y].filled) {
 					MapRegion newRegion = new MapRegion(GetRegionTiles (x, y), width, length);
-					newRegion.id = regionId;
 
 					foreach (Coord tile in newRegion.turf) {
 						mapFlags[tile.x, tile.y] = true;
-						spots[tile.x, tile.y].areaValue = regionId;
 					}
 
 					regions.Add (newRegion);
-					regionId++;
 				}
 			}
 		}
 
-		ClusterLocationsInRegions (ref regions);
 		return regions;
 	}
 
@@ -128,11 +123,38 @@ public class LandMap {
 		return tiles;
 	}
 
-	// Called by GetRegions ()
-	void ClusterLocationsInRegions (ref List<MapRegion> regions) {
-		// K-means cluster algorithm to separate locations in the regions
+    public List<MapRegion> GetSubRegions (List<MapRegion> regions) {
+        int subRegSize = ClusterLocationsInRegions (regions);
 
-		foreach (MapRegion region in regions) {
+        // Initialize list to prepare subregions
+        List<List<Coord>> subRegionTiles = new List<List<Coord>> ();
+        for (int i = 0; i < subRegSize; i++) {
+            subRegionTiles.Add (new List<Coord> ());
+        }
+
+        // Fill the lists
+        for (int x = 0; x < width; x++) {
+            for (int y = 0; y < length; y++) {
+                if (spots[x, y].filled) {
+                    subRegionTiles[spots[x, y].areaValue].Add (new Coord (x, y));
+                }
+            }
+        }
+
+        List<MapRegion> subRegions = new List<MapRegion> ();
+        for (int i = 0; i < subRegSize; i++) {
+            subRegions.Add (new MapRegion (subRegionTiles[i], width, length));
+        }
+
+        return subRegions;
+    }
+
+    // Called by GetSubRegions (), retruns number of subregions
+    int ClusterLocationsInRegions (List<MapRegion> regions) {
+        // K-means cluster algorithm to separate locations in the regions
+
+        int regionId = 0;
+        foreach (MapRegion region in regions) {
 			int k = Mathf.RoundToInt (Mathf.Sqrt (region.turf.Count / 16.0f));
             k = Mathf.Max (1, k);
 			//Debug.Log (k + " centroid(s)");
@@ -160,7 +182,7 @@ public class LandMap {
                         //currDistToCentroid += ObtainDistancePenalty (tile, new Coord (Mathf.RoundToInt(centroids[i].x), Mathf.RoundToInt (centroids[i].y)), 2);
 						if (currDistToCentroid < distanceToCentroid) {
 							distanceToCentroid = currDistToCentroid;
-							spots[tile.x, tile.y].areaValue = i + 1;
+							spots[tile.x, tile.y].areaValue = regionId + i;
 						}
 					}
 
@@ -172,8 +194,8 @@ public class LandMap {
 				Vector2[] cumulativeCentroids = new Vector2[k];
 				int[] frequency = new int[k];
 				foreach (Coord tile in region.turf) {
-					cumulativeCentroids[Mathf.Max (0, spots[tile.x, tile.y].areaValue - 1)] += tile.ToVector2 ();
-					frequency[Mathf.Max(0, spots[tile.x, tile.y].areaValue - 1)]++;
+					cumulativeCentroids[Mathf.Max (0, spots[tile.x, tile.y].areaValue - regionId)] += tile.ToVector2 ();
+					frequency[Mathf.Max(0, spots[tile.x, tile.y].areaValue - regionId)]++;
 				}
 
 				for (int i = 0; i < k; i++) {
@@ -182,8 +204,11 @@ public class LandMap {
                 iter++;
 			}
             //Debug.Log ("Iteration: " + iter);
+            regionId += k;
 		}
-	}
+
+        return regionId;
+    }
 
     // Called by ClusterLocationsInRegions ()
     /*float ObtainDistancePenalty (Coord a, Coord b, float penalty) {
@@ -217,7 +242,7 @@ public class LandMap {
         return totalPenalty;
     }*/
 
-	public bool IsInMapRange (int x, int y) {
+    public bool IsInMapRange (int x, int y) {
 		return x >= 0 && y >= 0 && x < width && y < length;
 	}
 
