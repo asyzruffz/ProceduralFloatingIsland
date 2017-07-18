@@ -7,7 +7,7 @@ public class IslandMeshGenerator : MonoBehaviour {
     SquareGrid squareGrid;
     List<Vector3> vertices = new List<Vector3> ();
     List<int> triangles = new List<int> ();
-    MeshRegion meshRegion;
+    IsleMeshDetail meshDetail;
 
     public List<Mesh> GenerateMesh (MapRegion region, IsleInfo info, float squareSize, float depth) {
         
@@ -15,7 +15,7 @@ public class IslandMeshGenerator : MonoBehaviour {
         vertices.Clear ();
         triangles.Clear ();
 
-        meshRegion = new MeshRegion ();
+        meshDetail = new IsleMeshDetail ();
 
         for (int x = 0; x < squareGrid.squares.GetLength (0); x++) {
             for (int y = 0; y < squareGrid.squares.GetLength (1); y++) {
@@ -40,19 +40,19 @@ public class IslandMeshGenerator : MonoBehaviour {
         meshList.Add (CreateWallMesh (depth));
         meshList.Add (undersideMesh);
         
-        info.surfaceMeshRegion = meshRegion;
+        info.surfaceMeshDetail = meshDetail;
         return meshList;
     }
 
     Mesh CreateWallMesh(float wallHeight) {
-        meshRegion.Vertices = vertices;
-        meshRegion.CalculateGradientMap ();
+        meshDetail.Vertices = vertices;
+        meshDetail.CalculateGradientMap ();
 
         List<Vector3> wallVertices = new List<Vector3> ();
         List<int> wallTriangles = new List<int> ();
         Mesh wallMesh = new Mesh ();
         
-        foreach (List<int> outline in meshRegion.outlines) {
+        foreach (List<int> outline in meshDetail.outlines) {
             for (int i = 0; i < outline.Count - 1; i++) {
                 int startIndex = wallVertices.Count;
                 wallVertices.Add (vertices[outline[i]]);        // left
@@ -170,8 +170,8 @@ public class IslandMeshGenerator : MonoBehaviour {
         triangles.Add (c.vertexIndex);
 
         Triangle triangle = new Triangle (a.vertexIndex, b.vertexIndex, c.vertexIndex);
-        meshRegion.AddTriangleToDictionary (triangle.vertices[0], triangle);
-        meshRegion.AddTriangleToDictionary (triangle.vertices[1], triangle);
-        meshRegion.AddTriangleToDictionary (triangle.vertices[2], triangle);
+        meshDetail.AddTriangleToDictionary (triangle.vertices[0], triangle);
+        meshDetail.AddTriangleToDictionary (triangle.vertices[1], triangle);
+        meshDetail.AddTriangleToDictionary (triangle.vertices[2], triangle);
     }
 }

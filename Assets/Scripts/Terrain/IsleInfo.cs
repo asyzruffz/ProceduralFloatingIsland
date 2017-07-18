@@ -9,7 +9,7 @@ public class IsleInfo {
 
     public Vector3 offset;
     
-    public MeshRegion surfaceMeshRegion;
+    public IsleMeshDetail surfaceMeshDetail;
     
     public MeshFilter GetSurfaceMesh (int index) {
         MeshFilter[] meshFilter = gameObject.GetComponentsInChildren<MeshFilter> ();

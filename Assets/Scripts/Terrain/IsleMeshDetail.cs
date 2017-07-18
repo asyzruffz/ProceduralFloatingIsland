@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class MeshRegion {
+public class IsleMeshDetail {
 
     public List<List<int>> outlines = new List<List<int>> ();
     public Dictionary<int, float> gradientMap = new Dictionary<int, float> ();

@@ -186,7 +186,7 @@ public class LandMap {
 	}
 
     // Called by ClusterLocationsInRegions ()
-    float ObtainDistancePenalty (Coord a, Coord b, float penalty) {
+    /*float ObtainDistancePenalty (Coord a, Coord b, float penalty) {
         // Using line drawing algorithm to find obstacle along the line
 
         int h = b.y - a.y;
@@ -215,7 +215,7 @@ public class LandMap {
 
         if (totalPenalty > 0) Debug.Log ("Penalty: " + totalPenalty);
         return totalPenalty;
-    }
+    }*/
 
 	public bool IsInMapRange (int x, int y) {
 		return x >= 0 && y >= 0 && x < width && y < length;

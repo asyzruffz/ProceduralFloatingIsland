@@ -11,7 +11,7 @@ public class PlacementGenerator : MonoBehaviour {
 
     public void GeneratePlacements (List<IsleInfo> islands) {
         foreach (IsleInfo island in islands) {
-            List<int> outline = island.surfaceMeshRegion.outlines.First ();
+            List<int> outline = island.surfaceMeshDetail.outlines.First ();
 
             int skip = 10;
             if (outline.Count > skip) {
@@ -19,7 +19,7 @@ public class PlacementGenerator : MonoBehaviour {
                     int randPosIndex = Random.Range (node, Mathf.Min(node + skip, outline.Count));
 
                     int vertIndex = outline[randPosIndex];
-                    Vector3 pos = island.surfaceMeshRegion.Vertices[vertIndex];
+                    Vector3 pos = island.surfaceMeshDetail.Vertices[vertIndex];
                     GameObject objPlaced = Instantiate (items[0], island.gameObject.transform);
                     objPlaced.transform.localPosition = pos;
                 }
