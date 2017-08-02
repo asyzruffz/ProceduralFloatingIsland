@@ -77,8 +77,8 @@ public class IslandGenerator : MonoBehaviour {
         }
 
         // Find strategic locations in each region
-        List<MapRegion> subRegions = map.GetSubRegions (regions);
-        SpliceTerritory (subRegions);
+        List<MapRegion> zones = map.GetZones (regions);
+        SpliceTerritory (zones);
 
         SetColliders ();
 
@@ -184,22 +184,22 @@ public class IslandGenerator : MonoBehaviour {
         return child;
     }
 
-    void SpliceTerritory (List<MapRegion> subRegions) {
+    void SpliceTerritory (List<MapRegion> zones) {
         GameObject territories = new GameObject ("Territories");
         territories.transform.parent = transform;
         territories.transform.localPosition = Vector3.zero;
         territories.transform.localRotation = Quaternion.identity;
 
         int regionCount = 1;
-        foreach (MapRegion region in subRegions) {
-            GameObject regionObject = AddChildMesh ("Region " + regionCount, territories.transform);
-            regionObject.transform.localPosition = region.GetCentre () * islandData.tileSize;
+        foreach (MapRegion zone in zones) {
+            GameObject zoneObject = AddChildMesh ("Zone " + regionCount, territories.transform);
+            zoneObject.transform.localPosition = zone.GetCentre () * islandData.tileSize;
 
-            regionObject.GetComponent<MeshFilter> ().mesh = meshGen.GenerateRegionMesh (region, islandData.tileSize);
+            zoneObject.GetComponent<MeshFilter> ().mesh = meshGen.GenerateZoneMesh (zone, islandData.tileSize);
             // TODO  Elevate region mesh
-            regionObject.GetComponent<MeshRenderer> ().material = islandData.invisibleMaterial;
+            zoneObject.GetComponent<MeshRenderer> ().material = islandData.invisibleMaterial;
 
-            cakeslice.Outline outlineComponent = regionObject.AddComponent<cakeslice.Outline> ();
+            cakeslice.Outline outlineComponent = zoneObject.AddComponent<cakeslice.Outline> ();
             outlineComponent.color = regionCount % 3;
 
             regionCount++;

@@ -123,30 +123,30 @@ public class LandMap {
 		return tiles;
 	}
 
-    public List<MapRegion> GetSubRegions (List<MapRegion> regions) {
-        int subRegSize = ClusterLocationsInRegions (regions);
+    public List<MapRegion> GetZones (List<MapRegion> regions) {
+        int zoneNum = ClusterLocationsInRegions (regions);
 
-        // Initialize list to prepare subregions
-        List<List<Coord>> subRegionTiles = new List<List<Coord>> ();
-        for (int i = 0; i < subRegSize; i++) {
-            subRegionTiles.Add (new List<Coord> ());
+        // Initialize list to prepare zones
+        List<List<Coord>> zoneTiles = new List<List<Coord>> ();
+        for (int i = 0; i < zoneNum; i++) {
+            zoneTiles.Add (new List<Coord> ());
         }
 
         // Fill the lists
         for (int x = 0; x < width; x++) {
             for (int y = 0; y < length; y++) {
                 if (spots[x, y].filled) {
-                    subRegionTiles[spots[x, y].areaValue].Add (new Coord (x, y));
+                    zoneTiles[spots[x, y].areaValue].Add (new Coord (x, y));
                 }
             }
         }
 
-        List<MapRegion> subRegions = new List<MapRegion> ();
-        for (int i = 0; i < subRegSize; i++) {
-            subRegions.Add (new MapRegion (subRegionTiles[i], width, length));
+        List<MapRegion> zones = new List<MapRegion> ();
+        for (int i = 0; i < zoneNum; i++) {
+            zones.Add (new MapRegion (zoneTiles[i], width, length));
         }
 
-        return subRegions;
+        return zones;
     }
 
     // Called by GetSubRegions (), retruns number of subregions

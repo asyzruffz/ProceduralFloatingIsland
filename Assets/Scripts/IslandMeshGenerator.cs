@@ -44,7 +44,7 @@ public class IslandMeshGenerator : MonoBehaviour {
         return meshList;
     }
 
-    public Mesh GenerateRegionMesh (MapRegion region, float squareSize) {
+    public Mesh GenerateZoneMesh (MapRegion region, float squareSize) {
 
         squareGrid = new SquareGrid (region, squareSize);
         vertices.Clear ();
