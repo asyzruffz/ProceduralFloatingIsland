@@ -28,6 +28,7 @@ public class IslandGenerator : MonoBehaviour {
     IslandMeshGenerator meshGen;
     LandMap map;
     List<IsleInfo> islands = new List<IsleInfo>();
+    List<SectorInfo> sectors = new List<SectorInfo> ();
 
     void Start () {
         GenerateIsland ();
@@ -87,6 +88,7 @@ public class IslandGenerator : MonoBehaviour {
 			placement.GenerateTrees (islands, ref pseudoRandom);
 		} else if (placement) {
             placement.GeneratePlacements (islands);
+            placement.GenerateSectorsContent (sectors, ref pseudoRandom);
         }
 
 		if (flatShading) {
@@ -190,19 +192,23 @@ public class IslandGenerator : MonoBehaviour {
         territories.transform.localPosition = Vector3.zero;
         territories.transform.localRotation = Quaternion.identity;
 
-        int regionCount = 1;
+        int zoneCount = 1;
         foreach (MapRegion zone in zones) {
-            GameObject zoneObject = AddChildMesh ("Zone " + regionCount, territories.transform);
-            zoneObject.transform.localPosition = zone.GetCentre () * islandData.tileSize;
+            SectorInfo sector = new SectorInfo ();
+            sector.id = zoneCount;
 
-            zoneObject.GetComponent<MeshFilter> ().mesh = meshGen.GenerateZoneMesh (zone, islandData.tileSize);
-            // TODO  Elevate region mesh
-            zoneObject.GetComponent<MeshRenderer> ().material = islandData.invisibleMaterial;
+            sector.gameObject = AddChildMesh ("Zone " + sector.id, territories.transform);
+            sector.gameObject.transform.localPosition = zone.GetCentre () * islandData.tileSize;
 
-            cakeslice.Outline outlineComponent = zoneObject.AddComponent<cakeslice.Outline> ();
-            outlineComponent.color = regionCount % 3;
+            sector.gameObject.GetComponent<MeshFilter> ().mesh = meshGen.GenerateZoneMesh (zone, islandData.tileSize);
+            sector.gameObject.GetComponent<MeshRenderer> ().material = islandData.invisibleMaterial;
+            // #TODO  Elevate region mesh
 
-            regionCount++;
+            cakeslice.Outline outlineComponent = sector.gameObject.AddComponent<cakeslice.Outline> ();
+            outlineComponent.color = zoneCount % 3;
+
+            sectors.Add (sector);
+            zoneCount++;
         }
 
         territories.AddComponent<CycleRegionOutline> ();

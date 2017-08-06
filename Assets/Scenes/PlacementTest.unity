@@ -8301,10 +8301,8 @@ MonoBehaviour:
   items:
   - {fileID: 106782, guid: 1d605f00ad99f2940b7ce236b8b85b1b, type: 2}
   - {fileID: 169886, guid: 932ba6a9fb6dff447bb4d3eaf88640fd, type: 2}
-  - {fileID: 126124, guid: 13b01f66b5834b54ab62e863b7018650, type: 2}
-  - {fileID: 143294, guid: 784735d69a6e7fe4aa1621e746da4280, type: 2}
-  - {fileID: 185402, guid: 479f85e594bb22c4bb41190a5adb6374, type: 2}
-  - {fileID: 120114, guid: cd19ed57c2e67c548ba0c6febfda6585, type: 2}
+  sectorTypes:
+  - {fileID: 11400000, guid: 485b46c3687921b4bbe5c701cfe145cf, type: 2}
 --- !u!114 &988232026
 MonoBehaviour:
   m_ObjectHideFlags: 0

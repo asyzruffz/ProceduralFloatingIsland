@@ -9,6 +9,26 @@ public class PlacementGenerator : MonoBehaviour {
     public float probability = 50;
 	public GameObject[] items;
 
+    public List<SectorArrangement> sectorTypes = new List<SectorArrangement> ();
+
+    public void GenerateSectorsContent (List<SectorInfo> sectors, ref System.Random randomizer) {
+        Debug.Log ("Sectors: " + sectors.Count);
+        RandomSample rndSample = new RandomSample (sectors.Count);
+
+        foreach (SectorArrangement sectorType in sectorTypes) {
+            int rndIndex = rndSample.Next (ref randomizer);
+            List<Vector3> verts = sectors[rndIndex].GetVertices ();
+
+            sectorType.Setup (verts, sectors[rndIndex].gameObject.transform);
+        }
+
+        string test = "";
+        while (!rndSample.IsEmpty ()) {
+            test += rndSample.Next (ref randomizer) + " ";
+        }
+        Debug.Log (test);
+    }
+
     public void GeneratePlacements (List<IsleInfo> islands) {
         foreach (IsleInfo island in islands) {
             List<int> outline = island.surfaceMeshDetail.outlines.First ();
