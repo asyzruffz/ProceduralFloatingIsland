@@ -16,5 +16,6 @@ public class SpawnPoint : SectorArrangement {
         base.Setup (points, parent);
 
         GameObject spawn = Instantiate (objectToSpawn, parent);
+        spawn.name = objectToSpawn.name;
     }
 }
