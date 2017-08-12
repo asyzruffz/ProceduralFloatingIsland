@@ -14,4 +14,6 @@ MonoBehaviour:
   description: Spawns player
   type: 1
   amount: 1
-  objectToSpawn: {fileID: 185402, guid: 479f85e594bb22c4bb41190a5adb6374, type: 2}
+  objectToSpawn: {fileID: 100000, guid: 5e9e851c0e142814dac026a256ba2ac0, type: 2}
+  offset: {x: 0, y: 2, z: 0}
+  childOfLevel: 0
