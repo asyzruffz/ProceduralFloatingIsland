@@ -29,11 +29,7 @@ public class IslandGenerator : MonoBehaviour {
     LandMap map;
     List<IsleInfo> islands = new List<IsleInfo>();
     List<SectorInfo> sectors = new List<SectorInfo> ();
-
-    void Start () {
-        GenerateIsland ();
-    }
-	
+    
     public void GenerateIsland () {
 		if (useRandomSeed) {
 			seed = System.DateTime.Now.ToString ();
