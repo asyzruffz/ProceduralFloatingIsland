@@ -1,20 +1,21 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.SceneManagement;
 
 public class FadeScreen : MonoBehaviour {
 
 	public float fadeTime = 1;
+    public bool playOnStart;
 
 	Image img;
 	float timer = 0;
-	bool startFading = true;
+	bool startFading = false;
     Color startColour;
     Color endColour;
 
-    void Start () {
+    void Awake () {
 		img = GetComponent<Image> ();
-	}
+        startFading = playOnStart;
+    }
 	
 	void Update () {
 		if (startFading) {
@@ -33,5 +34,9 @@ public class FadeScreen : MonoBehaviour {
 		startFading = true;
         startColour = img.color;
         endColour = colour;
+    }
+
+    public bool IsFading() {
+        return startFading;
     }
 }
