@@ -82,7 +82,8 @@ public class IslandGenerator : MonoBehaviour {
 		PlacementGenerator placement = GetComponent<PlacementGenerator> ();
 		if (placement && decorateTerrain) {
 			placement.GenerateTrees (islands, ref pseudoRandom);
-		} else if (placement) {
+            placement.GenerateSectorsContent (sectors, ref pseudoRandom);
+        } else if (placement) {
             placement.GeneratePlacements (islands);
             placement.GenerateSectorsContent (sectors, ref pseudoRandom);
         }

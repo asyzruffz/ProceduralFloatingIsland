@@ -6,6 +6,8 @@ public class LevelLoader : MonoBehaviour {
 
     public IslandGenerator islandGenerator;
 
+    public FadeScreen curtain;
+    
 	void Start () {
         islandGenerator.GenerateIsland ();
     }
