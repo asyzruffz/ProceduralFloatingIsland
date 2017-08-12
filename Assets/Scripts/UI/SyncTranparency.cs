@@ -4,6 +4,8 @@ using UnityEngine.UI;
 public class SyncTranparency : MonoBehaviour {
 
     public Image syncTarget;
+    [Range(0, 1)]
+    public float disappearAt = 0.5f;
 
     Image sourceImage;
 
@@ -12,6 +14,7 @@ public class SyncTranparency : MonoBehaviour {
     }
 	
 	void Update () {
-        syncTarget.color = new Color(syncTarget.color.r, syncTarget.color.g, syncTarget.color.b, sourceImage.color.a);
+        float alpha = Mathf.Clamp01 (Mathf.InverseLerp (disappearAt, 1, sourceImage.color.a));
+        syncTarget.color = new Color(syncTarget.color.r, syncTarget.color.g, syncTarget.color.b, alpha);
     }
 }

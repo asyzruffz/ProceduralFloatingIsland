@@ -15,5 +15,5 @@ MonoBehaviour:
   type: 1
   amount: 1
   objectToSpawn: {fileID: 100000, guid: 5e9e851c0e142814dac026a256ba2ac0, type: 2}
-  offset: {x: 0, y: 2, z: 0}
+  offset: {x: 0, y: 10, z: 0}
   childOfLevel: 0

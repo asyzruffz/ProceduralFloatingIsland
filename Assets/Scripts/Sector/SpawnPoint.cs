@@ -19,6 +19,6 @@ public class SpawnPoint : SectorArrangement {
 
         GameObject spawn = Instantiate (objectToSpawn, childOfLevel ? parent : null);
         spawn.name = objectToSpawn.name;
-        spawn.transform.localPosition = offset;
+        spawn.transform.localPosition = offset + (childOfLevel ? Vector3.zero : parent.position);
     }
 }

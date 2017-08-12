@@ -316,7 +316,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 797d5d57356ad41418a7da2d02e4291d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  curtain: {fileID: 1924375992}
 --- !u!4 &1111218119
 Transform:
   m_ObjectHideFlags: 0
@@ -514,3 +513,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   syncTarget: {fileID: 162234226}
+  disappearAt: 0.8

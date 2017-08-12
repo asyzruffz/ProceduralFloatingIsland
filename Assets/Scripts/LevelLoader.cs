@@ -3,11 +3,8 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class LevelLoader : MonoBehaviour {
-
-    public FadeScreen curtain;
-
+    
     AsyncOperation loadingOperation;
-    bool startFading = false;
     ExecutionTimer clock = new ExecutionTimer ();
 
     void Start () {
@@ -18,15 +15,11 @@ public class LevelLoader : MonoBehaviour {
     }
 	
 	void Update () {
-        if (startFading && !curtain.IsFading ()) {
-            Debug.Log ("Load with " + clock.Elapsed () + " seconds.");
-            startFading = false;
-            curtain.FadeToColour (Color.clear);
-        }
+        
 	}
 
     IEnumerator LoadGameLevelWithProgress (string levelName) {
-        yield return new WaitForSeconds (1);
+        yield return new WaitForSeconds (0.5f);
 
         loadingOperation = SceneManager.LoadSceneAsync (levelName);
         loadingOperation.allowSceneActivation = false;
@@ -34,11 +27,11 @@ public class LevelLoader : MonoBehaviour {
         while (!loadingOperation.isDone) {
             Debug.Log ("Progress " + (loadingOperation.progress * 100) + "%");
 
-            if (loadingOperation.progress >= 0.99f) {
-                startFading = true;
-                yield return new WaitForSeconds (curtain.fadeTime);
+            if (loadingOperation.progress >= 0.9f) {
                 loadingOperation.allowSceneActivation = true;
+                Debug.Log ("Load with " + clock.Elapsed () + " seconds.");
             }
+
             yield return null;
         }
     }
