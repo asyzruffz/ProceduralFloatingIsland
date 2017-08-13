@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Events;
 
 public class SaveSlots : MonoBehaviour {
 
@@ -34,6 +35,13 @@ public class SaveSlots : MonoBehaviour {
 
                 AddExistingSlotButton (slotData, isSaving);
             }
+        }
+    }
+
+    public void AddFurtherAction (UnityAction calledFunction) {
+        foreach (GameObject slot in slots) {
+            Button slotButton = slot.GetComponent<Button> ();
+            slotButton.onClick.AddListener (calledFunction);
         }
     }
 
