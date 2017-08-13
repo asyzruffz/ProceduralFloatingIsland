@@ -22,7 +22,9 @@ public class JsonFile {
 
     public static bool FilesExistIn (string folder) {
         string folderPath = Application.persistentDataPath + "/" + folder;
-        return Directory.Exists (folderPath) && (Directory.GetFiles (folderPath, "*.json") != null);
+        string[] files = Directory.GetFiles (folderPath, "*.json");
+        bool IsAnyFile = (files != null) && (files.Length > 0);
+        return Directory.Exists (folderPath) && IsAnyFile;
     }
 
     public static void Save (string fileName, string folder, GameSave gameSave) {

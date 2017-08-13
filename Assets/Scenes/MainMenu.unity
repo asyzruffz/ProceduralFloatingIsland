@@ -382,9 +382,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   saveFolder: Saves
   saveData:
-    Name: 
-    Date: 
-    Seed: 
+    Name: Default
+    Seed: Hello!
+    TimeLastSaved: 
 --- !u!4 &600344855
 Transform:
   m_ObjectHideFlags: 0

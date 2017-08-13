@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -22,10 +23,14 @@ public class SaveSlots : MonoBehaviour {
 
         if (saveFiles != null) {
             for (int i = 0; i < saveFiles.Length; i++) {
+
+                GameSave tempData = new GameSave ();
+                JsonFile.Load (saveFiles[i], GameController.Instance.saveFolder, ref tempData);
+
                 SlotData slotData = new SlotData ();
-                slotData.id = -1;
+                slotData.timeLastSaved = tempData.TimeLastSaved;
                 slotData.fileName = saveFiles[i];
-                slotData.displayName = saveFiles[i];
+                slotData.displayName = tempData.Name + " (" + tempData.TimeLastSaved + ")";
 
                 AddExistingSlotButton (slotData, isSaving);
             }
@@ -34,18 +39,11 @@ public class SaveSlots : MonoBehaviour {
 
     void AddCreateSlotButton () {
         GameObject newSlot = Instantiate (slotPrefab, transform);
-
-        SlotData slotData = new SlotData ();
-        slotData.id = Random.Range (0, 1000);
-        slotData.fileName = "save" + slotData.id + ".json";
-
-        GameController.Instance.saveData.Id = slotData.id;
-
-        newSlot.GetComponent<SaveSlotInfo> ().slotData = slotData;
+        
         newSlot.GetComponentInChildren<Text> ().text = "New Slot";
 
         Button slotButton = newSlot.GetComponent<Button> ();
-        slotButton.onClick.AddListener (() => { SaveToFile (slotData.fileName); });
+        slotButton.onClick.AddListener (() => { SaveToFile (CreateFileName ()); });
 
         slots.Add (newSlot);
     }
@@ -74,7 +72,12 @@ public class SaveSlots : MonoBehaviour {
         slots.Clear ();
     }
 
+    string CreateFileName () {
+        return "save-" + DateTime.Now.ToString("yy-MM-dd-HH-mm-ss") + ".json";
+    }
+
     void SaveToFile (string fileName) {
+        GameController.Instance.saveData.TimeLastSaved = DateTime.Now.ToString ();
         JsonFile.Save (fileName, GameController.Instance.saveFolder, GameController.Instance.saveData);
     }
 

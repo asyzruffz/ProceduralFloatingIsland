@@ -8,7 +8,7 @@ public class SaveSlotInfo : MonoBehaviour {
 
 [System.Serializable]
 public struct SlotData {
-    public int id;
+    public string timeLastSaved;
     public string fileName;
     public string displayName;
 }
