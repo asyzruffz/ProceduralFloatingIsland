@@ -4,18 +4,21 @@ using UnityEngine;
 
 public class GameController : Singleton<GameController> {
 
+    public string saveFolder = "Saves";
+    public GameSave saveData;
+
     protected override void SingletonAwake () {
         DontDestroyOnLoad (gameObject);
     }
     
     void Start () {
-		// #TODO Check save games to enable Continue button
+		
 	}
 	
 	void Update () {
 		
 	}
-
+    
     public void ExitGame () {
         Application.Quit ();
     }
