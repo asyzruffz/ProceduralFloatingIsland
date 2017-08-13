@@ -11,8 +11,8 @@ public class RandomSample  {
         Reset ();
     }
 	
-    public int Next(ref System.Random randomizer) {
-        int index = randomizer.Next (0, pop.Count);
+    public int Next() {
+        int index = Random.Range (0, pop.Count);
         int picked = pop[index];
         pop.RemoveAt (index);
         return picked;

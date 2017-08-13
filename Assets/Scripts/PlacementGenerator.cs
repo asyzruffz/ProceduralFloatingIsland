@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
@@ -11,11 +10,11 @@ public class PlacementGenerator : MonoBehaviour {
 
     public List<SectorArrangement> sectorTypes = new List<SectorArrangement> ();
 
-    public void GenerateSectorsContent (List<SectorInfo> sectors, ref System.Random randomizer) {
+    public void GenerateSectorsContent (List<SectorInfo> sectors) {
         RandomSample rndSample = new RandomSample (sectors.Count);
 
         foreach (SectorArrangement sectorType in sectorTypes) {
-            int rndIndex = rndSample.Next (ref randomizer);
+            int rndIndex = rndSample.Next ();
             List<Vector3> verts = sectors[rndIndex].GetVertices ();
 
             sectorType.Setup (verts, sectors[rndIndex].gameObject.transform);
@@ -40,7 +39,7 @@ public class PlacementGenerator : MonoBehaviour {
         }
     }
 
-    public void GenerateTrees (List<IsleInfo> islands, ref System.Random randomizer) {
+    public void GenerateTrees (List<IsleInfo> islands) {
         GameObject holder = new GameObject ("Decor");
         holder.transform.parent = transform;
 
@@ -65,8 +64,8 @@ public class PlacementGenerator : MonoBehaviour {
 
                 //Vector3 rot = mf.transform.TransformDirection ((n1 + n2 + n3) / 3);
 
-                if (randomizer.NextDouble() * 100 < probability) {
-                    GameObject objPlaced = Instantiate (items[randomizer.Next(0, items.Length)], holder.transform);
+                if (Random.value * 100 < probability) {
+                    GameObject objPlaced = Instantiate (items[Random.Range (0, items.Length)], holder.transform);
 
                     objPlaced.transform.position = pos;
                     objPlaced.transform.localRotation = Quaternion.identity;

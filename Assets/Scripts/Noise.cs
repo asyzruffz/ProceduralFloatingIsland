@@ -1,13 +1,12 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
+using Random = System.Random;
 
 public static class Noise {
 
 	public static float[,] GenerateNoiseMap(int width, int height, NoiseData data, int seed) {
         float[,] noiseMap = new float[width, height];
 
-        System.Random pseudoRandom = new System.Random (seed);
+        Random pseudoRandom = new Random (seed);
         Vector2[] octaveOffsets = new Vector2[data.octave];
         for(int i = 0; i < data.octave; i++) {
             float offsetX = pseudoRandom.Next (-100000, 100000) + data.offset.x;
