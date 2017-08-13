@@ -18,7 +18,11 @@ public class GenerateOnStart : MonoBehaviour {
         if (!readyPlaying && generator.IsDone ()) {
             Debug.Log ("Generated with " + clock.Elapsed () + " seconds.");
             readyPlaying = true;
-            overviewCam.SetActive (false);
+
+            if (overviewCam) {
+                overviewCam.SetActive (false);
+            }
+
             curtain.FadeToColour (Color.clear);
         }
     }

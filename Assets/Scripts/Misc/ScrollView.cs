@@ -2,23 +2,29 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SelectView : MonoBehaviour {
+public class ScrollView : MonoBehaviour {
 
     public Camera cam;
     public float smoothingSpeed = 1;
+    public bool autoScroll = false;
+    [ConditionalHide("autoScroll", true)]
+    public float autoDelay = 1;
 
     [Header("Viewable")]
     public List<CameraView> viewList = new List<CameraView> ();
 
     int currentIndex, targetIndex;
     bool snapped = true;
+    float timer = 0;
 
     void Start () {
 		if (viewList.Count > 0) {
             targetIndex = 0;
             ShiftView (false);
         }
-	}
+
+        timer = autoDelay - 1;
+    }
 	
 	void Update () {
         if (viewList.Count > 0) {
@@ -28,10 +34,18 @@ public class SelectView : MonoBehaviour {
             }
         }
 
-        if (Input.GetButtonDown ("Horizontal") && Input.GetAxisRaw ("Horizontal") > 0) {
-            Transition (1);
-        } else if (Input.GetButtonDown ("Horizontal") && Input.GetAxisRaw ("Horizontal") < 0) {
-            Transition (-1);
+        if (autoScroll) {
+            timer += Time.deltaTime;
+            if (timer >= autoDelay) {
+                timer = 0;
+                Transition (1);
+            }
+        } else {
+            if (Input.GetButtonDown ("Horizontal") && Input.GetAxisRaw ("Horizontal") > 0) {
+                Transition (1);
+            } else if (Input.GetButtonDown ("Horizontal") && Input.GetAxisRaw ("Horizontal") < 0) {
+                Transition (-1);
+            }
         }
     }
 
