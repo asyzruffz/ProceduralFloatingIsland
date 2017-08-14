@@ -1,0 +1,3435 @@
+{
+    "database": [
+        {
+            "prefix": "**",
+            "suffixes": [
+                {
+                    "value": "a",
+                    "multiplicity": 21
+                },
+                {
+                    "value": "b",
+                    "multiplicity": 5
+                },
+                {
+                    "value": "c",
+                    "multiplicity": 12
+                },
+                {
+                    "value": "d",
+                    "multiplicity": 8
+                },
+                {
+                    "value": "e",
+                    "multiplicity": 7
+                },
+                {
+                    "value": "f",
+                    "multiplicity": 3
+                },
+                {
+                    "value": "g",
+                    "multiplicity": 6
+                },
+                {
+                    "value": "h",
+                    "multiplicity": 4
+                },
+                {
+                    "value": "i",
+                    "multiplicity": 6
+                },
+                {
+                    "value": "j",
+                    "multiplicity": 1
+                },
+                {
+                    "value": "k",
+                    "multiplicity": 7
+                },
+                {
+                    "value": "l",
+                    "multiplicity": 9
+                },
+                {
+                    "value": "m",
+                    "multiplicity": 7
+                },
+                {
+                    "value": "n",
+                    "multiplicity": 6
+                },
+                {
+                    "value": "o",
+                    "multiplicity": 7
+                },
+                {
+                    "value": "p",
+                    "multiplicity": 8
+                },
+                {
+                    "value": "q",
+                    "multiplicity": 3
+                },
+                {
+                    "value": "r",
+                    "multiplicity": 6
+                },
+                {
+                    "value": "s",
+                    "multiplicity": 11
+                },
+                {
+                    "value": "t",
+                    "multiplicity": 10
+                },
+                {
+                    "value": "u",
+                    "multiplicity": 3
+                },
+                {
+                    "value": "v",
+                    "multiplicity": 3
+                },
+                {
+                    "value": "x",
+                    "multiplicity": 3
+                },
+                {
+                    "value": "y",
+                    "multiplicity": 6
+                },
+                {
+                    "value": "z",
+                    "multiplicity": 6
+                }
+            ]
+        },
+        {
+            "prefix": "*a",
+            "suffixes": [
+                {
+                    "value": "b",
+                    "multiplicity": 1
+                },
+                {
+                    "value": "d",
+                    "multiplicity": 3
+                },
+                {
+                    "value": "i",
+                    "multiplicity": 1
+                },
+                {
+                    "value": "l",
+                    "multiplicity": 4
+                },
+                {
+                    "value": "m",
+                    "multiplicity": 1
+                },
+                {
+                    "value": "n",
+                    "multiplicity": 2
+                },
+                {
+                    "value": "r",
+                    "multiplicity": 3
+                },
+                {
+                    "value": "u",
+                    "multiplicity": 4
+                },
+                {
+                    "value": "v",
+                    "multiplicity": 1
+                },
+                {
+                    "value": "c",
+                    "multiplicity": 1
+                }
+            ]
+        },
+        {
+            "prefix": "ab",
+            "suffixes": [
+                {
+                    "value": "r",
+                    "multiplicity": 1
+                }
+            ]
+        },
+        {
+            "prefix": "br",
+            "suffixes": [
+                {
+                    "value": "i",
+                    "multiplicity": 5
+                },
+                {
+                    "value": "e",
+                    "multiplicity": 1
+                }
+            ]
+        },
+        {
+            "prefix": "ri",
+            "suffixes": [
+                {
+                    "value": "e",
+                    "multiplicity": 13
+                },
+                {
+                    "value": "a",
+                    "multiplicity": 8
+                },
+                {
+                    "value": "s",
+                    "multiplicity": 3
+                },
+                {
+                    "value": "u",
+                    "multiplicity": 3
+                },
+                {
+                    "value": "f",
+                    "multiplicity": 1
+                },
+                {
+                    "value": "n",
+                    "multiplicity": 5
+                },
+                {
+                    "value": "o",
+                    "multiplicity": 3
+                },
+                {
+                    "value": "*",
+                    "multiplicity": 1
+                }
+            ]
+        },
+        {
+            "prefix": "ie",
+            "suffixes": [
+                {
+                    "value": "l",
+                    "multiplicity": 15
+                },
+                {
+                    "value": "n",
+                    "multiplicity": 3
+                },
+                {
+                    "value": "u",
+                    "multiplicity": 1
+                },
+                {
+                    "value": "*",
+                    "multiplicity": 1
+                }
+            ]
+        },
+        {
+            "prefix": "el",
+            "suffixes": [
+                {
+                    "value": "l",
+                    "multiplicity": 4
+                },
+                {
+                    "value": "*",
+                    "multiplicity": 10
+                },
+                {
+                    "value": "i",
+                    "multiplicity": 4
+                },
+                {
+                    "value": "a",
+                    "multiplicity": 4
+                },
+                {
+                    "value": "y",
+                    "multiplicity": 1
+                },
+                {
+                    "value": "o",
+                    "multiplicity": 1
+                }
+            ]
+        },
+        {
+            "prefix": "ll",
+            "suffixes": [
+                {
+                    "value": "e",
+                    "multiplicity": 5
+                },
+                {
+                    "value": "a",
+                    "multiplicity": 1
+                }
+            ]
+        },
+        {
+            "prefix": "le",
+            "suffixes": [
+                {
+                    "value": "*",
+                    "multiplicity": 5
+                },
+                {
+                    "value": "r",
+                    "multiplicity": 1
+                },
+                {
+                    "value": "a",
+                    "multiplicity": 2
+                },
+                {
+                    "value": "i",
+                    "multiplicity": 3
+                }
+            ]
+        },
+        {
+            "prefix": "e*",
+            "suffixes": [
+                {
+                    "value": "*",
+                    "multiplicity": 21
+                }
+            ]
+        },
+        {
+            "prefix": "ad",
+            "suffixes": [
+                {
+                    "value": "a",
+                    "multiplicity": 2
+                },
+                {
+                    "value": "r",
+                    "multiplicity": 2
+                },
+                {
+                    "value": "i",
+                    "multiplicity": 3
+                },
+                {
+                    "value": "n",
+                    "multiplicity": 2
+                }
+            ]
+        },
+        {
+            "prefix": "da",
+            "suffixes": [
+                {
+                    "value": "i",
+                    "multiplicity": 2
+                },
+                {
+                    "value": "r",
+                    "multiplicity": 2
+                },
+                {
+                    "value": "g",
+                    "multiplicity": 1
+                }
+            ]
+        },
+        {
+            "prefix": "ai",
+            "suffixes": [
+                {
+                    "value": "r",
+                    "multiplicity": 6
+                },
+                {
+                    "value": "y",
+                    "multiplicity": 1
+                },
+                {
+                    "value": "a",
+                    "multiplicity": 1
+                },
+                {
+                    "value": "n",
+                    "multiplicity": 1
+                },
+                {
+                    "value": "s",
+                    "multiplicity": 1
+                },
+                {
+                    "value": "*",
+                    "multiplicity": 1
+                }
+            ]
+        },
+        {
+            "prefix": "ir",
+            "suffixes": [
+                {
+                    "value": "*",
+                    "multiplicity": 2
+                },
+                {
+                    "value": "e",
+                    "multiplicity": 4
+                },
+                {
+                    "value": "a",
+                    "multiplicity": 9
+                },
+                {
+                    "value": "i",
+                    "multiplicity": 4
+                },
+                {
+                    "value": "o",
+                    "multiplicity": 2
+                },
+                {
+                    "value": "s",
+                    "multiplicity": 1
+                }
+            ]
+        },
+        {
+            "prefix": "r*",
+            "suffixes": [
+                {
+                    "value": "*",
+                    "multiplicity": 5
+                }
+            ]
+        },
+        {
+            "prefix": "ar",
+            "suffixes": [
+                {
+                    "value": "a",
+                    "multiplicity": 7
+                },
+                {
+                    "value": "c",
+                    "multiplicity": 1
+                },
+                {
+                    "value": "i",
+                    "multiplicity": 5
+                },
+                {
+                    "value": "y",
+                    "multiplicity": 1
+                },
+                {
+                    "value": "e",
+                    "multiplicity": 2
+                },
+                {
+                    "value": "l",
+                    "multiplicity": 1
+                }
+            ]
+        },
+        {
+            "prefix": "ra",
+            "suffixes": [
+                {
+                    "value": "*",
+                    "multiplicity": 24
+                },
+                {
+                    "value": "k",
+                    "multiplicity": 1
+                },
+                {
+                    "value": "l",
+                    "multiplicity": 3
+                },
+                {
+                    "value": "i",
+                    "multiplicity": 2
+                },
+                {
+                    "value": "p",
+                    "multiplicity": 2
+                }
+            ]
+        },
+        {
+            "prefix": "a*",
+            "suffixes": [
+                {
+                    "value": "*",
+                    "multiplicity": 63
+                }
+            ]
+        },
+        {
+            "prefix": "dr",
+            "suffixes": [
+                {
+                    "value": "i",
+                    "multiplicity": 2
+                },
+                {
+                    "value": "a",
+                    "multiplicity": 2
+                },
+                {
+                    "value": "y",
+                    "multiplicity": 1
+                }
+            ]
+        },
+        {
+            "prefix": "l*",
+            "suffixes": [
+                {
+                    "value": "*",
+                    "multiplicity": 10
+                }
+            ]
+        },
+        {
+            "prefix": "iy",
+            "suffixes": [
+                {
+                    "value": "a",
+                    "multiplicity": 1
+                }
+            ]
+        },
+        {
+            "prefix": "ya",
+            "suffixes": [
+                {
+                    "value": "n",
+                    "multiplicity": 2
+                },
+                {
+                    "value": "*",
+                    "multiplicity": 2
+                },
+                {
+                    "value": "d",
+                    "multiplicity": 1
+                },
+                {
+                    "value": "k",
+                    "multiplicity": 1
+                }
+            ]
+        },
+        {
+            "prefix": "an",
+            "suffixes": [
+                {
+                    "value": "a",
+                    "multiplicity": 3
+                },
+                {
+                    "value": "d",
+                    "multiplicity": 1
+                },
+                {
+                    "value": "y",
+                    "multiplicity": 1
+                },
+                {
+                    "value": "w",
+                    "multiplicity": 1
+                },
+                {
+                    "value": "*",
+                    "multiplicity": 14
+                },
+                {
+                    "value": "i",
+                    "multiplicity": 4
+                },
+                {
+                    "value": "t",
+                    "multiplicity": 3
+                },
+                {
+                    "value": "n",
+                    "multiplicity": 1
+                },
+                {
+                    "value": "o",
+                    "multiplicity": 1
+                }
+            ]
+        },
+        {
+            "prefix": "na",
+            "suffixes": [
+                {
+                    "value": "*",
+                    "multiplicity": 5
+                },
+                {
+                    "value": "t",
+                    "multiplicity": 3
+                },
+                {
+                    "value": "c",
+                    "multiplicity": 1
+                }
+            ]
+        },
+        {
+            "prefix": "al",
+            "suffixes": [
+                {
+                    "value": "i",
+                    "multiplicity": 7
+                },
+                {
+                    "value": "t",
+                    "multiplicity": 1
+                },
+                {
+                    "value": "o",
+                    "multiplicity": 1
+                },
+                {
+                    "value": "a",
+                    "multiplicity": 2
+                },
+                {
+                    "value": "l",
+                    "multiplicity": 1
+                },
+                {
+                    "value": "y",
+                    "multiplicity": 1
+                }
+            ]
+        },
+        {
+            "prefix": "li",
+            "suffixes": [
+                {
+                    "value": "s",
+                    "multiplicity": 3
+                },
+                {
+                    "value": "x",
+                    "multiplicity": 1
+                },
+                {
+                    "value": "a",
+                    "multiplicity": 6
+                },
+                {
+                    "value": "u",
+                    "multiplicity": 1
+                },
+                {
+                    "value": "n",
+                    "multiplicity": 1
+                },
+                {
+                    "value": "r",
+                    "multiplicity": 3
+                },
+                {
+                    "value": "l",
+                    "multiplicity": 1
+                },
+                {
+                    "value": "t",
+                    "multiplicity": 1
+                },
+                {
+                    "value": "o",
+                    "multiplicity": 1
+                },
+                {
+                    "value": "e",
+                    "multiplicity": 1
+                }
+            ]
+        },
+        {
+            "prefix": "is",
+            "suffixes": [
+                {
+                    "value": "s",
+                    "multiplicity": 1
+                },
+                {
+                    "value": "t",
+                    "multiplicity": 2
+                },
+                {
+                    "value": "e",
+                    "multiplicity": 2
+                },
+                {
+                    "value": "*",
+                    "multiplicity": 3
+                },
+                {
+                    "value": "o",
+                    "multiplicity": 1
+                },
+                {
+                    "value": "i",
+                    "multiplicity": 1
+                },
+                {
+                    "value": "a",
+                    "multiplicity": 2
+                },
+                {
+                    "value": "h",
+                    "multiplicity": 1
+                }
+            ]
+        },
+        {
+            "prefix": "ss",
+            "suffixes": [
+                {
+                    "value": "a",
+                    "multiplicity": 5
+                },
+                {
+                    "value": "i",
+                    "multiplicity": 5
+                }
+            ]
+        },
+        {
+            "prefix": "sa",
+            "suffixes": [
+                {
+                    "value": "*",
+                    "multiplicity": 7
+                },
+                {
+                    "value": "l",
+                    "multiplicity": 1
+                },
+                {
+                    "value": "o",
+                    "multiplicity": 1
+                },
+                {
+                    "value": "r",
+                    "multiplicity": 2
+                },
+                {
+                    "value": "i",
+                    "multiplicity": 1
+                }
+            ]
+        },
+        {
+            "prefix": "ix",
+            "suffixes": [
+                {
+                    "value": "a",
+                    "multiplicity": 1
+                }
+            ]
+        },
+        {
+            "prefix": "xa",
+            "suffixes": [
+                {
+                    "value": "n",
+                    "multiplicity": 2
+                },
+                {
+                    "value": "r",
+                    "multiplicity": 1
+                }
+            ]
+        },
+        {
+            "prefix": "nd",
+            "suffixes": [
+                {
+                    "value": "r",
+                    "multiplicity": 1
+                }
+            ]
+        },
+        {
+            "prefix": "lt",
+            "suffixes": [
+                {
+                    "value": "a",
+                    "multiplicity": 1
+                },
+                {
+                    "value": "*",
+                    "multiplicity": 2
+                }
+            ]
+        },
+        {
+            "prefix": "ta",
+            "suffixes": [
+                {
+                    "value": "i",
+                    "multiplicity": 1
+                },
+                {
+                    "value": "n",
+                    "multiplicity": 3
+                },
+                {
+                    "value": "v",
+                    "multiplicity": 1
+                }
+            ]
+        },
+        {
+            "prefix": "am",
+            "suffixes": [
+                {
+                    "value": "a",
+                    "multiplicity": 1
+                },
+                {
+                    "value": "b",
+                    "multiplicity": 1
+                }
+            ]
+        },
+        {
+            "prefix": "ma",
+            "suffixes": [
+                {
+                    "value": "r",
+                    "multiplicity": 2
+                },
+                {
+                    "value": "i",
+                    "multiplicity": 1
+                },
+                {
+                    "value": "t",
+                    "multiplicity": 1
+                },
+                {
+                    "value": "y",
+                    "multiplicity": 1
+                }
+            ]
+        },
+        {
+            "prefix": "at",
+            "suffixes": [
+                {
+                    "value": "o",
+                    "multiplicity": 1
+                },
+                {
+                    "value": "i",
+                    "multiplicity": 1
+                },
+                {
+                    "value": "r",
+                    "multiplicity": 1
+                },
+                {
+                    "value": "h",
+                    "multiplicity": 1
+                },
+                {
+                    "value": "a",
+                    "multiplicity": 1
+                }
+            ]
+        },
+        {
+            "prefix": "to",
+            "suffixes": [
+                {
+                    "value": "l",
+                    "multiplicity": 1
+                },
+                {
+                    "value": "r",
+                    "multiplicity": 2
+                }
+            ]
+        },
+        {
+            "prefix": "ol",
+            "suffixes": [
+                {
+                    "value": "a",
+                    "multiplicity": 1
+                },
+                {
+                    "value": "d",
+                    "multiplicity": 1
+                },
+                {
+                    "value": "e",
+                    "multiplicity": 1
+                }
+            ]
+        },
+        {
+            "prefix": "la",
+            "suffixes": [
+                {
+                    "value": "*",
+                    "multiplicity": 6
+                },
+                {
+                    "value": "i",
+                    "multiplicity": 1
+                },
+                {
+                    "value": "n",
+                    "multiplicity": 2
+                },
+                {
+                    "value": "c",
+                    "multiplicity": 1
+                }
+            ]
+        },
+        {
+            "prefix": "ny",
+            "suffixes": [
+                {
+                    "value": "a",
+                    "multiplicity": 1
+                },
+                {
+                    "value": "s",
+                    "multiplicity": 1
+                },
+                {
+                    "value": "f",
+                    "multiplicity": 1
+                }
+            ]
+        },
+        {
+            "prefix": "rc",
+            "suffixes": [
+                {
+                    "value": "a",
+                    "multiplicity": 1
+                },
+                {
+                    "value": "h",
+                    "multiplicity": 2
+                }
+            ]
+        },
+        {
+            "prefix": "ca",
+            "suffixes": [
+                {
+                    "value": "d",
+                    "multiplicity": 1
+                },
+                {
+                    "value": "l",
+                    "multiplicity": 1
+                },
+                {
+                    "value": "m",
+                    "multiplicity": 1
+                },
+                {
+                    "value": "r",
+                    "multiplicity": 2
+                },
+                {
+                    "value": "s",
+                    "multiplicity": 5
+                }
+            ]
+        },
+        {
+            "prefix": "di",
+            "suffixes": [
+                {
+                    "value": "a",
+                    "multiplicity": 1
+                },
+                {
+                    "value": "r",
+                    "multiplicity": 2
+                }
+            ]
+        },
+        {
+            "prefix": "ia",
+            "suffixes": [
+                {
+                    "value": "*",
+                    "multiplicity": 15
+                },
+                {
+                    "value": "d",
+                    "multiplicity": 1
+                },
+                {
+                    "value": "n",
+                    "multiplicity": 11
+                },
+                {
+                    "value": "l",
+                    "multiplicity": 1
+                },
+                {
+                    "value": "g",
+                    "multiplicity": 1
+                }
+            ]
+        },
+        {
+            "prefix": "dn",
+            "suffixes": [
+                {
+                    "value": "e",
+                    "multiplicity": 2
+                }
+            ]
+        },
+        {
+            "prefix": "ne",
+            "suffixes": [
+                {
+                    "value": "*",
+                    "multiplicity": 6
+                },
+                {
+                    "value": "a",
+                    "multiplicity": 1
+                },
+                {
+                    "value": "v",
+                    "multiplicity": 2
+                },
+                {
+                    "value": "r",
+                    "multiplicity": 2
+                },
+                {
+                    "value": "l",
+                    "multiplicity": 2
+                },
+                {
+                    "value": "i",
+                    "multiplicity": 1
+                }
+            ]
+        },
+        {
+            "prefix": "nw",
+            "suffixes": [
+                {
+                    "value": "e",
+                    "multiplicity": 1
+                }
+            ]
+        },
+        {
+            "prefix": "we",
+            "suffixes": [
+                {
+                    "value": "n",
+                    "multiplicity": 1
+                }
+            ]
+        },
+        {
+            "prefix": "en",
+            "suffixes": [
+                {
+                    "value": "*",
+                    "multiplicity": 4
+                },
+                {
+                    "value": "a",
+                    "multiplicity": 1
+                },
+                {
+                    "value": "s",
+                    "multiplicity": 1
+                },
+                {
+                    "value": "e",
+                    "multiplicity": 1
+                },
+                {
+                    "value": "f",
+                    "multiplicity": 1
+                }
+            ]
+        },
+        {
+            "prefix": "n*",
+            "suffixes": [
+                {
+                    "value": "*",
+                    "multiplicity": 38
+                }
+            ]
+        },
+        {
+            "prefix": "au",
+            "suffixes": [
+                {
+                    "value": "r",
+                    "multiplicity": 4
+                }
+            ]
+        },
+        {
+            "prefix": "ur",
+            "suffixes": [
+                {
+                    "value": "e",
+                    "multiplicity": 3
+                },
+                {
+                    "value": "i",
+                    "multiplicity": 4
+                }
+            ]
+        },
+        {
+            "prefix": "re",
+            "suffixes": [
+                {
+                    "value": "l",
+                    "multiplicity": 3
+                },
+                {
+                    "value": "*",
+                    "multiplicity": 5
+                },
+                {
+                    "value": "e",
+                    "multiplicity": 1
+                },
+                {
+                    "value": "t",
+                    "multiplicity": 1
+                },
+                {
+                    "value": "n",
+                    "multiplicity": 2
+                },
+                {
+                    "value": "i",
+                    "multiplicity": 1
+                },
+                {
+                    "value": "y",
+                    "multiplicity": 1
+                },
+                {
+                    "value": "g",
+                    "multiplicity": 1
+                },
+                {
+                    "value": "m",
+                    "multiplicity": 1
+                },
+                {
+                    "value": "w",
+                    "multiplicity": 1
+                },
+                {
+                    "value": "s",
+                    "multiplicity": 1
+                },
+                {
+                    "value": "k",
+                    "multiplicity": 1
+                }
+            ]
+        },
+        {
+            "prefix": "iu",
+            "suffixes": [
+                {
+                    "value": "s",
+                    "multiplicity": 6
+                }
+            ]
+        },
+        {
+            "prefix": "us",
+            "suffixes": [
+                {
+                    "value": "*",
+                    "multiplicity": 10
+                }
+            ]
+        },
+        {
+            "prefix": "s*",
+            "suffixes": [
+                {
+                    "value": "*",
+                    "multiplicity": 17
+                }
+            ]
+        },
+        {
+            "prefix": "av",
+            "suffixes": [
+                {
+                    "value": "a",
+                    "multiplicity": 1
+                },
+                {
+                    "value": "r",
+                    "multiplicity": 1
+                },
+                {
+                    "value": "i",
+                    "multiplicity": 1
+                }
+            ]
+        },
+        {
+            "prefix": "va",
+            "suffixes": [
+                {
+                    "value": "l",
+                    "multiplicity": 1
+                },
+                {
+                    "value": "d",
+                    "multiplicity": 1
+                },
+                {
+                    "value": "n",
+                    "multiplicity": 2
+                },
+                {
+                    "value": "*",
+                    "multiplicity": 1
+                },
+                {
+                    "value": "s",
+                    "multiplicity": 1
+                }
+            ]
+        },
+        {
+            "prefix": "lo",
+            "suffixes": [
+                {
+                    "value": "n",
+                    "multiplicity": 1
+                },
+                {
+                    "value": "r",
+                    "multiplicity": 1
+                }
+            ]
+        },
+        {
+            "prefix": "on",
+            "suffixes": [
+                {
+                    "value": "*",
+                    "multiplicity": 5
+                },
+                {
+                    "value": "e",
+                    "multiplicity": 3
+                },
+                {
+                    "value": "a",
+                    "multiplicity": 1
+                }
+            ]
+        },
+        {
+            "prefix": "ac",
+            "suffixes": [
+                {
+                    "value": "a",
+                    "multiplicity": 1
+                },
+                {
+                    "value": "i",
+                    "multiplicity": 1
+                },
+                {
+                    "value": "h",
+                    "multiplicity": 1
+                }
+            ]
+        },
+        {
+            "prefix": "st",
+            "suffixes": [
+                {
+                    "value": "e",
+                    "multiplicity": 1
+                },
+                {
+                    "value": "i",
+                    "multiplicity": 4
+                },
+                {
+                    "value": "a",
+                    "multiplicity": 2
+                }
+            ]
+        },
+        {
+            "prefix": "te",
+            "suffixes": [
+                {
+                    "value": "l",
+                    "multiplicity": 1
+                },
+                {
+                    "value": "s",
+                    "multiplicity": 1
+                },
+                {
+                    "value": "a",
+                    "multiplicity": 1
+                },
+                {
+                    "value": "r",
+                    "multiplicity": 1
+                }
+            ]
+        },
+        {
+            "prefix": "*b",
+            "suffixes": [
+                {
+                    "value": "a",
+                    "multiplicity": 1
+                },
+                {
+                    "value": "r",
+                    "multiplicity": 4
+                }
+            ]
+        },
+        {
+            "prefix": "ba",
+            "suffixes": [
+                {
+                    "value": "s",
+                    "multiplicity": 2
+                }
+            ]
+        },
+        {
+            "prefix": "as",
+            "suffixes": [
+                {
+                    "value": "t",
+                    "multiplicity": 2
+                },
+                {
+                    "value": "p",
+                    "multiplicity": 1
+                },
+                {
+                    "value": "s",
+                    "multiplicity": 4
+                },
+                {
+                    "value": "*",
+                    "multiplicity": 1
+                },
+                {
+                    "value": "i",
+                    "multiplicity": 1
+                }
+            ]
+        },
+        {
+            "prefix": "ti",
+            "suffixes": [
+                {
+                    "value": "a",
+                    "multiplicity": 2
+                },
+                {
+                    "value": "n",
+                    "multiplicity": 2
+                },
+                {
+                    "value": "u",
+                    "multiplicity": 1
+                }
+            ]
+        },
+        {
+            "prefix": "ee",
+            "suffixes": [
+                {
+                    "value": "n",
+                    "multiplicity": 1
+                }
+            ]
+        },
+        {
+            "prefix": "se",
+            "suffixes": [
+                {
+                    "value": "i",
+                    "multiplicity": 1
+                },
+                {
+                    "value": "u",
+                    "multiplicity": 3
+                },
+                {
+                    "value": "p",
+                    "multiplicity": 1
+                },
+                {
+                    "value": "*",
+                    "multiplicity": 1
+                },
+                {
+                    "value": "b",
+                    "multiplicity": 1
+                },
+                {
+                    "value": "r",
+                    "multiplicity": 3
+                },
+                {
+                    "value": "v",
+                    "multiplicity": 1
+                }
+            ]
+        },
+        {
+            "prefix": "ei",
+            "suffixes": [
+                {
+                    "value": "s",
+                    "multiplicity": 2
+                },
+                {
+                    "value": "a",
+                    "multiplicity": 2
+                },
+                {
+                    "value": "r",
+                    "multiplicity": 6
+                },
+                {
+                    "value": "l",
+                    "multiplicity": 2
+                }
+            ]
+        },
+        {
+            "prefix": "*c",
+            "suffixes": [
+                {
+                    "value": "a",
+                    "multiplicity": 8
+                },
+                {
+                    "value": "h",
+                    "multiplicity": 1
+                },
+                {
+                    "value": "o",
+                    "multiplicity": 2
+                },
+                {
+                    "value": "y",
+                    "multiplicity": 1
+                }
+            ]
+        },
+        {
+            "prefix": "mb",
+            "suffixes": [
+                {
+                    "value": "r",
+                    "multiplicity": 1
+                }
+            ]
+        },
+        {
+            "prefix": "ry",
+            "suffixes": [
+                {
+                    "value": "s",
+                    "multiplicity": 3
+                },
+                {
+                    "value": "d",
+                    "multiplicity": 1
+                }
+            ]
+        },
+        {
+            "prefix": "ys",
+            "suffixes": [
+                {
+                    "value": "*",
+                    "multiplicity": 2
+                },
+                {
+                    "value": "t",
+                    "multiplicity": 1
+                },
+                {
+                    "value": "i",
+                    "multiplicity": 1
+                },
+                {
+                    "value": "s",
+                    "multiplicity": 2
+                },
+                {
+                    "value": "e",
+                    "multiplicity": 1
+                }
+            ]
+        },
+        {
+            "prefix": "sp",
+            "suffixes": [
+                {
+                    "value": "i",
+                    "multiplicity": 1
+                },
+                {
+                    "value": "e",
+                    "multiplicity": 2
+                }
+            ]
+        },
+        {
+            "prefix": "pi",
+            "suffixes": [
+                {
+                    "value": "a",
+                    "multiplicity": 1
+                }
+            ]
+        },
+        {
+            "prefix": "si",
+            "suffixes": [
+                {
+                    "value": "a",
+                    "multiplicity": 3
+                },
+                {
+                    "value": "e",
+                    "multiplicity": 1
+                },
+                {
+                    "value": "o",
+                    "multiplicity": 1
+                },
+                {
+                    "value": "u",
+                    "multiplicity": 1
+                },
+                {
+                    "value": "n",
+                    "multiplicity": 1
+                },
+                {
+                    "value": "r",
+                    "multiplicity": 1
+                },
+                {
+                    "value": "l",
+                    "multiplicity": 1
+                }
+            ]
+        },
+        {
+            "prefix": "io",
+            "suffixes": [
+                {
+                    "value": "p",
+                    "multiplicity": 1
+                },
+                {
+                    "value": "n",
+                    "multiplicity": 4
+                },
+                {
+                    "value": "r",
+                    "multiplicity": 1
+                }
+            ]
+        },
+        {
+            "prefix": "op",
+            "suffixes": [
+                {
+                    "value": "e",
+                    "multiplicity": 1
+                }
+            ]
+        },
+        {
+            "prefix": "pe",
+            "suffixes": [
+                {
+                    "value": "i",
+                    "multiplicity": 1
+                },
+                {
+                    "value": "r",
+                    "multiplicity": 5
+                },
+                {
+                    "value": "t",
+                    "multiplicity": 1
+                }
+            ]
+        },
+        {
+            "prefix": "ch",
+            "suffixes": [
+                {
+                    "value": "a",
+                    "multiplicity": 2
+                },
+                {
+                    "value": "*",
+                    "multiplicity": 2
+                }
+            ]
+        },
+        {
+            "prefix": "ha",
+            "suffixes": [
+                {
+                    "value": "n",
+                    "multiplicity": 3
+                },
+                {
+                    "value": "d",
+                    "multiplicity": 1
+                },
+                {
+                    "value": "*",
+                    "multiplicity": 1
+                },
+                {
+                    "value": "l",
+                    "multiplicity": 1
+                }
+            ]
+        },
+        {
+            "prefix": "ni",
+            "suffixes": [
+                {
+                    "value": "e",
+                    "multiplicity": 3
+                },
+                {
+                    "value": "a",
+                    "multiplicity": 2
+                }
+            ]
+        },
+        {
+            "prefix": "co",
+            "suffixes": [
+                {
+                    "value": "r",
+                    "multiplicity": 2
+                }
+            ]
+        },
+        {
+            "prefix": "or",
+            "suffixes": [
+                {
+                    "value": "a",
+                    "multiplicity": 5
+                },
+                {
+                    "value": "b",
+                    "multiplicity": 2
+                },
+                {
+                    "value": "*",
+                    "multiplicity": 1
+                },
+                {
+                    "value": "e",
+                    "multiplicity": 1
+                },
+                {
+                    "value": "i",
+                    "multiplicity": 5
+                },
+                {
+                    "value": "p",
+                    "multiplicity": 1
+                },
+                {
+                    "value": "c",
+                    "multiplicity": 1
+                }
+            ]
+        },
+        {
+            "prefix": "rb",
+            "suffixes": [
+                {
+                    "value": "i",
+                    "multiplicity": 2
+                }
+            ]
+        },
+        {
+            "prefix": "bi",
+            "suffixes": [
+                {
+                    "value": "n",
+                    "multiplicity": 2
+                }
+            ]
+        },
+        {
+            "prefix": "in",
+            "suffixes": [
+                {
+                    "value": "*",
+                    "multiplicity": 12
+                },
+                {
+                    "value": "e",
+                    "multiplicity": 5
+                },
+                {
+                    "value": "i",
+                    "multiplicity": 1
+                },
+                {
+                    "value": "t",
+                    "multiplicity": 2
+                },
+                {
+                    "value": "a",
+                    "multiplicity": 1
+                }
+            ]
+        },
+        {
+            "prefix": "cy",
+            "suffixes": [
+                {
+                    "value": "p",
+                    "multiplicity": 1
+                }
+            ]
+        },
+        {
+            "prefix": "yp",
+            "suffixes": [
+                {
+                    "value": "r",
+                    "multiplicity": 1
+                }
+            ]
+        },
+        {
+            "prefix": "pr",
+            "suffixes": [
+                {
+                    "value": "i",
+                    "multiplicity": 1
+                },
+                {
+                    "value": "y",
+                    "multiplicity": 1
+                }
+            ]
+        },
+        {
+            "prefix": "*d",
+            "suffixes": [
+                {
+                    "value": "a",
+                    "multiplicity": 3
+                },
+                {
+                    "value": "e",
+                    "multiplicity": 3
+                },
+                {
+                    "value": "r",
+                    "multiplicity": 2
+                }
+            ]
+        },
+        {
+            "prefix": "de",
+            "suffixes": [
+                {
+                    "value": "s",
+                    "multiplicity": 1
+                },
+                {
+                    "value": "v",
+                    "multiplicity": 2
+                },
+                {
+                    "value": "*",
+                    "multiplicity": 1
+                },
+                {
+                    "value": "r",
+                    "multiplicity": 2
+                }
+            ]
+        },
+        {
+            "prefix": "es",
+            "suffixes": [
+                {
+                    "value": "t",
+                    "multiplicity": 2
+                },
+                {
+                    "value": "p",
+                    "multiplicity": 2
+                },
+                {
+                    "value": "s",
+                    "multiplicity": 3
+                }
+            ]
+        },
+        {
+            "prefix": "ak",
+            "suffixes": [
+                {
+                    "value": "e",
+                    "multiplicity": 1
+                },
+                {
+                    "value": "i",
+                    "multiplicity": 1
+                }
+            ]
+        },
+        {
+            "prefix": "ke",
+            "suffixes": [
+                {
+                    "value": "*",
+                    "multiplicity": 1
+                },
+                {
+                    "value": "r",
+                    "multiplicity": 1
+                }
+            ]
+        },
+        {
+            "prefix": "ag",
+            "suffixes": [
+                {
+                    "value": "e",
+                    "multiplicity": 1
+                },
+                {
+                    "value": "a",
+                    "multiplicity": 1
+                }
+            ]
+        },
+        {
+            "prefix": "ge",
+            "suffixes": [
+                {
+                    "value": "n",
+                    "multiplicity": 1
+                }
+            ]
+        },
+        {
+            "prefix": "ev",
+            "suffixes": [
+                {
+                    "value": "l",
+                    "multiplicity": 2
+                },
+                {
+                    "value": "a",
+                    "multiplicity": 2
+                },
+                {
+                    "value": "e",
+                    "multiplicity": 3
+                }
+            ]
+        },
+        {
+            "prefix": "vl",
+            "suffixes": [
+                {
+                    "value": "i",
+                    "multiplicity": 1
+                },
+                {
+                    "value": "y",
+                    "multiplicity": 1
+                }
+            ]
+        },
+        {
+            "prefix": "ly",
+            "suffixes": [
+                {
+                    "value": "n",
+                    "multiplicity": 2
+                },
+                {
+                    "value": "s",
+                    "multiplicity": 2
+                },
+                {
+                    "value": "r",
+                    "multiplicity": 1
+                }
+            ]
+        },
+        {
+            "prefix": "yn",
+            "suffixes": [
+                {
+                    "value": "*",
+                    "multiplicity": 2
+                }
+            ]
+        },
+        {
+            "prefix": "*e",
+            "suffixes": [
+                {
+                    "value": "i",
+                    "multiplicity": 2
+                },
+                {
+                    "value": "l",
+                    "multiplicity": 2
+                },
+                {
+                    "value": "o",
+                    "multiplicity": 1
+                },
+                {
+                    "value": "v",
+                    "multiplicity": 2
+                }
+            ]
+        },
+        {
+            "prefix": "eo",
+            "suffixes": [
+                {
+                    "value": "i",
+                    "multiplicity": 1
+                }
+            ]
+        },
+        {
+            "prefix": "oi",
+            "suffixes": [
+                {
+                    "value": "n",
+                    "multiplicity": 1
+                },
+                {
+                    "value": "s",
+                    "multiplicity": 1
+                },
+                {
+                    "value": "r",
+                    "multiplicity": 1
+                }
+            ]
+        },
+        {
+            "prefix": "ro",
+            "suffixes": [
+                {
+                    "value": "n",
+                    "multiplicity": 3
+                },
+                {
+                    "value": "s",
+                    "multiplicity": 1
+                }
+            ]
+        },
+        {
+            "prefix": "nt",
+            "suffixes": [
+                {
+                    "value": "h",
+                    "multiplicity": 4
+                },
+                {
+                    "value": "e",
+                    "multiplicity": 1
+                }
+            ]
+        },
+        {
+            "prefix": "th",
+            "suffixes": [
+                {
+                    "value": "*",
+                    "multiplicity": 3
+                },
+                {
+                    "value": "e",
+                    "multiplicity": 3
+                },
+                {
+                    "value": "i",
+                    "multiplicity": 1
+                },
+                {
+                    "value": "a",
+                    "multiplicity": 2
+                },
+                {
+                    "value": "u",
+                    "multiplicity": 1
+                }
+            ]
+        },
+        {
+            "prefix": "h*",
+            "suffixes": [
+                {
+                    "value": "*",
+                    "multiplicity": 6
+                }
+            ]
+        },
+        {
+            "prefix": "*f",
+            "suffixes": [
+                {
+                    "value": "i",
+                    "multiplicity": 2
+                },
+                {
+                    "value": "y",
+                    "multiplicity": 1
+                }
+            ]
+        },
+        {
+            "prefix": "fi",
+            "suffixes": [
+                {
+                    "value": "n",
+                    "multiplicity": 3
+                }
+            ]
+        },
+        {
+            "prefix": "ea",
+            "suffixes": [
+                {
+                    "value": "s",
+                    "multiplicity": 1
+                },
+                {
+                    "value": "l",
+                    "multiplicity": 1
+                },
+                {
+                    "value": "*",
+                    "multiplicity": 2
+                },
+                {
+                    "value": "r",
+                    "multiplicity": 1
+                }
+            ]
+        },
+        {
+            "prefix": "fy",
+            "suffixes": [
+                {
+                    "value": "o",
+                    "multiplicity": 1
+                }
+            ]
+        },
+        {
+            "prefix": "yo",
+            "suffixes": [
+                {
+                    "value": "d",
+                    "multiplicity": 1
+                }
+            ]
+        },
+        {
+            "prefix": "od",
+            "suffixes": [
+                {
+                    "value": "o",
+                    "multiplicity": 1
+                }
+            ]
+        },
+        {
+            "prefix": "do",
+            "suffixes": [
+                {
+                    "value": "r",
+                    "multiplicity": 1
+                }
+            ]
+        },
+        {
+            "prefix": "*g",
+            "suffixes": [
+                {
+                    "value": "a",
+                    "multiplicity": 3
+                },
+                {
+                    "value": "r",
+                    "multiplicity": 1
+                },
+                {
+                    "value": "u",
+                    "multiplicity": 1
+                },
+                {
+                    "value": "i",
+                    "multiplicity": 1
+                }
+            ]
+        },
+        {
+            "prefix": "ga",
+            "suffixes": [
+                {
+                    "value": "r",
+                    "multiplicity": 1
+                },
+                {
+                    "value": "v",
+                    "multiplicity": 1
+                },
+                {
+                    "value": "e",
+                    "multiplicity": 1
+                },
+                {
+                    "value": "n",
+                    "multiplicity": 1
+                }
+            ]
+        },
+        {
+            "prefix": "et",
+            "suffixes": [
+                {
+                    "value": "h",
+                    "multiplicity": 1
+                },
+                {
+                    "value": "r",
+                    "multiplicity": 1
+                }
+            ]
+        },
+        {
+            "prefix": "vr",
+            "suffixes": [
+                {
+                    "value": "i",
+                    "multiplicity": 1
+                }
+            ]
+        },
+        {
+            "prefix": "gr",
+            "suffixes": [
+                {
+                    "value": "i",
+                    "multiplicity": 2
+                }
+            ]
+        },
+        {
+            "prefix": "if",
+            "suffixes": [
+                {
+                    "value": "f",
+                    "multiplicity": 1
+                }
+            ]
+        },
+        {
+            "prefix": "ff",
+            "suffixes": [
+                {
+                    "value": "i",
+                    "multiplicity": 1
+                }
+            ]
+        },
+        {
+            "prefix": "gu",
+            "suffixes": [
+                {
+                    "value": "i",
+                    "multiplicity": 1
+                }
+            ]
+        },
+        {
+            "prefix": "ui",
+            "suffixes": [
+                {
+                    "value": "n",
+                    "multiplicity": 3
+                }
+            ]
+        },
+        {
+            "prefix": "ve",
+            "suffixes": [
+                {
+                    "value": "r",
+                    "multiplicity": 3
+                },
+                {
+                    "value": "s",
+                    "multiplicity": 1
+                }
+            ]
+        },
+        {
+            "prefix": "er",
+            "suffixes": [
+                {
+                    "value": "e",
+                    "multiplicity": 4
+                },
+                {
+                    "value": "w",
+                    "multiplicity": 1
+                },
+                {
+                    "value": "v",
+                    "multiplicity": 1
+                },
+                {
+                    "value": "m",
+                    "multiplicity": 1
+                },
+                {
+                    "value": "o",
+                    "multiplicity": 1
+                },
+                {
+                    "value": "*",
+                    "multiplicity": 1
+                },
+                {
+                    "value": "y",
+                    "multiplicity": 1
+                },
+                {
+                    "value": "s",
+                    "multiplicity": 2
+                },
+                {
+                    "value": "i",
+                    "multiplicity": 4
+                },
+                {
+                    "value": "c",
+                    "multiplicity": 1
+                },
+                {
+                    "value": "a",
+                    "multiplicity": 3
+                },
+                {
+                    "value": "r",
+                    "multiplicity": 1
+                }
+            ]
+        },
+        {
+            "prefix": "ae",
+            "suffixes": [
+                {
+                    "value": "r",
+                    "multiplicity": 1
+                }
+            ]
+        },
+        {
+            "prefix": "rw",
+            "suffixes": [
+                {
+                    "value": "n",
+                    "multiplicity": 1
+                }
+            ]
+        },
+        {
+            "prefix": "wn",
+            "suffixes": [
+                {
+                    "value": "*",
+                    "multiplicity": 1
+                }
+            ]
+        },
+        {
+            "prefix": "gi",
+            "suffixes": [
+                {
+                    "value": "n",
+                    "multiplicity": 1
+                }
+            ]
+        },
+        {
+            "prefix": "rv",
+            "suffixes": [
+                {
+                    "value": "a",
+                    "multiplicity": 1
+                }
+            ]
+        },
+        {
+            "prefix": "*h",
+            "suffixes": [
+                {
+                    "value": "a",
+                    "multiplicity": 2
+                },
+                {
+                    "value": "e",
+                    "multiplicity": 2
+                }
+            ]
+        },
+        {
+            "prefix": "nn",
+            "suffixes": [
+                {
+                    "value": "e",
+                    "multiplicity": 1
+                }
+            ]
+        },
+        {
+            "prefix": "he",
+            "suffixes": [
+                {
+                    "value": "r",
+                    "multiplicity": 1
+                },
+                {
+                    "value": "s",
+                    "multiplicity": 1
+                },
+                {
+                    "value": "*",
+                    "multiplicity": 1
+                },
+                {
+                    "value": "u",
+                    "multiplicity": 1
+                },
+                {
+                    "value": "a",
+                    "multiplicity": 1
+                },
+                {
+                    "value": "l",
+                    "multiplicity": 1
+                },
+                {
+                    "value": "i",
+                    "multiplicity": 1
+                }
+            ]
+        },
+        {
+            "prefix": "rm",
+            "suffixes": [
+                {
+                    "value": "i",
+                    "multiplicity": 1
+                }
+            ]
+        },
+        {
+            "prefix": "mi",
+            "suffixes": [
+                {
+                    "value": "o",
+                    "multiplicity": 1
+                },
+                {
+                    "value": "r",
+                    "multiplicity": 2
+                }
+            ]
+        },
+        {
+            "prefix": "os",
+            "suffixes": [
+                {
+                    "value": "*",
+                    "multiplicity": 1
+                }
+            ]
+        },
+        {
+            "prefix": "*i",
+            "suffixes": [
+                {
+                    "value": "a",
+                    "multiplicity": 2
+                },
+                {
+                    "value": "g",
+                    "multiplicity": 2
+                },
+                {
+                    "value": "s",
+                    "multiplicity": 2
+                }
+            ]
+        },
+        {
+            "prefix": "ig",
+            "suffixes": [
+                {
+                    "value": "n",
+                    "multiplicity": 2
+                }
+            ]
+        },
+        {
+            "prefix": "gn",
+            "suffixes": [
+                {
+                    "value": "a",
+                    "multiplicity": 2
+                }
+            ]
+        },
+        {
+            "prefix": "ci",
+            "suffixes": [
+                {
+                    "value": "a",
+                    "multiplicity": 1
+                },
+                {
+                    "value": "e",
+                    "multiplicity": 1
+                }
+            ]
+        },
+        {
+            "prefix": "eu",
+            "suffixes": [
+                {
+                    "value": "l",
+                    "multiplicity": 2
+                },
+                {
+                    "value": "*",
+                    "multiplicity": 1
+                },
+                {
+                    "value": "s",
+                    "multiplicity": 2
+                }
+            ]
+        },
+        {
+            "prefix": "ul",
+            "suffixes": [
+                {
+                    "value": "t",
+                    "multiplicity": 2
+                },
+                {
+                    "value": "y",
+                    "multiplicity": 1
+                }
+            ]
+        },
+        {
+            "prefix": "t*",
+            "suffixes": [
+                {
+                    "value": "*",
+                    "multiplicity": 2
+                }
+            ]
+        },
+        {
+            "prefix": "so",
+            "suffixes": [
+                {
+                    "value": "l",
+                    "multiplicity": 1
+                },
+                {
+                    "value": "r",
+                    "multiplicity": 1
+                }
+            ]
+        },
+        {
+            "prefix": "ld",
+            "suffixes": [
+                {
+                    "value": "e",
+                    "multiplicity": 1
+                }
+            ]
+        },
+        {
+            "prefix": "*j",
+            "suffixes": [
+                {
+                    "value": "e",
+                    "multiplicity": 1
+                }
+            ]
+        },
+        {
+            "prefix": "je",
+            "suffixes": [
+                {
+                    "value": "s",
+                    "multiplicity": 1
+                }
+            ]
+        },
+        {
+            "prefix": "*k",
+            "suffixes": [
+                {
+                    "value": "a",
+                    "multiplicity": 2
+                },
+                {
+                    "value": "e",
+                    "multiplicity": 1
+                },
+                {
+                    "value": "o",
+                    "multiplicity": 1
+                },
+                {
+                    "value": "y",
+                    "multiplicity": 3
+                }
+            ]
+        },
+        {
+            "prefix": "ka",
+            "suffixes": [
+                {
+                    "value": "r",
+                    "multiplicity": 1
+                },
+                {
+                    "value": "t",
+                    "multiplicity": 1
+                }
+            ]
+        },
+        {
+            "prefix": "ns",
+            "suffixes": [
+                {
+                    "value": "a",
+                    "multiplicity": 1
+                }
+            ]
+        },
+        {
+            "prefix": "ko",
+            "suffixes": [
+                {
+                    "value": "r",
+                    "multiplicity": 1
+                }
+            ]
+        },
+        {
+            "prefix": "ky",
+            "suffixes": [
+                {
+                    "value": "l",
+                    "multiplicity": 1
+                },
+                {
+                    "value": "r",
+                    "multiplicity": 2
+                }
+            ]
+        },
+        {
+            "prefix": "yl",
+            "suffixes": [
+                {
+                    "value": "e",
+                    "multiplicity": 2
+                },
+                {
+                    "value": "i",
+                    "multiplicity": 1
+                }
+            ]
+        },
+        {
+            "prefix": "yr",
+            "suffixes": [
+                {
+                    "value": "a",
+                    "multiplicity": 4
+                },
+                {
+                    "value": "i",
+                    "multiplicity": 1
+                },
+                {
+                    "value": "*",
+                    "multiplicity": 1
+                }
+            ]
+        },
+        {
+            "prefix": "tr",
+            "suffixes": [
+                {
+                    "value": "i",
+                    "multiplicity": 2
+                },
+                {
+                    "value": "o",
+                    "multiplicity": 1
+                },
+                {
+                    "value": "e",
+                    "multiplicity": 1
+                }
+            ]
+        },
+        {
+            "prefix": "*l",
+            "suffixes": [
+                {
+                    "value": "e",
+                    "multiplicity": 3
+                },
+                {
+                    "value": "i",
+                    "multiplicity": 4
+                },
+                {
+                    "value": "u",
+                    "multiplicity": 1
+                },
+                {
+                    "value": "y",
+                    "multiplicity": 1
+                }
+            ]
+        },
+        {
+            "prefix": "il",
+            "suffixes": [
+                {
+                    "value": "a",
+                    "multiplicity": 1
+                },
+                {
+                    "value": "i",
+                    "multiplicity": 2
+                },
+                {
+                    "value": "l",
+                    "multiplicity": 1
+                }
+            ]
+        },
+        {
+            "prefix": "it",
+            "suffixes": [
+                {
+                    "value": "h",
+                    "multiplicity": 1
+                }
+            ]
+        },
+        {
+            "prefix": "lu",
+            "suffixes": [
+                {
+                    "value": "c",
+                    "multiplicity": 1
+                }
+            ]
+        },
+        {
+            "prefix": "uc",
+            "suffixes": [
+                {
+                    "value": "i",
+                    "multiplicity": 1
+                }
+            ]
+        },
+        {
+            "prefix": "*m",
+            "suffixes": [
+                {
+                    "value": "a",
+                    "multiplicity": 4
+                },
+                {
+                    "value": "i",
+                    "multiplicity": 2
+                },
+                {
+                    "value": "e",
+                    "multiplicity": 1
+                }
+            ]
+        },
+        {
+            "prefix": "hi",
+            "suffixes": [
+                {
+                    "value": "e",
+                    "multiplicity": 1
+                },
+                {
+                    "value": "m",
+                    "multiplicity": 1
+                },
+                {
+                    "value": "n",
+                    "multiplicity": 1
+                }
+            ]
+        },
+        {
+            "prefix": "u*",
+            "suffixes": [
+                {
+                    "value": "*",
+                    "multiplicity": 1
+                }
+            ]
+        },
+        {
+            "prefix": "ey",
+            "suffixes": [
+                {
+                    "value": "a",
+                    "multiplicity": 1
+                }
+            ]
+        },
+        {
+            "prefix": "ay",
+            "suffixes": [
+                {
+                    "value": "l",
+                    "multiplicity": 1
+                }
+            ]
+        },
+        {
+            "prefix": "me",
+            "suffixes": [
+                {
+                    "value": "i",
+                    "multiplicity": 1
+                }
+            ]
+        },
+        {
+            "prefix": "*n",
+            "suffixes": [
+                {
+                    "value": "a",
+                    "multiplicity": 1
+                },
+                {
+                    "value": "e",
+                    "multiplicity": 2
+                },
+                {
+                    "value": "u",
+                    "multiplicity": 1
+                },
+                {
+                    "value": "y",
+                    "multiplicity": 2
+                }
+            ]
+        },
+        {
+            "prefix": "nu",
+            "suffixes": [
+                {
+                    "value": "r",
+                    "multiplicity": 1
+                }
+            ]
+        },
+        {
+            "prefix": "yf",
+            "suffixes": [
+                {
+                    "value": "a",
+                    "multiplicity": 1
+                }
+            ]
+        },
+        {
+            "prefix": "fa",
+            "suffixes": [
+                {
+                    "value": "i",
+                    "multiplicity": 1
+                }
+            ]
+        },
+        {
+            "prefix": "*o",
+            "suffixes": [
+                {
+                    "value": "i",
+                    "multiplicity": 1
+                },
+                {
+                    "value": "r",
+                    "multiplicity": 4
+                },
+                {
+                    "value": "z",
+                    "multiplicity": 1
+                },
+                {
+                    "value": "l",
+                    "multiplicity": 1
+                }
+            ]
+        },
+        {
+            "prefix": "rp",
+            "suffixes": [
+                {
+                    "value": "h",
+                    "multiplicity": 1
+                }
+            ]
+        },
+        {
+            "prefix": "ph",
+            "suffixes": [
+                {
+                    "value": "e",
+                    "multiplicity": 2
+                },
+                {
+                    "value": "o",
+                    "multiplicity": 1
+                },
+                {
+                    "value": "i",
+                    "multiplicity": 2
+                },
+                {
+                    "value": "y",
+                    "multiplicity": 1
+                }
+            ]
+        },
+        {
+            "prefix": "oz",
+            "suffixes": [
+                {
+                    "value": "a",
+                    "multiplicity": 1
+                }
+            ]
+        },
+        {
+            "prefix": "za",
+            "suffixes": [
+                {
+                    "value": "r",
+                    "multiplicity": 2
+                },
+                {
+                    "value": "i",
+                    "multiplicity": 1
+                },
+                {
+                    "value": "n",
+                    "multiplicity": 1
+                }
+            ]
+        },
+        {
+            "prefix": "*p",
+            "suffixes": [
+                {
+                    "value": "e",
+                    "multiplicity": 4
+                },
+                {
+                    "value": "h",
+                    "multiplicity": 1
+                },
+                {
+                    "value": "r",
+                    "multiplicity": 1
+                },
+                {
+                    "value": "y",
+                    "multiplicity": 2
+                }
+            ]
+        },
+        {
+            "prefix": "eg",
+            "suffixes": [
+                {
+                    "value": "r",
+                    "multiplicity": 1
+                }
+            ]
+        },
+        {
+            "prefix": "rs",
+            "suffixes": [
+                {
+                    "value": "e",
+                    "multiplicity": 3
+                }
+            ]
+        },
+        {
+            "prefix": "ep",
+            "suffixes": [
+                {
+                    "value": "h",
+                    "multiplicity": 2
+                }
+            ]
+        },
+        {
+            "prefix": "ho",
+            "suffixes": [
+                {
+                    "value": "n",
+                    "multiplicity": 1
+                }
+            ]
+        },
+        {
+            "prefix": "yd",
+            "suffixes": [
+                {
+                    "value": "e",
+                    "multiplicity": 1
+                },
+                {
+                    "value": "d",
+                    "multiplicity": 1
+                }
+            ]
+        },
+        {
+            "prefix": "i*",
+            "suffixes": [
+                {
+                    "value": "*",
+                    "multiplicity": 2
+                }
+            ]
+        },
+        {
+            "prefix": "py",
+            "suffixes": [
+                {
+                    "value": "r",
+                    "multiplicity": 2
+                }
+            ]
+        },
+        {
+            "prefix": "*q",
+            "suffixes": [
+                {
+                    "value": "a",
+                    "multiplicity": 1
+                },
+                {
+                    "value": "u",
+                    "multiplicity": 2
+                }
+            ]
+        },
+        {
+            "prefix": "qa",
+            "suffixes": [
+                {
+                    "value": "d",
+                    "multiplicity": 1
+                }
+            ]
+        },
+        {
+            "prefix": "qu",
+            "suffixes": [
+                {
+                    "value": "i",
+                    "multiplicity": 2
+                }
+            ]
+        },
+        {
+            "prefix": "*r",
+            "suffixes": [
+                {
+                    "value": "a",
+                    "multiplicity": 1
+                },
+                {
+                    "value": "e",
+                    "multiplicity": 2
+                },
+                {
+                    "value": "h",
+                    "multiplicity": 2
+                },
+                {
+                    "value": "i",
+                    "multiplicity": 1
+                }
+            ]
+        },
+        {
+            "prefix": "em",
+            "suffixes": [
+                {
+                    "value": "u",
+                    "multiplicity": 1
+                }
+            ]
+        },
+        {
+            "prefix": "mu",
+            "suffixes": [
+                {
+                    "value": "s",
+                    "multiplicity": 1
+                }
+            ]
+        },
+        {
+            "prefix": "rh",
+            "suffixes": [
+                {
+                    "value": "y",
+                    "multiplicity": 2
+                }
+            ]
+        },
+        {
+            "prefix": "hy",
+            "suffixes": [
+                {
+                    "value": "a",
+                    "multiplicity": 1
+                },
+                {
+                    "value": "d",
+                    "multiplicity": 1
+                },
+                {
+                    "value": "r",
+                    "multiplicity": 1
+                }
+            ]
+        },
+        {
+            "prefix": "dd",
+            "suffixes": [
+                {
+                    "value": "e",
+                    "multiplicity": 1
+                }
+            ]
+        },
+        {
+            "prefix": "nf",
+            "suffixes": [
+                {
+                    "value": "r",
+                    "multiplicity": 1
+                }
+            ]
+        },
+        {
+            "prefix": "fr",
+            "suffixes": [
+                {
+                    "value": "e",
+                    "multiplicity": 1
+                }
+            ]
+        },
+        {
+            "prefix": "ew",
+            "suffixes": [
+                {
+                    "value": "*",
+                    "multiplicity": 1
+                }
+            ]
+        },
+        {
+            "prefix": "w*",
+            "suffixes": [
+                {
+                    "value": "*",
+                    "multiplicity": 1
+                }
+            ]
+        },
+        {
+            "prefix": "*s",
+            "suffixes": [
+                {
+                    "value": "a",
+                    "multiplicity": 4
+                },
+                {
+                    "value": "e",
+                    "multiplicity": 5
+                },
+                {
+                    "value": "i",
+                    "multiplicity": 1
+                },
+                {
+                    "value": "o",
+                    "multiplicity": 1
+                }
+            ]
+        },
+        {
+            "prefix": "ao",
+            "suffixes": [
+                {
+                    "value": "i",
+                    "multiplicity": 1
+                }
+            ]
+        },
+        {
+            "prefix": "eb",
+            "suffixes": [
+                {
+                    "value": "a",
+                    "multiplicity": 1
+                }
+            ]
+        },
+        {
+            "prefix": "ap",
+            "suffixes": [
+                {
+                    "value": "h",
+                    "multiplicity": 2
+                }
+            ]
+        },
+        {
+            "prefix": "im",
+            "suffixes": [
+                {
+                    "value": "*",
+                    "multiplicity": 1
+                }
+            ]
+        },
+        {
+            "prefix": "m*",
+            "suffixes": [
+                {
+                    "value": "*",
+                    "multiplicity": 1
+                }
+            ]
+        },
+        {
+            "prefix": "*t",
+            "suffixes": [
+                {
+                    "value": "a",
+                    "multiplicity": 1
+                },
+                {
+                    "value": "e",
+                    "multiplicity": 2
+                },
+                {
+                    "value": "h",
+                    "multiplicity": 3
+                },
+                {
+                    "value": "o",
+                    "multiplicity": 2
+                },
+                {
+                    "value": "r",
+                    "multiplicity": 2
+                }
+            ]
+        },
+        {
+            "prefix": "vi",
+            "suffixes": [
+                {
+                    "value": "s",
+                    "multiplicity": 1
+                }
+            ]
+        },
+        {
+            "prefix": "sh",
+            "suffixes": [
+                {
+                    "value": "*",
+                    "multiplicity": 1
+                }
+            ]
+        },
+        {
+            "prefix": "rl",
+            "suffixes": [
+                {
+                    "value": "a",
+                    "multiplicity": 1
+                }
+            ]
+        },
+        {
+            "prefix": "rr",
+            "suffixes": [
+                {
+                    "value": "a",
+                    "multiplicity": 1
+                }
+            ]
+        },
+        {
+            "prefix": "*u",
+            "suffixes": [
+                {
+                    "value": "r",
+                    "multiplicity": 2
+                },
+                {
+                    "value": "l",
+                    "multiplicity": 1
+                }
+            ]
+        },
+        {
+            "prefix": "*v",
+            "suffixes": [
+                {
+                    "value": "a",
+                    "multiplicity": 2
+                },
+                {
+                    "value": "e",
+                    "multiplicity": 1
+                }
+            ]
+        },
+        {
+            "prefix": "no",
+            "suffixes": [
+                {
+                    "value": "r",
+                    "multiplicity": 1
+                }
+            ]
+        },
+        {
+            "prefix": "*x",
+            "suffixes": [
+                {
+                    "value": "a",
+                    "multiplicity": 2
+                },
+                {
+                    "value": "y",
+                    "multiplicity": 1
+                }
+            ]
+        },
+        {
+            "prefix": "hu",
+            "suffixes": [
+                {
+                    "value": "s",
+                    "multiplicity": 1
+                }
+            ]
+        },
+        {
+            "prefix": "xy",
+            "suffixes": [
+                {
+                    "value": "l",
+                    "multiplicity": 1
+                }
+            ]
+        },
+        {
+            "prefix": "*y",
+            "suffixes": [
+                {
+                    "value": "a",
+                    "multiplicity": 2
+                },
+                {
+                    "value": "s",
+                    "multiplicity": 1
+                },
+                {
+                    "value": "e",
+                    "multiplicity": 3
+                }
+            ]
+        },
+        {
+            "prefix": "ki",
+            "suffixes": [
+                {
+                    "value": "r",
+                    "multiplicity": 1
+                }
+            ]
+        },
+        {
+            "prefix": "ye",
+            "suffixes": [
+                {
+                    "value": "i",
+                    "multiplicity": 1
+                },
+                {
+                    "value": "r",
+                    "multiplicity": 1
+                },
+                {
+                    "value": "s",
+                    "multiplicity": 1
+                }
+            ]
+        },
+        {
+            "prefix": "*z",
+            "suffixes": [
+                {
+                    "value": "a",
+                    "multiplicity": 3
+                },
+                {
+                    "value": "e",
+                    "multiplicity": 1
+                },
+                {
+                    "value": "o",
+                    "multiplicity": 2
+                }
+            ]
+        },
+        {
+            "prefix": "ze",
+            "suffixes": [
+                {
+                    "value": "p",
+                    "multiplicity": 1
+                }
+            ]
+        },
+        {
+            "prefix": "zo",
+            "suffixes": [
+                {
+                    "value": "r",
+                    "multiplicity": 2
+                }
+            ]
+        },
+        {
+            "prefix": "ek",
+            "suffixes": [
+                {
+                    "value": "*",
+                    "multiplicity": 1
+                }
+            ]
+        }
+    ]
+}

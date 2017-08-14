@@ -984,9 +984,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e54ed2c41233ce429028ae734bd6d56, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  category: Default
+  category: Fantasy
   maxCharacter: 15
-  sample: 
+  sample: "Abrielle\r\nAdair\r\nAdara\r\nAdriel\r\nAiyana\r\nAlissa\r\nAlixandra\r\nAltair\r\nAmara\r\nAnatola\r\nAnya\r\nArcadia\r\nAriadne\r\nArianwen\r\nAurelia\r\nAurelian\r\nAurelius\r\nAvalon\r\nAcalia\r\nAlaire\r\nAuristela\r\nBastian\r\nBreena\r\nBrielle\r\nBriallan\r\nBriseis\r\nCambria\r\nCara\r\nCarys\r\nCaspian\r\nCassia\r\nCassiel\r\nCassiopeia\r\nCassius\r\nChaniel\r\nCora\r\nCorbin\r\nCyprian\r\nDaire\r\nDarius\r\nDestin\r\nDrake\r\nDrystan\r\nDagen\r\nDevlin\r\nDevlyn\r\nEira\r\nEirian\r\nElysia\r\nEoin\r\nEvadne\r\nEliron\r\nEvanth\r\nFineas\r\nFinian\r\nFyodor\r\nGareth\r\nGavriel\r\nGriffin\r\nGuinevere\r\nGaerwn\r\nGinerva\r\nHadriel\r\nHannelore\r\nHermione\r\nHesperos\r\nIagan\r\nIanthe\r\nIgnacia\r\nIgnatius\r\nIseult\r\nIsolde\r\nJessalyn\r\nKara\r\nKerensa\r\nKorbin\r\nKyler\r\nKyra\r\nKatriel\r\nKyrielle\r\nLeala\r\nLeila\r\nLilith\r\nLiora\r\nLucien\r\nLyra\r\nLeira\r\nLiriene\r\nLiron\r\nMaia\r\nMarius\r\nMathieu\r\nMireille\r\nMireya\r\nMaylea\r\nMeira\r\nNatania\r\nNerys\r\nNuriel\r\nNyssa\r\nNeirin\r\nNyfain\r\nOisin\r\nOralie\r\nOrion\r\nOrpheus\r\nOzara\r\nOleisa\r\nOrinthea\r\nPeregrine\r\nPersephone\r\nPerseus\r\nPetronela\r\nPhelan\r\nPryderi\r\nPyralia\r\nPyralis\r\nQadira\r\nQuintessa\r\nQuinevere\r\nRaisa\r\nRemus\r\nRhyan\r\nRhydderch\r\nRiona\r\nRenfrew\r\nSaoirse\r\nSarai\r\nSebastian\r\nSeraphim\r\nSeraphina\r\nSirius\r\nSorcha\r\nSaira\r\nSarielle\r\nSerian\r\nSeverin\r\nTavish\r\nTearlach\r\nTerra\r\nThalia\r\nThaniel\r\nTheia\r\nTorian\r\nTorin\r\nTressa\r\nTristana\r\nUriela\r\nUrien\r\nUlyssia\r\nVanora\r\nVespera\r\nVasilis\r\nXanthus\r\nXara\r\nXylia\r\nYadira\r\nYseult\r\nYakira\r\nYeira\r\nYeriel\r\nYestin\r\nZaira\r\nZephyr\r\nZora\r\nZorion\r\nZaniel\r\nZarek"
 --- !u!1 &658586656
 GameObject:
   m_ObjectHideFlags: 0
