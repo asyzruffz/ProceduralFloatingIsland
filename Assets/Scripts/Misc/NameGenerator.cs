@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class NameGenerator : MonoBehaviour {
 
@@ -26,8 +27,9 @@ public class NameGenerator : MonoBehaviour {
 
             if (currentSuffix.value != "*") {
                 result += currentSuffix.value;
-                currentPrefix.Add (currentSuffix.value[0]);
             }
+
+            currentPrefix.Add (currentSuffix.value[0]);
         } while (currentSuffix.value != "*" && result.Length < maxCharacter);
 
         return result;
@@ -140,12 +142,10 @@ public class Prefix {
     }
 
     public void Add (char newChar) {
-        //char outChar = value[0];
         for (int i = 0; i < length - 1; i++) {
             value[i] = value[i + 1];
         }
         value[length - 1] = newChar;
-        //return outChar;
     }
 }
 
