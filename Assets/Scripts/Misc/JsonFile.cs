@@ -1,5 +1,4 @@
 ﻿using System.IO;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class JsonFile {
@@ -27,7 +26,7 @@ public class JsonFile {
         return Directory.Exists (folderPath) && IsAnyFile;
     }
 
-    public static void Save (string fileName, string folder, GameSave gameSave) {
+    public static void Save<T> (string fileName, string folder, T saveData) {
         string folderPath = Application.persistentDataPath + "/" + folder;
         string filePath = folderPath + "/" + fileName;
 
@@ -35,16 +34,16 @@ public class JsonFile {
             Directory.CreateDirectory (folderPath);
         }
 
-        string jsonData = JsonUtility.ToJson (gameSave);
+        string jsonData = JsonUtility.ToJson (saveData, true);
         File.WriteAllText (filePath, jsonData);
     }
 	
-	public static void Load (string fileName, string folder, ref GameSave gameSave) {
+	public static void Load<T> (string fileName, string folder, ref T saveData) {
         string path = Application.persistentDataPath + "/" + folder + "/" + fileName;
 
         if (File.Exists (path)) {
             string jsonData = File.ReadAllText (path);
-            gameSave = JsonUtility.FromJson<GameSave> (jsonData);
+            saveData = JsonUtility.FromJson<T> (jsonData);
         } else {
             Debug.LogWarning (fileName + " not found in the " + folder + " folder!");
         }

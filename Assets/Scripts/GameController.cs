@@ -25,7 +25,13 @@ public class GameController : Singleton<GameController> {
 	}
 
     public void CreateNewGame () {
-        saveData.Name = "Arbitrary";
+        string username;
+        do {
+            username = GetComponent<NameGenerator> ().GenerateName ();
+            username = char.ToUpper (username[0]) + username.Substring (1); // Capitalize first letter
+        } while (username.Length > 0 && username.Length < 4);
+
+        saveData.Name = username.Length > 0 ? username : "Anonymous";
         saveData.Seed = DateTime.Now.ToString ("yy-MM-dd-HH-mm-ss");
     }
 
