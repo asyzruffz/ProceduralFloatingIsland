@@ -87,6 +87,10 @@ public class ScrollView : MonoBehaviour {
             snapped = false;
         }
     }
+
+    public int GetCurrentIndexViewed () {
+        return currentIndex;
+    }
 }
 
 [System.Serializable]

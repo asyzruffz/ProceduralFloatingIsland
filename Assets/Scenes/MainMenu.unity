@@ -287,7 +287,7 @@ GameObject:
   - component: {fileID: 189115211}
   - component: {fileID: 189115213}
   m_Layer: 0
-  m_Name: BackView
+  m_Name: BackViewing
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -595,8 +595,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1181647898}
-        m_MethodName: SetItem1Display
-        m_Mode: 6
+        m_MethodName: HideItem
+        m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -606,8 +606,8 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
       - m_Target: {fileID: 658586661}
-        m_MethodName: SetItem1Display
-        m_Mode: 6
+        m_MethodName: ShowItem
+        m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -958,7 +958,7 @@ MonoBehaviour:
     Seed: 
     TimeLastSaved: 
   slotsHandler: {fileID: 951453334}
-  portableCanvas: {fileID: 1181647896}
+  portableCanvas: {fileID: 1181647898}
 --- !u!4 &600344855
 Transform:
   m_ObjectHideFlags: 0
@@ -1095,11 +1095,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cc1a86ea70a36e44cb521cd8f4c9a3f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  UIItem1: {fileID: 1660810398}
-  UIItem2: {fileID: 0}
-  UIItem3: {fileID: 0}
-  UIItem4: {fileID: 0}
-  UIItem5: {fileID: 0}
+  UIItems:
+  - {fileID: 1660810398}
 --- !u!1 &670361269
 GameObject:
   m_ObjectHideFlags: 0
@@ -1641,8 +1638,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 658586661}
-        m_MethodName: SetItem1Display
-        m_Mode: 6
+        m_MethodName: HideItem
+        m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -1663,8 +1660,8 @@ MonoBehaviour:
           m_BoolArgument: 1
         m_CallState: 2
       - m_Target: {fileID: 1181647898}
-        m_MethodName: SetItem1Display
-        m_Mode: 6
+        m_MethodName: ShowItem
+        m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -2073,11 +2070,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cc1a86ea70a36e44cb521cd8f4c9a3f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  UIItem1: {fileID: 824945723}
-  UIItem2: {fileID: 872372995}
-  UIItem3: {fileID: 0}
-  UIItem4: {fileID: 0}
-  UIItem5: {fileID: 0}
+  UIItems:
+  - {fileID: 824945723}
+  - {fileID: 872372995}
 --- !u!114 &1181647899
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2268,8 +2263,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 658586661}
-        m_MethodName: SetItem1Display
-        m_Mode: 6
+        m_MethodName: HideItem
+        m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -2279,12 +2274,12 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
       - m_Target: {fileID: 1181647898}
-        m_MethodName: SetItem2Display
-        m_Mode: 6
+        m_MethodName: ShowItem
+        m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
+          m_IntArgument: 1
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 1
@@ -2626,8 +2621,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 658586661}
-        m_MethodName: SetItem1Display
-        m_Mode: 6
+        m_MethodName: HideItem
+        m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -2648,8 +2643,8 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
       - m_Target: {fileID: 1181647898}
-        m_MethodName: SetItem1Display
-        m_Mode: 6
+        m_MethodName: ShowItem
+        m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -2972,19 +2967,19 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1181647898}
-        m_MethodName: SetItem2Display
-        m_Mode: 6
+        m_MethodName: HideItem
+        m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
+          m_IntArgument: 1
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
       - m_Target: {fileID: 658586661}
-        m_MethodName: SetItem1Display
-        m_Mode: 6
+        m_MethodName: ShowItem
+        m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine

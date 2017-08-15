@@ -5,7 +5,7 @@ using System.Linq;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-[RequireComponent (typeof (IslandMeshGenerator))]
+[RequireComponent (typeof (IslandMeshGenerator), typeof (ElevationGenerator))]
 public class IslandGenerator : MonoBehaviour {
 
     public bool autoUpdate = true;

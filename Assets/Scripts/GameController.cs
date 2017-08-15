@@ -5,12 +5,16 @@ using UnityEngine.SceneManagement;
 
 public class GameController : Singleton<GameController> {
 
+    [Header ("Save Info")]
     public string saveFolder = "Saves";
     public GameSave saveData;
 
+    [Header ("Gameplay Info")]
+    public int level;
+
     [Header ("References")]
     public SaveSlots slotsHandler;
-    public GameObject portableCanvas;
+    public MenuDisplay portableCanvas;
 
     protected override void SingletonAwake () {
         DontDestroyOnLoad (gameObject);
@@ -41,7 +45,15 @@ public class GameController : Singleton<GameController> {
 
     void GoToSelectLevel () {
         SceneManager.LoadScene ("LevelSelection");
-        portableCanvas.SetActive (false);
+        portableCanvas.HideItem (0);
+    }
+
+    public void GoToIsland () {
+        SceneManager.LoadScene ("LoadingScreen");
+    }
+
+    public void BackToMenu () {
+        SceneManager.LoadScene ("MainMenu");
     }
 
     public void ExitGame () {
