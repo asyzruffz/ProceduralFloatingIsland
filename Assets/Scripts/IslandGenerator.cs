@@ -1,9 +1,11 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
-[RequireComponent (typeof (IslandMeshGenerator))]
+[RequireComponent (typeof (IslandMeshGenerator), typeof (ElevationGenerator))]
 public class IslandGenerator : MonoBehaviour {
 
     public bool autoUpdate = true;
@@ -29,69 +31,173 @@ public class IslandGenerator : MonoBehaviour {
     LandMap map;
     List<IsleInfo> islands = new List<IsleInfo>();
     List<SectorInfo> sectors = new List<SectorInfo> ();
+    bool finished = false;
 
-    void Start () {
-        GenerateIsland ();
-    }
-	
     public void GenerateIsland () {
-		if (useRandomSeed) {
-			seed = System.DateTime.Now.ToString ();
-		}
+        #region Generate in Editor
+        if (!Application.isPlaying) {
+            finished = false;
 
+            if (useRandomSeed) {
+                seed = DateTime.Now.ToString ();
+            }
+
+            Random.State oldState = Random.state;
+            int seedHash = seed.GetHashCode ();
+            Random.InitState (seedHash);
+
+            for (int i = 0; i < randCol.Length; i++) {
+                randCol[i] = Random.ColorHSV (0, 1, 0, 1, 0.5f, 1);
+            }
+
+            map = new LandMap (islandData.maxWidth, islandData.maxHeight);
+
+            // Fill the map randomly with 0s and 1s based on percentage fill
+            map.RandomFillMap (islandData.randomFillPercent);
+
+            // Smooth the map 5 times
+            map.SmoothMap (5);
+
+            meshGen = GetComponent<IslandMeshGenerator> ();
+
+            // Find separated regions to form an island
+            List<MapRegion> regions = map.GetRegions ();
+
+            // Create separate islands
+            SeparateIslands (regions);
+
+            if (shouldElevate) {
+                int highestPeak = 0;
+                foreach (IsleInfo island in islands) {
+                    int peak = island.surfaceMeshDetail.localPeak;
+                    highestPeak = peak > highestPeak ? peak : highestPeak;
+                }
+                foreach (IsleInfo island in islands) {
+                    island.surfaceMeshDetail.NormalizeGradientMap (highestPeak);
+                }
+
+                ElevationGenerator elevGen = GetComponent<ElevationGenerator> ();
+                elevGen.elevateSurface (islands, islandData.altitude, islandData.mountainCurve, surfaceNoiseData, seedHash, 0); // elevate hills on the surface
+                elevGen.elevateSurface (islands, -islandData.stalactite, islandData.bellyCurve, undersideNoiseData, seedHash, 2); // extend stakes at surface below
+            }
+
+            // Find strategic locations in each region
+            List<MapRegion> zones = map.GetZones (regions);
+            SpliceTerritory (zones);
+
+            SetColliders ();
+
+            PlacementGenerator placement = GetComponent<PlacementGenerator> ();
+            if (placement && decorateTerrain) {
+                placement.GenerateTrees (islands);
+                placement.GenerateSectorsContent (sectors);
+            } else if (placement) {
+                placement.GeneratePlacements (islands);
+                placement.GenerateSectorsContent (sectors);
+            }
+
+            if (flatShading) {
+                foreach (IsleInfo island in islands) {
+                    for (int surfaceIndex = 0; surfaceIndex < 3; surfaceIndex++) {
+                        MeshFilter mf = island.GetSurfaceMesh (surfaceIndex);
+                        float oldVertCount = mf.sharedMesh.vertexCount;
+                        mf.sharedMesh = FlatShade.DuplicateSharedVertex (mf.sharedMesh);
+                        float newVertCount = mf.sharedMesh.vertexCount;
+                        //Debug.Log (mf.transform.parent.name + "." + mf.transform.name + " new vertices are at " + (newVertCount / oldVertCount * 100) + "% with " + newVertCount + " verts.");
+                    }
+                }
+            }
+
+            Random.state = oldState;
+
+            finished = true;
+            return;
+        }
+        #endregion
+
+        StartCoroutine (GenerateInProgress ());
+    }
+
+    IEnumerator GenerateInProgress () {
+        finished = false;
+
+        if (useRandomSeed) {
+            seed = DateTime.Now.ToString ();
+        }
+
+        Random.State oldState = Random.state;
         int seedHash = seed.GetHashCode ();
-        System.Random pseudoRandom = new System.Random (seedHash);
+        Random.InitState (seedHash);
+
+        yield return new WaitForEndOfFrame ();
 
         for (int i = 0; i < randCol.Length; i++) {
             randCol[i] = Random.ColorHSV (0, 1, 0, 1, 0.5f, 1);
         }
 
+        yield return new WaitForEndOfFrame ();
+
         map = new LandMap (islandData.maxWidth, islandData.maxHeight);
 
-		// Fill the map randomly with 0s and 1s based on percentage fill
-		map.RandomFillMap (ref pseudoRandom, islandData.randomFillPercent);
+        // Fill the map randomly with 0s and 1s based on percentage fill
+        map.RandomFillMap (islandData.randomFillPercent);
 
         // Smooth the map 5 times
-		map.SmoothMap (5);
+        map.SmoothMap (5);
+
+        yield return new WaitForEndOfFrame ();
 
         meshGen = GetComponent<IslandMeshGenerator> ();
 
         // Find separated regions to form an island
         List<MapRegion> regions = map.GetRegions ();
 
-		// Create separate islands
-		SeparateIslands (regions);
+        yield return new WaitForEndOfFrame ();
+
+        // Create separate islands
+        SeparateIslands (regions);
+
+        yield return new WaitForEndOfFrame ();
 
         if (shouldElevate) {
-			int highestPeak = 0;
+            int highestPeak = 0;
             foreach (IsleInfo island in islands) {
-				int peak = island.surfaceMeshDetail.localPeak;
-				highestPeak = peak > highestPeak ? peak : highestPeak;
+                int peak = island.surfaceMeshDetail.localPeak;
+                highestPeak = peak > highestPeak ? peak : highestPeak;
             }
-			foreach (IsleInfo island in islands) {
-				island.surfaceMeshDetail.NormalizeGradientMap (highestPeak);
-			}
+            foreach (IsleInfo island in islands) {
+                island.surfaceMeshDetail.NormalizeGradientMap (highestPeak);
+            }
 
-			ElevationGenerator elevGen = GetComponent<ElevationGenerator> ();
+            ElevationGenerator elevGen = GetComponent<ElevationGenerator> ();
             elevGen.elevateSurface (islands, islandData.altitude, islandData.mountainCurve, surfaceNoiseData, seedHash, 0); // elevate hills on the surface
             elevGen.elevateSurface (islands, -islandData.stalactite, islandData.bellyCurve, undersideNoiseData, seedHash, 2); // extend stakes at surface below
         }
+
+        yield return new WaitForEndOfFrame ();
 
         // Find strategic locations in each region
         List<MapRegion> zones = map.GetZones (regions);
         SpliceTerritory (zones);
 
+        yield return new WaitForEndOfFrame ();
+
         SetColliders ();
 
-		PlacementGenerator placement = GetComponent<PlacementGenerator> ();
-		if (placement && decorateTerrain) {
-			placement.GenerateTrees (islands, ref pseudoRandom);
-		} else if (placement) {
+        yield return new WaitForEndOfFrame ();
+
+        PlacementGenerator placement = GetComponent<PlacementGenerator> ();
+        if (placement && decorateTerrain) {
+            placement.GenerateTrees (islands);
+            placement.GenerateSectorsContent (sectors);
+        } else if (placement) {
             placement.GeneratePlacements (islands);
-            placement.GenerateSectorsContent (sectors, ref pseudoRandom);
+            placement.GenerateSectorsContent (sectors);
         }
 
-		if (flatShading) {
+        yield return new WaitForEndOfFrame ();
+
+        if (flatShading) {
             foreach (IsleInfo island in islands) {
                 for (int surfaceIndex = 0; surfaceIndex < 3; surfaceIndex++) {
                     MeshFilter mf = island.GetSurfaceMesh (surfaceIndex);
@@ -102,8 +208,13 @@ public class IslandGenerator : MonoBehaviour {
                 }
             }
         }
+
+        Random.state = oldState;
+
+        finished = true;
+        yield return null;
     }
-	
+
     void SeparateIslands (List<MapRegion> islandRegions) {
         // Based on regions, create separate child GameObject for each island
 
@@ -112,27 +223,27 @@ public class IslandGenerator : MonoBehaviour {
         var childList = transform.Cast<Transform> ().ToList ();
         foreach (Transform island in childList) {
 #if UNITY_EDITOR
-			////////////////////////////////////////////////////////////  for debugging, only for in editor
-			if (!Application.isPlaying) {                           ////
+            ////////////////////////////////////////////////////////////  for debugging, only for in editor
+            if (!Application.isPlaying) {                           ////
                 UnityEditor.EditorApplication.delayCall += () =>    ////
                 {                                                   ////
-					if (island) {									////
-						DestroyImmediate (island.gameObject);       ////
-					}												////
+                    if (island) {                                   ////
+                        DestroyImmediate (island.gameObject);       ////
+                    }												////
                 };                                                  ////
             } else {                                                ////
-			////////////////////////////////////////////////////////////
+            ////////////////////////////////////////////////////////////
 #endif
-				Destroy (island.gameObject);
+                Destroy (island.gameObject);
 #if UNITY_EDITOR
-			////////////////////////////////////////////////////////////
-			}                                                       ////
-			////////////////////////////////////////////////////////////
+            ////////////////////////////////////////////////////////////
+            }                                                       ////
+            ////////////////////////////////////////////////////////////
 #endif
-		}
+        }
 
         int islandCount = 1;
-        foreach(MapRegion region in islandRegions) {
+        foreach (MapRegion region in islandRegions) {
             IsleInfo isle = new IsleInfo ();
             isle.id = islandCount;
 
@@ -142,7 +253,7 @@ public class IslandGenerator : MonoBehaviour {
             isle.gameObject.transform.localRotation = Quaternion.identity;
             isle.offset = region.GetCentre () * islandData.tileSize;
             isle.gameObject.transform.localPosition = isle.offset;
-            
+
             // Child game object of isle to store surface
             GameObject surface = AddChildMesh ("Surface", isle.gameObject.transform, withCollider);
             // Child game object of isle to store wall
@@ -150,9 +261,9 @@ public class IslandGenerator : MonoBehaviour {
             // Child game object of isle to store underside
             GameObject underside = AddChildMesh ("Underside", isle.gameObject.transform);
             underside.transform.position += Vector3.up * -islandData.depth;
-            
+
             List<Mesh> meshes = meshGen.GenerateIslandMesh (region, isle, islandData.tileSize, islandData.depth);
-            
+
             // Mesh for surface
             surface.GetComponent<MeshFilter> ().mesh = meshes[0];
             surface.GetComponent<MeshRenderer> ().material = islandData.grassMaterial;
@@ -164,7 +275,7 @@ public class IslandGenerator : MonoBehaviour {
             // Mesh for underside
             underside.GetComponent<MeshFilter> ().mesh = meshes[2];
             underside.GetComponent<MeshRenderer> ().material = islandData.dirtMaterial;
-			
+
             islands.Add (isle);
             islandCount++;
         }
@@ -230,6 +341,10 @@ public class IslandGenerator : MonoBehaviour {
 		}
 	}
 	
+    public bool IsDone () {
+        return finished;
+    }
+
     void OnValuesUpdated () {
         if(!Application.isPlaying) {
             GenerateIsland ();

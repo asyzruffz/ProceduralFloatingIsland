@@ -14,9 +14,9 @@ MonoBehaviour:
   autoUpdate: 0
   maxWidth: 100
   maxHeight: 100
-  tileSize: 1
+  tileSize: 2
   depth: 0.5
-  altitude: 20
+  altitude: 40
   mountainCurve:
     serializedVersion: 2
     m_Curve:
@@ -47,7 +47,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 0
-  stalactite: 15
+  stalactite: 30
   bellyCurve:
     serializedVersion: 2
     m_Curve:

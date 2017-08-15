@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 public class LandMap {
@@ -17,7 +16,7 @@ public class LandMap {
 		spots = new MapPoint[width, length];
 	}
 
-	public void RandomFillMap (ref System.Random randomizer, float fillPercent) {
+	public void RandomFillMap (float fillPercent) {
 		// Fill the map randomly with 0s and 1s based on percentage fill
 		
 		for (int x = 0; x < width; x++) {
@@ -25,7 +24,7 @@ public class LandMap {
 				if (x == 0 || y == 0 || x == width - 1 || y == length - 1) {
 					spots[x, y].filled = false;
 				} else {
-					spots[x, y].filled = (randomizer.Next (0, 100) < fillPercent);
+					spots[x, y].filled = (Random.Range (0, 100) < fillPercent);
 				}
 			}
 		}
