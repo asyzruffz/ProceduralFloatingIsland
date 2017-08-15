@@ -298,6 +298,8 @@ public class IslandGenerator : MonoBehaviour {
     }
 
     void SpliceTerritory (List<MapRegion> zones) {
+        sectors.Clear ();
+
         GameObject territories = new GameObject ("Territories");
         territories.transform.parent = transform;
         territories.transform.localPosition = Vector3.zero;
