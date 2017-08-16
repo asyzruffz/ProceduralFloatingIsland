@@ -4,8 +4,7 @@ using UnityEngine;
 
 [CreateAssetMenu (fileName = "SpawnPoint", menuName = "Procedural/Sector/Spawn Point")]
 public class SpawnPoint : SectorArrangement {
-
-    public int amount = 1;
+    
     public GameObject objectToSpawn;
     public Vector3 offset;
     public bool childOfLevel = true;

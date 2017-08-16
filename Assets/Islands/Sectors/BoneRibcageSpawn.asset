@@ -9,11 +9,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: aab0c8104ce1a884f928954f3c5dfa6d, type: 3}
-  m_Name: PlayerSpawnPoint
+  m_Name: BoneRibcageSpawn
   m_EditorClassIdentifier: 
-  description: Spawns player
+  description: 
   type: 1
-  amount: 1
-  objectToSpawn: {fileID: 100000, guid: 5e9e851c0e142814dac026a256ba2ac0, type: 2}
-  offset: {x: 0, y: 10, z: 0}
-  childOfLevel: 0
+  objectToSpawn: {fileID: 1531093254067106, guid: 098e3e5e2f58cea43addd7126853b878,
+    type: 2}
+  offset: {x: 0, y: 1, z: 0}
+  childOfLevel: 1

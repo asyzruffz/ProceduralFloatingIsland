@@ -1,0 +1,73 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 29cbc1c6195ecf24c8355fe3b4704e38, type: 3}
+  m_Name: TestIsland
+  m_EditorClassIdentifier: 
+  autoUpdate: 0
+  maxWidth: 110
+  maxHeight: 120
+  tileSize: 2
+  depth: 1
+  altitude: 80
+  mountainCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 0
+      inSlope: 0.31740192
+      outSlope: 0.31740192
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 0.26681304
+      value: 0.01885643
+      inSlope: -0.0005878136
+      outSlope: -0.0005878136
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 0.75872946
+      value: 0.53039354
+      inSlope: 2.4224367
+      outSlope: 2.4224367
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
+  stalactite: 60
+  bellyCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 0
+      inSlope: 2.8499997
+      outSlope: 2.8499997
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
+  randomFillPercent: 54
+  grassMaterial: {fileID: 2100000, guid: bc6af6cb203edf64eb6deed573069006, type: 2}
+  wallMaterial: {fileID: 2100000, guid: 16e13b2712122104fbc36cce44b59899, type: 2}
+  dirtMaterial: {fileID: 2100000, guid: 16e13b2712122104fbc36cce44b59899, type: 2}
+  invisibleMaterial: {fileID: 2100000, guid: 8c59477d3c3621c45aa71d78df162759, type: 2}
