@@ -11,6 +11,9 @@ public class GenerateOnStart : MonoBehaviour {
 
     void Start () {
         clock.Start ();
+        if (GameController.Instance) {
+            generator.seed = GameController.Instance.saveData.Seed;
+        }
         generator.GenerateIsland ();
     }
 

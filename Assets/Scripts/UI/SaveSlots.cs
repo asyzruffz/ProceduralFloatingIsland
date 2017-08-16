@@ -53,6 +53,8 @@ public class SaveSlots : MonoBehaviour {
         Button slotButton = newSlot.GetComponent<Button> ();
         slotButton.onClick.AddListener (() => { SaveToFile (CreateFileName ()); });
 
+        Destroy (GetComponentsInChildren<Button> ()[1].gameObject); // Remove the delete button for this slot
+
         slots.Add (newSlot);
     }
 

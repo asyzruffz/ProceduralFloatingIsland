@@ -49,4 +49,14 @@ public class JsonFile {
         }
     }
 
+    public static void Delete (string fileName, string folder) {
+        string path = Application.persistentDataPath + "/" + folder + "/" + fileName;
+
+        if (File.Exists (path)) {
+            File.Delete (path);
+        } else {
+            Debug.LogWarning (fileName + " not found in the " + folder + " folder!");
+        }
+    }
+
 }
