@@ -482,7 +482,26 @@ MonoBehaviour:
   items:
   - {fileID: 106782, guid: 1d605f00ad99f2940b7ce236b8b85b1b, type: 2}
   - {fileID: 169886, guid: 932ba6a9fb6dff447bb4d3eaf88640fd, type: 2}
-  sectorTypes: []
+  sectorTypes:
+  - {fileID: 11400000, guid: 90ce3baf56948c84ab4362cb5e786578, type: 2}
+  - {fileID: 11400000, guid: c1f37680d4ce89e448a4563f9eeb16a5, type: 2}
+  - {fileID: 11400000, guid: 4087bae2fc79c5c48bf0097086bfcf65, type: 2}
+  - {fileID: 11400000, guid: dd15248f81051ca499e30bbe8bf27e48, type: 2}
+  - {fileID: 11400000, guid: bb263dd8b9f252941b610563c2159835, type: 2}
+  - {fileID: 11400000, guid: 4087bae2fc79c5c48bf0097086bfcf65, type: 2}
+  - {fileID: 11400000, guid: 4087bae2fc79c5c48bf0097086bfcf65, type: 2}
+  - {fileID: 11400000, guid: d4bd0d14bb9d4b443b8af62171b8eb33, type: 2}
+  - {fileID: 11400000, guid: d4bd0d14bb9d4b443b8af62171b8eb33, type: 2}
+  - {fileID: 11400000, guid: d4bd0d14bb9d4b443b8af62171b8eb33, type: 2}
+  - {fileID: 11400000, guid: d4bd0d14bb9d4b443b8af62171b8eb33, type: 2}
+  - {fileID: 11400000, guid: d4bd0d14bb9d4b443b8af62171b8eb33, type: 2}
+  - {fileID: 11400000, guid: d4bd0d14bb9d4b443b8af62171b8eb33, type: 2}
+  - {fileID: 11400000, guid: d4bd0d14bb9d4b443b8af62171b8eb33, type: 2}
+  - {fileID: 11400000, guid: d4bd0d14bb9d4b443b8af62171b8eb33, type: 2}
+  - {fileID: 11400000, guid: d4bd0d14bb9d4b443b8af62171b8eb33, type: 2}
+  - {fileID: 11400000, guid: d4bd0d14bb9d4b443b8af62171b8eb33, type: 2}
+  - {fileID: 11400000, guid: d4bd0d14bb9d4b443b8af62171b8eb33, type: 2}
+  - {fileID: 11400000, guid: d4bd0d14bb9d4b443b8af62171b8eb33, type: 2}
 --- !u!114 &223758521
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -957,6 +976,7 @@ MonoBehaviour:
     Name: 
     Seed: 
     TimeLastSaved: 
+  level: 0
   slotsHandler: {fileID: 951453334}
   portableCanvas: {fileID: 1181647898}
 --- !u!4 &600344855
