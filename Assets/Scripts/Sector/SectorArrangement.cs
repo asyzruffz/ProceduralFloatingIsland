@@ -21,5 +21,5 @@ public class SectorArrangement : ScriptableObject {
 public enum SectorType {
     Blank,
     SpawnPoint,
-    Forest
+    SpawnScattered
 }

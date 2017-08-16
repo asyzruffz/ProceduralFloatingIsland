@@ -92,7 +92,7 @@ public class IslandGenerator : MonoBehaviour {
                 placement.GenerateTrees (islands);
                 placement.GenerateSectorsContent (sectors);
             } else if (placement) {
-                placement.GeneratePlacements (islands);
+                //placement.GeneratePlacements (islands);
                 placement.GenerateSectorsContent (sectors);
             }
 
@@ -191,7 +191,7 @@ public class IslandGenerator : MonoBehaviour {
             placement.GenerateTrees (islands);
             placement.GenerateSectorsContent (sectors);
         } else if (placement) {
-            placement.GeneratePlacements (islands);
+            //placement.GeneratePlacements (islands);
             placement.GenerateSectorsContent (sectors);
         }
 
