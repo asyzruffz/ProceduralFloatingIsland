@@ -33,8 +33,7 @@ namespace UnityStandardAssets.Utility
 
             if (IncreaseCurve == null)
             {
-                throw new Exception(
-                    "FOVKick Increase curve is null, please define the curve for the field of view kicks");
+                throw new Exception("FOVKick Increase curve is null, please define the curve for the field of view kicks");
             }
         }
 
