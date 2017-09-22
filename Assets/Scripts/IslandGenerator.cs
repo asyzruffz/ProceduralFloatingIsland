@@ -33,8 +33,20 @@ public class IslandGenerator : MonoBehaviour {
     List<SectorInfo> sectors = new List<SectorInfo> ();
     bool finished = false;
 
-    public void GenerateIsland () {
+    public void GenerateIsland (bool inGame = true) {
         #region Generate in Editor
+#if UNITY_EDITOR
+        if (!inGame) {
+            GenerateInEditor ();
+            return;
+        }
+#endif
+        #endregion
+
+        StartCoroutine (GenerateInProgress ());
+    }
+    
+    void GenerateInEditor () {
         if (!Application.isPlaying) {
             finished = false;
 
@@ -109,13 +121,7 @@ public class IslandGenerator : MonoBehaviour {
             }
 
             Random.state = oldState;
-
-            finished = true;
-            return;
         }
-        #endregion
-
-        StartCoroutine (GenerateInProgress ());
     }
 
     IEnumerator GenerateInProgress () {

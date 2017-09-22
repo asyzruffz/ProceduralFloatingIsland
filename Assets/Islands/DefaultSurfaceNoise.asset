@@ -11,7 +11,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 680d863eef139f9488672a3d2e1f1196, type: 3}
   m_Name: DefaultSurfaceNoise
   m_EditorClassIdentifier: 
-  autoUpdate: 1
+  autoUpdate: 0
   scale: 15
   octave: 3
   lacunarity: 2

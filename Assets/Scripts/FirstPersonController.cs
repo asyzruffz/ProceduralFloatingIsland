@@ -60,6 +60,20 @@ public class FirstPersonController : MonoBehaviour
         }
 
         m_PreviouslyGrounded = m_CharacterController.isGrounded;
+
+        if (Input.GetButtonDown ("Interact")) {
+            // We create a ray
+            Ray ray = m_Camera.ScreenPointToRay (Input.mousePosition);
+            RaycastHit hit;
+
+            // If the ray hits
+            if (Physics.Raycast (ray, out hit, 100)) {
+                Interactable interactable = hit.collider.transform.parent.GetComponentInChildren<Interactable> ();
+                if (interactable) {
+                    interactable.InteractFrom (hit.distance);
+                }
+            }
+        }
     }
     
     void FixedUpdate() {
