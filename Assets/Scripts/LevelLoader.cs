@@ -8,15 +8,19 @@ public class LevelLoader : MonoBehaviour {
     ExecutionTimer clock = new ExecutionTimer ();
 
     void Start () {
-        // #TODO Set which level to load
+        string levelToPlay = SelectLevel ();
 
         clock.Start ();
-        StartCoroutine (LoadGameLevelWithProgress ("GameplayTest"));
+        StartCoroutine (LoadGameLevelWithProgress (levelToPlay));
     }
 	
-	void Update () {
-        
-	}
+	string SelectLevel () {
+        if (GameController.Instance.level == 0) {
+            return "Tutorial";
+        } else {
+            return "GameplayTest";
+        }
+    }
 
     IEnumerator LoadGameLevelWithProgress (string levelName) {
         yield return new WaitForSeconds (0.5f);

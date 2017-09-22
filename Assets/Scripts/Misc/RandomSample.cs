@@ -12,6 +12,10 @@ public class RandomSample  {
     }
 	
     public int Next() {
+        if (pop.Count == 0) {
+            Reset ();
+        }
+
         int index = Random.Range (0, pop.Count);
         int picked = pop[index];
         pop.RemoveAt (index);

@@ -11,9 +11,7 @@ public class GenerateOnStart : MonoBehaviour {
 
     void Start () {
         clock.Start ();
-        if (GameController.Instance) {
-            generator.seed = GameController.Instance.saveData.Seed;
-        }
+        SetLevelSeed ();
         generator.GenerateIsland ();
     }
 
@@ -27,6 +25,15 @@ public class GenerateOnStart : MonoBehaviour {
             }
 
             curtain.FadeToColour (Color.clear);
+        }
+    }
+
+    void SetLevelSeed () {
+        if (GameController.Instance) {
+            string thisSeed = GameController.Instance.saveData.Seed;
+            thisSeed += ":" + GameController.Instance.level.ToString ();
+
+            generator.seed = thisSeed;
         }
     }
 }

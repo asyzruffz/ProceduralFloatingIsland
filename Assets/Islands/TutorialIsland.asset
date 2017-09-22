@@ -1,0 +1,85 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 29cbc1c6195ecf24c8355fe3b4704e38, type: 3}
+  m_Name: TutorialIsland
+  m_EditorClassIdentifier: 
+  autoUpdate: 0
+  maxWidth: 30
+  maxHeight: 30
+  tileSize: 4
+  depth: 1
+  altitude: 50
+  mountainCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 0
+      inSlope: 2.7394228
+      outSlope: 2.7394228
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 0.030592501
+      value: 0.024350245
+      inSlope: -0.028949121
+      outSlope: -0.028949121
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 0.28611752
+      value: 0.0312561
+      inSlope: 0.032442845
+      outSlope: 0.032442845
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 0.6544761
+      value: 0.27415267
+      inSlope: 1.5049881
+      outSlope: 1.5049881
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 0.8312842
+      value: 0.8577139
+      inSlope: 2.1176276
+      outSlope: 2.1176276
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 1
+      value: 1
+      inSlope: 0.03237543
+      outSlope: 0.03237543
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
+  stalactite: 35
+  bellyCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 0
+      inSlope: 2.8499997
+      outSlope: 2.8499997
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
+  randomFillPercent: 53
+  grassMaterial: {fileID: 2100000, guid: bc6af6cb203edf64eb6deed573069006, type: 2}
+  wallMaterial: {fileID: 2100000, guid: 16e13b2712122104fbc36cce44b59899, type: 2}
+  dirtMaterial: {fileID: 2100000, guid: 16e13b2712122104fbc36cce44b59899, type: 2}
+  invisibleMaterial: {fileID: 2100000, guid: 8c59477d3c3621c45aa71d78df162759, type: 2}

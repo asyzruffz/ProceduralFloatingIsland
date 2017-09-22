@@ -65,7 +65,7 @@ public class GameController : Singleton<GameController> {
 
 	void InitializeDatabase () {
 		NameGenerator nameGen = GetComponent<NameGenerator> ();
-		if (!Directory.Exists (nameGen.category) || !JsonFile.FilesExistIn(nameGen.category)) {
+		if (!JsonFile.FilesExistIn("NameGenerator")) {
 			Debug.Log ("Initializing Database");
 			nameGen.BuildDatabase ();
 		}

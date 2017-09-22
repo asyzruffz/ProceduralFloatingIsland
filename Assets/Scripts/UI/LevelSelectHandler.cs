@@ -13,7 +13,7 @@ public class LevelSelectHandler : MonoBehaviour {
     }
 
     public void GoToIsland () {
-        GameController.Instance.level = view.GetCurrentIndexViewed () + 1;
+        GameController.Instance.level = view.GetCurrentIndexViewed ();
         GameController.Instance.GoToIsland ();
     }
 }
