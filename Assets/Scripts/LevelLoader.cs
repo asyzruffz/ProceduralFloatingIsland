@@ -15,7 +15,7 @@ public class LevelLoader : MonoBehaviour {
     }
 	
 	string SelectLevel () {
-        if (GameController.Instance.level == 0) {
+        if (GameController.Instance && GameController.Instance.level == 0) {
             return "Tutorial";
         } else {
             return "GameplayTest";
@@ -23,7 +23,7 @@ public class LevelLoader : MonoBehaviour {
     }
 
     IEnumerator LoadGameLevelWithProgress (string levelName) {
-        yield return new WaitForSeconds (0.5f);
+        yield return new WaitForSecondsRealtime (0.5f);
 
         loadingOperation = SceneManager.LoadSceneAsync (levelName);
         loadingOperation.allowSceneActivation = false;

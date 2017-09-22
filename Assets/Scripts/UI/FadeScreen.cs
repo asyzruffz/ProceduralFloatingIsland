@@ -19,7 +19,7 @@ public class FadeScreen : MonoBehaviour {
 	
 	void Update () {
 		if (startFading) {
-			timer += Time.deltaTime;
+			timer += Time.unscaledDeltaTime;
 			float t = Mathf.Clamp01 (timer / fadeTime);
 			img.color = Color.Lerp (startColour, endColour, t);
 

@@ -38,7 +38,17 @@ public class FirstPersonController : MonoBehaviour
     }
         
     void Update() {
-        RotateView();
+        if (GameController.Instance) {
+            if (GameController.Instance.isPaused || !GameController.Instance.isPausable) {
+                m_MouseLook.SetCursorLock (false);
+            } else {
+                m_MouseLook.SetCursorLock (true);
+                RotateView ();
+            }
+        } else {
+            RotateView ();
+        }
+
         // the jump state needs to read here to make sure it is not missed
         if (!m_Jump)
         {

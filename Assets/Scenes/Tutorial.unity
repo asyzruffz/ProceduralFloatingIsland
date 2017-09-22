@@ -2378,7 +2378,6 @@ GameObject:
   - component: {fileID: 1015384392}
   - component: {fileID: 232212622}
   - component: {fileID: 232212621}
-  - component: {fileID: 232212620}
   m_Layer: 5
   m_Name: LoadingCanvas
   m_TagString: Untagged
@@ -2386,22 +2385,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &232212620
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 232212619}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 1301386320, guid: f70555f144d8491a825f0804e09c671c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_IgnoreReversedGraphics: 1
-  m_BlockingObjects: 0
-  m_BlockingMask:
-    serializedVersion: 2
-    m_Bits: 4294967295
 --- !u!114 &232212621
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -17,6 +17,11 @@ public class GameController : Singleton<GameController> {
     public SaveSlots slotsHandler;
     public MenuDisplay portableCanvas;
 
+    [HideInInspector]
+    public bool isPaused;
+    [HideInInspector]
+    public bool isPausable;
+
     protected override void SingletonAwake () {
         DontDestroyOnLoad (gameObject);
 
@@ -28,8 +33,18 @@ public class GameController : Singleton<GameController> {
 	}
 	
 	void Update () {
-		
-	}
+        if (Input.GetButtonDown ("Cancel")) {
+            TogglePause ();
+        }
+    }
+
+    void InitializeDatabase () {
+        NameGenerator nameGen = GetComponent<NameGenerator> ();
+        if (!JsonFile.FilesExistIn ("NameGenerator")) {
+            Debug.Log ("Initializing Database");
+            nameGen.BuildDatabase ();
+        }
+    }
 
     public void CreateNewGame () {
         string username;
@@ -46,28 +61,37 @@ public class GameController : Singleton<GameController> {
         slotsHandler.AddFurtherAction (GoToSelectLevel);
     }
 
-    void GoToSelectLevel () {
+    public void GoToSelectLevel () {
         SceneManager.LoadScene ("LevelSelection");
+        isPausable = false;
         portableCanvas.HideItem (0);
     }
 
     public void GoToIsland () {
         SceneManager.LoadScene ("LoadingScreen");
+        isPausable = true;
     }
 
     public void BackToMenu () {
         SceneManager.LoadScene ("MainMenu");
+        isPausable = false;
+        portableCanvas.ShowItem (3);
+    }
+    
+    public void TogglePause () {
+        if (isPausable) {
+            isPaused = !isPaused;
+            Time.timeScale = isPaused ? 0 : 1;
+
+            if (isPaused) {
+                portableCanvas.ShowItem (2);
+            } else {
+                portableCanvas.HideItem (2);
+            }
+        }
     }
 
     public void ExitGame () {
         Application.Quit ();
     }
-
-	void InitializeDatabase () {
-		NameGenerator nameGen = GetComponent<NameGenerator> ();
-		if (!JsonFile.FilesExistIn("NameGenerator")) {
-			Debug.Log ("Initializing Database");
-			nameGen.BuildDatabase ();
-		}
-	}
 }

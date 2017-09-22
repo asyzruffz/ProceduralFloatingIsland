@@ -9,11 +9,15 @@ public class LevelSelectHandler : MonoBehaviour {
     }
 
 	public void BackToMenu () {
-        GameController.Instance.BackToMenu ();
+        if (GameController.Instance) {
+            GameController.Instance.BackToMenu ();
+        }
     }
 
     public void GoToIsland () {
-        GameController.Instance.level = view.GetCurrentIndexViewed ();
-        GameController.Instance.GoToIsland ();
+        if (GameController.Instance) {
+            GameController.Instance.level = view.GetCurrentIndexViewed ();
+            GameController.Instance.GoToIsland ();
+        }
     }
 }
