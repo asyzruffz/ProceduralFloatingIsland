@@ -370,7 +370,15 @@ public class IslandGenerator : MonoBehaviour {
         if (debug && map != null) {
             int width = map.spots.GetLength (0);
             int length = map.spots.GetLength (1);
-
+			
+			/*for (int x = 0; x < width; x ++) {
+				for (int y = 0; y < length; y ++) {
+					Gizmos.color = map.spots[x, y].filled ? Color.black : Color.white;
+					Vector3 pos = new Vector3(-width/2 + x + .5f,0, -length/2 + y+.5f);
+					Gizmos.DrawCube(pos, Vector3.one);
+				}
+			}*/
+			
             for (int x = 0; x < width; x++) {
                 for (int y = 0; y < length; y++) {
                     Gizmos.color = !map.spots[x, y].filled ? Color.white : randCol[(map.spots[x, y].areaValue % 20)];

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -18,7 +19,9 @@ public class GameController : Singleton<GameController> {
 
     protected override void SingletonAwake () {
         DontDestroyOnLoad (gameObject);
-    }
+
+		InitializeDatabase ();
+	}
     
     void Start () {
 		
@@ -59,4 +62,12 @@ public class GameController : Singleton<GameController> {
     public void ExitGame () {
         Application.Quit ();
     }
+
+	void InitializeDatabase () {
+		NameGenerator nameGen = GetComponent<NameGenerator> ();
+		if (!Directory.Exists (nameGen.category) || !JsonFile.FilesExistIn(nameGen.category)) {
+			Debug.Log ("Initializing Database");
+			nameGen.BuildDatabase ();
+		}
+	}
 }

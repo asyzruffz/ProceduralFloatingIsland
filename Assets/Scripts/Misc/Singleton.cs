@@ -9,7 +9,7 @@ public abstract class Singleton<T> : MonoBehaviour where T : Singleton<T> {
 			Instance = (T)this;
 			SingletonAwake();
 		} else {
-			Debug.LogError("Duplicate singleton " + this.GetType(), this);
+			Debug.LogWarning("Duplicate singleton " + this.GetType(), this);
 			Destroy(this);
 		}
 	}
