@@ -12,14 +12,14 @@ public class GameController : Singleton<GameController> {
 
     [Header ("Gameplay Info")]
     public int level;
+    public GameObject player;
 
     [Header ("References")]
     public SaveSlots slotsHandler;
     public MenuDisplay portableCanvas;
 
-    [HideInInspector]
+    [Header ("Status")]
     public bool isPaused;
-    [HideInInspector]
     public bool isPausable;
 
     protected override void SingletonAwake () {
@@ -34,7 +34,7 @@ public class GameController : Singleton<GameController> {
 	
 	void Update () {
         if (Input.GetButtonDown ("Cancel")) {
-            TogglePause ();
+            TogglePausePanel ();
         }
     }
 
@@ -79,16 +79,26 @@ public class GameController : Singleton<GameController> {
         portableCanvas.ShowItem (3);
     }
     
-    public void TogglePause () {
-        if (isPausable) {
-            isPaused = !isPaused;
-            Time.timeScale = isPaused ? 0 : 1;
+    public void TogglePausePanel () {
+        if (!Inventory.AnyInventoryOpened) {
+            TogglePause (!isPaused);
+        }
 
-            if (isPaused) {
-                portableCanvas.ShowItem (2);
-            } else {
-                portableCanvas.HideItem (2);
+        if (isPaused) {
+            portableCanvas.ShowItem (2);
+            if (player) {
+                player.GetComponent<PlayerInventory> ().CloseAllPlayerPanels ();
+                isPaused = true;
             }
+        } else {
+            portableCanvas.HideItem (2);
+        }
+    }
+
+    public void TogglePause (bool set) {
+        if (isPausable) {
+            isPaused = set;
+            Time.timeScale = isPaused ? 0 : 1;
         }
     }
 

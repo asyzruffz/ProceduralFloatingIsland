@@ -40,6 +40,8 @@ GameObject:
   - component: {fileID: 114513511212599936}
   - component: {fileID: 54368820761251742}
   - component: {fileID: 82626942300505358}
+  - component: {fileID: 114298044811878590}
+  - component: {fileID: 114718751167508704}
   m_Layer: 0
   m_Name: FPPlayer
   m_TagString: Untagged
@@ -1741,6 +1743,20 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
+--- !u!114 &114298044811878590
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1047326384599882}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0db4493228a4ba442a891316e3ee246f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inventory: {fileID: 0}
+  characterSystem: {fileID: 0}
+  craftSystem: {fileID: 0}
 --- !u!114 &114513511212599936
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1805,6 +1821,26 @@ MonoBehaviour:
   - {fileID: 8300000, guid: e9714160ce34f2b4ab63ff8c27bd68e1, type: 3}
   jumpSound: {fileID: 8300000, guid: 5897aeed9b676024fbb8c694b421a861, type: 3}
   landSound: {fileID: 8300000, guid: 3b09d59f4499d45428baa7a21e954296, type: 3}
+--- !u!114 &114718751167508704
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1047326384599882}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c24e0a0a2e7c4ed4cb9ec766420ce308, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  HPMANACanvas: {fileID: 0}
+  maxHealth: 100
+  maxMana: 100
+  maxDamage: 0
+  maxArmor: 0
+  currentHealth: 60
+  currentMana: 100
+  currentDamage: 0
+  currentArmor: 0
 --- !u!114 &114960266861068680
 MonoBehaviour:
   m_ObjectHideFlags: 1

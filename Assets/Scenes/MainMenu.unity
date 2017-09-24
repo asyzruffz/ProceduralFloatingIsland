@@ -977,6 +977,7 @@ MonoBehaviour:
     Seed: 
     TimeLastSaved: 
   level: 0
+  player: {fileID: 0}
   slotsHandler: {fileID: 951453334}
   portableCanvas: {fileID: 1181647898}
   isPaused: 0
@@ -1086,7 +1087,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 600344854}
-        m_MethodName: TogglePause
+        m_MethodName: TogglePausePanel
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
