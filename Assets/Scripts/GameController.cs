@@ -75,6 +75,7 @@ public class GameController : Singleton<GameController> {
     public void BackToMenu () {
         SceneManager.LoadScene ("MainMenu");
         isPausable = false;
+        level = 0;
         portableCanvas.ShowItem (3);
     }
     

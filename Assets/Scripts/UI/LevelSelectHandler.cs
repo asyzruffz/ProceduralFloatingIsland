@@ -6,6 +6,10 @@ public class LevelSelectHandler : MonoBehaviour {
 
     void Start () {
         view = GetComponent<ScrollView> ();
+
+        if (GameController.Instance) {
+            view.SetViewAt(GameController.Instance.level);
+        }
     }
 
 	public void BackToMenu () {
