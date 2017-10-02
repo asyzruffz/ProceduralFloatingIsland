@@ -77,6 +77,7 @@ public class GameController : Singleton<GameController> {
         isPausable = false;
         level = 0;
         portableCanvas.ShowItem (3);
+        portableCanvas.ShowItem (4);
     }
     
     public void TogglePausePanel () {
