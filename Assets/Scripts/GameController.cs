@@ -17,6 +17,7 @@ public class GameController : Singleton<GameController> {
     [Header ("References")]
     public SaveSlots slotsHandler;
     public MenuDisplay portableCanvas;
+    public ContinueButtonEnabler contButton;
 
     [Header ("Status")]
     public bool isPaused;
@@ -72,10 +73,18 @@ public class GameController : Singleton<GameController> {
         isPausable = true;
     }
 
+    public void GoToPrototype () {
+        SceneManager.LoadScene ("Prototype");
+        portableCanvas.HideItem (3);
+        portableCanvas.HideItem (4);
+    }
+
     public void BackToMenu () {
         SceneManager.LoadScene ("MainMenu");
         isPausable = false;
         level = 0;
+
+        contButton.CheckAnySaveFile ();
         portableCanvas.ShowItem (3);
         portableCanvas.ShowItem (4);
     }

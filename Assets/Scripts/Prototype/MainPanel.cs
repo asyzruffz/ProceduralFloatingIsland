@@ -71,4 +71,11 @@ public class MainPanel : MonoBehaviour {
             Application.Quit ();
         }
     }
+
+    public void BackToMenu () {
+        if (GameController.Instance) {
+            GameController.Instance.BackToMenu ();
+        }
+    }
+
 }
