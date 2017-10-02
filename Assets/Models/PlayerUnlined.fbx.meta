@@ -1,157 +1,246 @@
 fileFormatVersion: 2
 guid: 2314102c6ed942a46ba1d40521292cef
-timeCreated: 1506969770
+timeCreated: 1506971217
 licenseType: Free
 ModelImporter:
   serializedVersion: 19
   fileIDToRecycleName:
     100000: Armature
     100002: Chest
-    100004: EndFinger1.L
-    100006: EndFinger1.L_end
-    100008: EndFinger1.R
-    100010: EndFinger1.R_end
-    100012: EndFinger2.L
-    100014: EndFinger2.L_end
-    100016: EndFinger2.R
-    100018: EndFinger2.R_end
-    100020: EndFinger3.L
-    100022: EndFinger3.L_end
-    100024: EndFinger3.R
-    100026: EndFinger3.R_end
-    100028: EndFinger4.L
-    100030: EndFinger4.L_end
-    100032: EndFinger4.R
-    100034: EndFinger4.R_end
-    100036: EndThumb.L
-    100038: EndThumb.L_end
-    100040: EndThumb.R
-    100042: EndThumb.R_end
-    100044: Foot.L
-    100046: Foot.L_end
-    100048: Foot.R
-    100050: Foot.R_end
-    100052: Head
-    100054: Head_end
-    100056: Hip
-    100058: LegIK.L
-    100060: LegIK.L_end
-    100062: LegIK.R
-    100064: LegIK.R_end
-    100066: LowerArm.L
-    100068: LowerArm.R
-    100070: LowerFinger1.L
-    100072: LowerFinger1.R
-    100074: LowerFinger2.L
-    100076: LowerFinger2.R
-    100078: LowerFinger3.L
-    100080: LowerFinger3.R
-    100082: LowerFinger4.L
-    100084: LowerFinger4.R
-    100086: LowerLeg.L
-    100088: LowerLeg.R
-    100090: LowerThumb.L
-    100092: LowerThumb.R
-    100094: Mesh
-    100096: MiddleFinger1.L
-    100098: MiddleFinger1.R
-    100100: MiddleFinger2.L
-    100102: MiddleFinger2.R
-    100104: MiddleFinger3.L
-    100106: MiddleFinger3.R
-    100108: MiddleFinger4.L
-    100110: MiddleFinger4.R
-    100112: MiddleThumb.L
-    100114: MiddleThumb.R
-    100116: Neck
-    100118: Palm.L
-    100120: Palm.R
-    100122: //RootNode
-    100124: PoleTarget.L
-    100126: PoleTarget.L_end
-    100128: PoleTarget.R
-    100130: PoleTarget.R_end
-    100132: Shoulder.L
-    100134: Shoulder.R
-    100136: Spine
-    100138: UpperArm.L
-    100140: UpperArm.R
-    100142: UpperLeg.L
-    100144: UpperLeg.R
+    100004: EndFinger1_L
+    100006: EndFinger1_R
+    100008: EndFinger2_L
+    100010: EndFinger2_R
+    100012: EndFinger3_L
+    100014: EndFinger3_R
+    100016: EndFinger4_L
+    100018: EndFinger4_R
+    100020: EndThumb_L
+    100022: EndThumb_R
+    100024: Foot_L
+    100026: Foot_R
+    100028: Head
+    100030: Hip
+    100032: LowerArm_L
+    100034: LowerArm_R
+    100036: LowerFinger1_L
+    100038: LowerFinger1_R
+    100040: LowerFinger2_L
+    100042: LowerFinger2_R
+    100044: LowerFinger3_L
+    100046: LowerFinger3_R
+    100048: LowerFinger4_L
+    100050: LowerFinger4_R
+    100052: LowerLeg_L
+    100054: LowerLeg_R
+    100056: LowerThumb_L
+    100058: LowerThumb_R
+    100060: Mesh
+    100062: MiddleFinger1_L
+    100064: MiddleFinger1_R
+    100066: MiddleFinger2_L
+    100068: MiddleFinger2_R
+    100070: MiddleFinger3_L
+    100072: MiddleFinger3_R
+    100074: MiddleFinger4_L
+    100076: MiddleFinger4_R
+    100078: MiddleThumb_L
+    100080: MiddleThumb_R
+    100082: Neck
+    100084: Palm_L
+    100086: Palm_R
+    100088: //RootNode
+    100090: Shoulder_L
+    100092: Shoulder_R
+    100094: Spine
+    100096: UpperArm_L
+    100098: UpperArm_R
+    100100: UpperLeg_L
+    100102: UpperLeg_R
+    100104: EndFinger1.L
+    100106: EndFinger1.L_end
+    100108: EndFinger1.R
+    100110: EndFinger1.R_end
+    100112: EndFinger2.L
+    100114: EndFinger2.L_end
+    100116: EndFinger2.R
+    100118: EndFinger2.R_end
+    100120: EndFinger3.L
+    100122: EndFinger3.L_end
+    100124: EndFinger3.R
+    100126: EndFinger3.R_end
+    100128: EndFinger4.L
+    100130: EndFinger4.L_end
+    100132: EndFinger4.R
+    100134: EndFinger4.R_end
+    100136: EndThumb.L
+    100138: EndThumb.L_end
+    100140: EndThumb.R
+    100142: EndThumb.R_end
+    100144: Foot.L
+    100146: Foot.L_end
+    100148: Foot.R
+    100150: Foot.R_end
+    100152: Head_end
+    100154: LegIK.L
+    100156: LegIK.L_end
+    100158: LegIK.R
+    100160: LegIK.R_end
+    100162: LowerArm.L
+    100164: LowerArm.R
+    100166: LowerFinger1.L
+    100168: LowerFinger1.R
+    100170: LowerFinger2.L
+    100172: LowerFinger2.R
+    100174: LowerFinger3.L
+    100176: LowerFinger3.R
+    100178: LowerFinger4.L
+    100180: LowerFinger4.R
+    100182: LowerLeg.L
+    100184: LowerLeg.R
+    100186: LowerThumb.L
+    100188: LowerThumb.R
+    100190: MiddleFinger1.L
+    100192: MiddleFinger1.R
+    100194: MiddleFinger2.L
+    100196: MiddleFinger2.R
+    100198: MiddleFinger3.L
+    100200: MiddleFinger3.R
+    100202: MiddleFinger4.L
+    100204: MiddleFinger4.R
+    100206: MiddleThumb.L
+    100208: MiddleThumb.R
+    100210: Palm.L
+    100212: Palm.R
+    100214: PoleTarget.L
+    100216: PoleTarget.L_end
+    100218: PoleTarget.R
+    100220: PoleTarget.R_end
+    100222: Shoulder.L
+    100224: Shoulder.R
+    100226: UpperArm.L
+    100228: UpperArm.R
+    100230: UpperLeg.L
+    100232: UpperLeg.R
     400000: Armature
     400002: Chest
-    400004: EndFinger1.L
-    400006: EndFinger1.L_end
-    400008: EndFinger1.R
-    400010: EndFinger1.R_end
-    400012: EndFinger2.L
-    400014: EndFinger2.L_end
-    400016: EndFinger2.R
-    400018: EndFinger2.R_end
-    400020: EndFinger3.L
-    400022: EndFinger3.L_end
-    400024: EndFinger3.R
-    400026: EndFinger3.R_end
-    400028: EndFinger4.L
-    400030: EndFinger4.L_end
-    400032: EndFinger4.R
-    400034: EndFinger4.R_end
-    400036: EndThumb.L
-    400038: EndThumb.L_end
-    400040: EndThumb.R
-    400042: EndThumb.R_end
-    400044: Foot.L
-    400046: Foot.L_end
-    400048: Foot.R
-    400050: Foot.R_end
-    400052: Head
-    400054: Head_end
-    400056: Hip
-    400058: LegIK.L
-    400060: LegIK.L_end
-    400062: LegIK.R
-    400064: LegIK.R_end
-    400066: LowerArm.L
-    400068: LowerArm.R
-    400070: LowerFinger1.L
-    400072: LowerFinger1.R
-    400074: LowerFinger2.L
-    400076: LowerFinger2.R
-    400078: LowerFinger3.L
-    400080: LowerFinger3.R
-    400082: LowerFinger4.L
-    400084: LowerFinger4.R
-    400086: LowerLeg.L
-    400088: LowerLeg.R
-    400090: LowerThumb.L
-    400092: LowerThumb.R
-    400094: Mesh
-    400096: MiddleFinger1.L
-    400098: MiddleFinger1.R
-    400100: MiddleFinger2.L
-    400102: MiddleFinger2.R
-    400104: MiddleFinger3.L
-    400106: MiddleFinger3.R
-    400108: MiddleFinger4.L
-    400110: MiddleFinger4.R
-    400112: MiddleThumb.L
-    400114: MiddleThumb.R
-    400116: Neck
-    400118: Palm.L
-    400120: Palm.R
-    400122: //RootNode
-    400124: PoleTarget.L
-    400126: PoleTarget.L_end
-    400128: PoleTarget.R
-    400130: PoleTarget.R_end
-    400132: Shoulder.L
-    400134: Shoulder.R
-    400136: Spine
-    400138: UpperArm.L
-    400140: UpperArm.R
-    400142: UpperLeg.L
-    400144: UpperLeg.R
+    400004: EndFinger1_L
+    400006: EndFinger1_R
+    400008: EndFinger2_L
+    400010: EndFinger2_R
+    400012: EndFinger3_L
+    400014: EndFinger3_R
+    400016: EndFinger4_L
+    400018: EndFinger4_R
+    400020: EndThumb_L
+    400022: EndThumb_R
+    400024: Foot_L
+    400026: Foot_R
+    400028: Head
+    400030: Hip
+    400032: LowerArm_L
+    400034: LowerArm_R
+    400036: LowerFinger1_L
+    400038: LowerFinger1_R
+    400040: LowerFinger2_L
+    400042: LowerFinger2_R
+    400044: LowerFinger3_L
+    400046: LowerFinger3_R
+    400048: LowerFinger4_L
+    400050: LowerFinger4_R
+    400052: LowerLeg_L
+    400054: LowerLeg_R
+    400056: LowerThumb_L
+    400058: LowerThumb_R
+    400060: Mesh
+    400062: MiddleFinger1_L
+    400064: MiddleFinger1_R
+    400066: MiddleFinger2_L
+    400068: MiddleFinger2_R
+    400070: MiddleFinger3_L
+    400072: MiddleFinger3_R
+    400074: MiddleFinger4_L
+    400076: MiddleFinger4_R
+    400078: MiddleThumb_L
+    400080: MiddleThumb_R
+    400082: Neck
+    400084: Palm_L
+    400086: Palm_R
+    400088: //RootNode
+    400090: Shoulder_L
+    400092: Shoulder_R
+    400094: Spine
+    400096: UpperArm_L
+    400098: UpperArm_R
+    400100: UpperLeg_L
+    400102: UpperLeg_R
+    400104: EndFinger1.L
+    400106: EndFinger1.L_end
+    400108: EndFinger1.R
+    400110: EndFinger1.R_end
+    400112: EndFinger2.L
+    400114: EndFinger2.L_end
+    400116: EndFinger2.R
+    400118: EndFinger2.R_end
+    400120: EndFinger3.L
+    400122: EndFinger3.L_end
+    400124: EndFinger3.R
+    400126: EndFinger3.R_end
+    400128: EndFinger4.L
+    400130: EndFinger4.L_end
+    400132: EndFinger4.R
+    400134: EndFinger4.R_end
+    400136: EndThumb.L
+    400138: EndThumb.L_end
+    400140: EndThumb.R
+    400142: EndThumb.R_end
+    400144: Foot.L
+    400146: Foot.L_end
+    400148: Foot.R
+    400150: Foot.R_end
+    400152: Head_end
+    400154: LegIK.L
+    400156: LegIK.L_end
+    400158: LegIK.R
+    400160: LegIK.R_end
+    400162: LowerArm.L
+    400164: LowerArm.R
+    400166: LowerFinger1.L
+    400168: LowerFinger1.R
+    400170: LowerFinger2.L
+    400172: LowerFinger2.R
+    400174: LowerFinger3.L
+    400176: LowerFinger3.R
+    400178: LowerFinger4.L
+    400180: LowerFinger4.R
+    400182: LowerLeg.L
+    400184: LowerLeg.R
+    400186: LowerThumb.L
+    400188: LowerThumb.R
+    400190: MiddleFinger1.L
+    400192: MiddleFinger1.R
+    400194: MiddleFinger2.L
+    400196: MiddleFinger2.R
+    400198: MiddleFinger3.L
+    400200: MiddleFinger3.R
+    400202: MiddleFinger4.L
+    400204: MiddleFinger4.R
+    400206: MiddleThumb.L
+    400208: MiddleThumb.R
+    400210: Palm.L
+    400212: Palm.R
+    400214: PoleTarget.L
+    400216: PoleTarget.L_end
+    400218: PoleTarget.R
+    400220: PoleTarget.R_end
+    400222: Shoulder.L
+    400224: Shoulder.R
+    400226: UpperArm.L
+    400228: UpperArm.R
+    400230: UpperLeg.L
+    400232: UpperLeg.R
     4300000: Mesh
+    7400000: Default Take
     9500000: //RootNode
     13700000: Mesh
   materials:
@@ -556,22 +645,6 @@ ModelImporter:
         value: {x: 0, y: 0, z: 0}
         length: 0
         modified: 0
-    - boneName: Chest
-      humanName: Chest
-      limit:
-        min: {x: 0, y: 0, z: 0}
-        max: {x: 0, y: 0, z: 0}
-        value: {x: 0, y: 0, z: 0}
-        length: 0
-        modified: 0
-    - boneName: Neck
-      humanName: Neck
-      limit:
-        min: {x: 0, y: 0, z: 0}
-        max: {x: 0, y: 0, z: 0}
-        value: {x: 0, y: 0, z: 0}
-        length: 0
-        modified: 0
     - boneName: Head
       humanName: Head
       limit:
@@ -590,6 +663,22 @@ ModelImporter:
         modified: 0
     - boneName: EndFinger2.R
       humanName: Right Middle Distal
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Neck
+      humanName: Neck
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Chest
+      humanName: Chest
       limit:
         min: {x: 0, y: 0, z: 0}
         max: {x: 0, y: 0, z: 0}
@@ -645,33 +734,33 @@ ModelImporter:
     - name: UpperArm.L
       parentName: Shoulder.L
       position: {x: -0.0000000012245397, y: 0.0019121359, z: 3.7252902e-11}
-      rotation: {x: 0.0392564, y: 0.014639929, z: -0.026235294, w: 0.99877745}
-      scale: {x: 1.0000002, y: 0.9999994, z: 1.0000001}
+      rotation: {x: 0.039256427, y: 0.01463995, z: -0.02623523, w: 0.9987774}
+      scale: {x: 1.0000007, y: 1.0000002, z: 0.99999976}
     - name: LowerArm.L
       parentName: UpperArm.L
       position: {x: -3.1359106e-11, y: 0.002481188, z: 5.47152e-11}
       rotation: {x: 0.00018110867, y: -0.000722918, z: -0.01444914, w: 0.9998954}
-      scale: {x: 1.0000007, y: 1.0000008, z: 1}
+      scale: {x: 1.000001, y: 1.0000008, z: 0.99999994}
     - name: Palm.L
       parentName: LowerArm.L
       position: {x: 2.6074012e-10, y: 0.0024497411, z: 3.4924594e-11}
       rotation: {x: 0.017962327, y: 0.0028416193, z: 0.041634243, w: 0.99896747}
-      scale: {x: 1.0000004, y: 1.0000001, z: 0.99999976}
+      scale: {x: 1.0000008, y: 1.0000007, z: 1.0000002}
     - name: LowerFinger1.L
       parentName: Palm.L
       position: {x: 0.00008260525, y: 0.0012702058, z: 0.00040590903}
-      rotation: {x: -0.0069274134, y: 0.001436448, z: 0.010893741, w: 0.9999157}
-      scale: {x: 1.0000011, y: 1.0000012, z: 0.99999994}
+      rotation: {x: -0.0069274628, y: 0.0014365253, z: 0.0108934995, w: 0.99991566}
+      scale: {x: 1.0000012, y: 1.0000006, z: 0.99999964}
     - name: MiddleFinger1.L
       parentName: LowerFinger1.L
       position: {x: 3.8375053e-11, y: 0.00035481056, z: 5.5879353e-11}
-      rotation: {x: -0.006824069, y: 0.0028596958, z: 0.039458666, w: 0.9991938}
-      scale: {x: 1.0000007, y: 1.0000005, z: 1.0000001}
+      rotation: {x: -0.006824279, y: 0.002859743, z: 0.039455112, w: 0.999194}
+      scale: {x: 0.9999992, y: 0.9999991, z: 1.0000001}
     - name: EndFinger1.L
       parentName: MiddleFinger1.L
       position: {x: -5.950527e-10, y: 0.00043958783, z: -3.259629e-11}
-      rotation: {x: -0.00035269588, y: 0.004343411, z: 0.035466626, w: 0.9993614}
-      scale: {x: 1.0000006, y: 1.0000006, z: 0.9999999}
+      rotation: {x: -0.00035248764, y: 0.004343569, z: 0.03546275, w: 0.9993615}
+      scale: {x: 1.0000006, y: 1.0000004, z: 1}
     - name: EndFinger1.L_end
       parentName: EndFinger1.L
       position: {x: -0, y: 0.00037244952, z: 0}
@@ -680,18 +769,18 @@ ModelImporter:
     - name: LowerFinger2.L
       parentName: Palm.L
       position: {x: 0.00010339973, y: 0.001128782, z: 0.00012106334}
-      rotation: {x: 0.0004987416, y: 0.0029290824, z: 0.017089346, w: 0.9998496}
-      scale: {x: 1.0000008, y: 1.000001, z: 0.99999994}
+      rotation: {x: 0.00049746386, y: 0.0029290386, z: 0.017091302, w: 0.99984956}
+      scale: {x: 1.000001, y: 1.0000006, z: 0.9999994}
     - name: MiddleFinger2.L
       parentName: LowerFinger2.L
       position: {x: -7.8202e-13, y: 0.0005405346, z: 2.7939677e-11}
-      rotation: {x: -0.010763897, y: 0.0021120585, z: 0.039074283, w: 0.99917614}
-      scale: {x: 1.0000007, y: 1.0000002, z: 1.0000002}
+      rotation: {x: -0.01076379, y: 0.0021120405, z: 0.039073955, w: 0.9991762}
+      scale: {x: 1.0000002, y: 1.0000004, z: 1.0000002}
     - name: EndFinger2.L
       parentName: MiddleFinger2.L
       position: {x: 5.930171e-10, y: 0.00049294304, z: -1.6298145e-11}
-      rotation: {x: 0.0002676563, y: 0.0028222923, z: 0.03654048, w: 0.9993282}
-      scale: {x: 1.0000011, y: 1.0000011, z: 1.0000001}
+      rotation: {x: 0.0002695813, y: 0.002822179, z: 0.036541842, w: 0.9993281}
+      scale: {x: 1.000002, y: 1.0000018, z: 0.9999999}
     - name: EndFinger2.L_end
       parentName: EndFinger2.L
       position: {x: -0, y: 0.00044404305, z: 0}
@@ -700,18 +789,18 @@ ModelImporter:
     - name: LowerFinger3.L
       parentName: Palm.L
       position: {x: 0.000102106234, y: 0.0011473666, z: -0.00015148235}
-      rotation: {x: -0.0029568188, y: 0.0025820876, z: 0.013276409, w: 0.99990416}
-      scale: {x: 1.0000007, y: 1.0000006, z: 1.0000001}
+      rotation: {x: -0.0029587266, y: 0.0025820492, z: 0.013278037, w: 0.99990416}
+      scale: {x: 1.0000019, y: 1.000001, z: 0.99999976}
     - name: MiddleFinger3.L
       parentName: LowerFinger3.L
       position: {x: -6.2031225e-10, y: 0.00045330066, z: 4.6566128e-12}
-      rotation: {x: 0.00046371648, y: 0.0014064589, z: 0.041118525, w: 0.9991532}
-      scale: {x: 0.99999976, y: 1.0000005, z: 0.99999994}
+      rotation: {x: 0.00046390825, y: 0.0014063882, z: 0.04111605, w: 0.9991533}
+      scale: {x: 0.9999996, y: 0.9999999, z: 1.0000002}
     - name: EndFinger3.L
       parentName: MiddleFinger3.L
       position: {x: 4.356602e-10, y: 0.00043302195, z: 0}
-      rotation: {x: 0.0014081949, y: 0.0057352325, z: 0.035436764, w: 0.99935454}
-      scale: {x: 1.000001, y: 1.0000002, z: 0.99999994}
+      rotation: {x: 0.0014086739, y: 0.0057352367, z: 0.035432797, w: 0.99935466}
+      scale: {x: 1.0000011, y: 1.0000005, z: 1.0000001}
     - name: EndFinger3.L_end
       parentName: EndFinger3.L
       position: {x: -0, y: 0.00037265624, z: 0}
@@ -720,18 +809,18 @@ ModelImporter:
     - name: LowerFinger4.L
       parentName: Palm.L
       position: {x: 0.00009972703, y: 0.0011536453, z: -0.00043542264}
-      rotation: {x: -0.004218518, y: 0.0023863087, z: 0.011699357, w: 0.99991983}
-      scale: {x: 1.0000005, y: 1.0000007, z: 1}
+      rotation: {x: -0.004218873, y: 0.0023863728, z: 0.011699373, w: 0.99991983}
+      scale: {x: 1.0000006, y: 1.0000002, z: 1}
     - name: MiddleFinger4.L
       parentName: LowerFinger4.L
       position: {x: -1.2591926e-10, y: 0.0003776629, z: 6.0535965e-11}
-      rotation: {x: 0.017935535, y: 0.0016481397, z: 0.037092447, w: 0.9991495}
-      scale: {x: 1.0000006, y: 1.0000005, z: 1.0000001}
+      rotation: {x: 0.017935472, y: 0.0016481769, z: 0.03709212, w: 0.99914956}
+      scale: {x: 1.0000012, y: 1.000001, z: 1}
     - name: EndFinger4.L
       parentName: MiddleFinger4.L
       position: {x: 5.6555816e-10, y: 0.0003692096, z: 0}
-      rotation: {x: -0.00095613254, y: 0.007831378, z: 0.036515817, w: 0.99930197}
-      scale: {x: 1.0000002, y: 1.0000008, z: 0.99999964}
+      rotation: {x: -0.0009560132, y: 0.007831422, z: 0.03651697, w: 0.9993019}
+      scale: {x: 1.0000013, y: 1.0000012, z: 0.9999999}
     - name: EndFinger4.L_end
       parentName: EndFinger4.L
       position: {x: -0, y: 0.00030185623, z: 0}
@@ -740,18 +829,18 @@ ModelImporter:
     - name: LowerThumb.L
       parentName: Palm.L
       position: {x: -0.000065552464, y: 0.0009001184, z: 0.00066899345}
-      rotation: {x: 0.37287375, y: 0.072161, z: 0.042266816, w: 0.92410576}
-      scale: {x: 1.0000002, y: 0.99999976, z: 1.0000004}
+      rotation: {x: 0.37287197, y: 0.072161414, z: 0.042266987, w: 0.9241064}
+      scale: {x: 1.0000007, y: 1.000001, z: 0.9999994}
     - name: MiddleThumb.L
       parentName: LowerThumb.L
       position: {x: -3.7428718e-10, y: 0.0003707842, z: -3.1664968e-10}
-      rotation: {x: -0.032306593, y: 0.007495451, z: 0.015466901, w: 0.99933016}
-      scale: {x: 1.0000005, y: 1.0000002, z: 1.0000002}
+      rotation: {x: -0.032303922, y: 0.0074954685, z: 0.015466075, w: 0.99933034}
+      scale: {x: 1.0000021, y: 1.0000013, z: 1.0000002}
     - name: EndThumb.L
       parentName: MiddleThumb.L
       position: {x: -8.7796756e-11, y: 0.0003084245, z: 6.984919e-12}
       rotation: {x: -0.016769836, y: -0.0012418092, z: 0.02688898, w: 0.99949706}
-      scale: {x: 1.0000006, y: 1, z: 1}
+      scale: {x: 1.0000007, y: 1.0000004, z: 1.0000001}
     - name: EndThumb.L_end
       parentName: EndThumb.L
       position: {x: -0, y: 0.0003186071, z: 0}
@@ -765,33 +854,33 @@ ModelImporter:
     - name: UpperArm.R
       parentName: Shoulder.R
       position: {x: 0.0000000012245397, y: 0.0019121359, z: 3.7252902e-11}
-      rotation: {x: -0.0392564, y: 0.014640011, z: -0.026235588, w: -0.9987774}
-      scale: {x: 1.0000007, y: 0.9999999, z: 1.0000001}
+      rotation: {x: -0.039256375, y: 0.014639962, z: -0.026235413, w: -0.99877745}
+      scale: {x: 1.000001, y: 1.0000004, z: 0.99999976}
     - name: LowerArm.R
       parentName: UpperArm.R
       position: {x: 3.1359106e-11, y: 0.002481188, z: 5.47152e-11}
       rotation: {x: 0.00018110122, y: 0.00072292826, z: 0.014449172, w: 0.9998954}
-      scale: {x: 1.000001, y: 1.0000008, z: 0.9999999}
+      scale: {x: 1.0000011, y: 1.000001, z: 0.99999994}
     - name: Palm.R
       parentName: LowerArm.R
       position: {x: -2.6074012e-10, y: 0.0024497411, z: 3.4924594e-11}
       rotation: {x: 0.017962318, y: -0.0028416254, z: -0.041634385, w: 0.99896747}
-      scale: {x: 1.0000002, y: 1.0000001, z: 0.9999999}
+      scale: {x: 1.0000005, y: 1.0000005, z: 1.0000001}
     - name: LowerFinger1.R
       parentName: Palm.R
       position: {x: -0.00008260525, y: 0.0012702058, z: 0.00040590903}
-      rotation: {x: -0.0069267037, y: -0.0014365374, z: -0.010893202, w: 0.9999157}
-      scale: {x: 1.0000007, y: 1.0000007, z: 1.0000001}
+      rotation: {x: -0.0069279545, y: -0.0014364675, z: -0.010894292, w: 0.99991566}
+      scale: {x: 1.0000012, y: 1.0000005, z: 0.9999998}
     - name: MiddleFinger1.R
       parentName: LowerFinger1.R
       position: {x: -3.8375053e-11, y: 0.00035481056, z: 5.5879353e-11}
-      rotation: {x: -0.00682397, y: -0.0028596132, z: -0.039452318, w: 0.9991941}
-      scale: {x: 1.0000006, y: 1.0000008, z: 0.9999998}
+      rotation: {x: -0.006823772, y: -0.0028596339, z: -0.039454952, w: 0.99919397}
+      scale: {x: 0.99999917, y: 0.99999934, z: 1.0000001}
     - name: EndFinger1.R
       parentName: MiddleFinger1.R
       position: {x: 5.950527e-10, y: 0.00043958783, z: -3.259629e-11}
-      rotation: {x: -0.00035161639, y: -0.004343543, z: -0.035464194, w: 0.99936146}
-      scale: {x: 1.0000007, y: 1.0000002, z: 1}
+      rotation: {x: -0.00035271252, y: -0.0043435013, z: -0.035463735, w: 0.99936146}
+      scale: {x: 1.0000006, y: 1.0000005, z: 1}
     - name: EndFinger1.R_end
       parentName: EndFinger1.R
       position: {x: -0, y: 0.00037244952, z: 0}
@@ -800,18 +889,18 @@ ModelImporter:
     - name: LowerFinger2.R
       parentName: Palm.R
       position: {x: -0.00010339973, y: 0.001128782, z: 0.00012106334}
-      rotation: {x: 0.00049904146, y: -0.0029291136, z: -0.017089449, w: 0.99984956}
-      scale: {x: 1.0000011, y: 1.0000011, z: 0.9999999}
+      rotation: {x: 0.0004983392, y: -0.0029291036, z: -0.017090557, w: 0.9998496}
+      scale: {x: 1.000001, y: 1.0000005, z: 0.9999996}
     - name: MiddleFinger2.R
       parentName: LowerFinger2.R
       position: {x: 7.8202e-13, y: 0.0005405346, z: 2.7939677e-11}
-      rotation: {x: -0.010763874, y: -0.0021120573, z: -0.039074227, w: 0.99917614}
-      scale: {x: 1.0000001, y: 1.0000002, z: 1.0000001}
+      rotation: {x: -0.01076392, y: -0.0021119132, z: -0.03907479, w: 0.99917614}
+      scale: {x: 1.0000005, y: 1.0000004, z: 1.0000002}
     - name: EndFinger2.R
       parentName: MiddleFinger2.R
       position: {x: -5.930171e-10, y: 0.00049294304, z: -1.6298145e-11}
-      rotation: {x: 0.00026745233, y: -0.0028221803, z: -0.036542308, w: 0.9993281}
-      scale: {x: 1.0000006, y: 1.0000004, z: 0.9999998}
+      rotation: {x: 0.00026846278, y: -0.0028221684, z: -0.03654233, w: 0.9993281}
+      scale: {x: 1.000002, y: 1.0000019, z: 0.9999999}
     - name: EndFinger2.R_end
       parentName: EndFinger2.R
       position: {x: -0, y: 0.00044404305, z: 0}
@@ -820,18 +909,18 @@ ModelImporter:
     - name: LowerFinger3.R
       parentName: Palm.R
       position: {x: -0.000102106234, y: 0.0011473666, z: -0.00015148235}
-      rotation: {x: -0.0029571657, y: -0.0025820746, z: -0.013276977, w: 0.99990416}
-      scale: {x: 1.0000006, y: 1.0000004, z: 1.0000001}
+      rotation: {x: -0.0029576363, y: -0.002582081, z: -0.013277846, w: 0.99990416}
+      scale: {x: 1.0000018, y: 1.0000008, z: 1}
     - name: MiddleFinger3.R
       parentName: LowerFinger3.R
       position: {x: 6.2031225e-10, y: 0.00045330066, z: 4.6566128e-12}
-      rotation: {x: 0.0004639221, y: -0.0014063895, z: -0.041117877, w: 0.99915326}
-      scale: {x: 0.99999976, y: 1.0000004, z: 0.9999999}
+      rotation: {x: 0.00046359212, y: -0.0014063481, z: -0.041121345, w: 0.99915314}
+      scale: {x: 0.9999997, y: 1.0000001, z: 1.0000001}
     - name: EndFinger3.R
       parentName: MiddleFinger3.R
       position: {x: -4.356602e-10, y: 0.00043302195, z: 0}
-      rotation: {x: 0.0014093654, y: -0.005734975, z: -0.035437047, w: 0.9993545}
-      scale: {x: 1.0000008, y: 0.9999998, z: 0.9999999}
+      rotation: {x: 0.0014094138, y: -0.005735101, z: -0.03543579, w: 0.99935454}
+      scale: {x: 1.0000012, y: 1.0000005, z: 1.0000001}
     - name: EndFinger3.R_end
       parentName: EndFinger3.R
       position: {x: -0, y: 0.00037265624, z: 0}
@@ -840,18 +929,18 @@ ModelImporter:
     - name: LowerFinger4.R
       parentName: Palm.R
       position: {x: -0.00009972703, y: 0.0011536453, z: -0.00043542264}
-      rotation: {x: -0.004218151, y: -0.002386436, z: -0.011698627, w: 0.99991983}
-      scale: {x: 1.0000002, y: 1.0000002, z: 1}
+      rotation: {x: -0.0042179446, y: -0.0023864466, z: -0.011698305, w: 0.9999199}
+      scale: {x: 1.0000006, y: 1.0000002, z: 1.0000001}
     - name: MiddleFinger4.R
       parentName: LowerFinger4.R
       position: {x: 1.2591926e-10, y: 0.0003776629, z: 6.0535965e-11}
-      rotation: {x: 0.017935408, y: -0.0016481503, z: -0.03709211, w: 0.99914956}
-      scale: {x: 1.0000007, y: 1.0000005, z: 1}
+      rotation: {x: 0.017935554, y: -0.0016481103, z: -0.03709179, w: 0.9991496}
+      scale: {x: 1.0000013, y: 1.0000011, z: 1}
     - name: EndFinger4.R
       parentName: MiddleFinger4.R
       position: {x: -5.6555816e-10, y: 0.0003692096, z: 0}
-      rotation: {x: -0.0009558344, y: -0.007831379, z: -0.036511075, w: 0.99930215}
-      scale: {x: 1.0000008, y: 1.0000005, z: 0.99999976}
+      rotation: {x: -0.0009562123, y: -0.007831259, z: -0.03651631, w: 0.9993019}
+      scale: {x: 1.0000011, y: 1.000001, z: 0.9999999}
     - name: EndFinger4.R_end
       parentName: EndFinger4.R
       position: {x: -0, y: 0.00030185623, z: 0}
@@ -860,18 +949,18 @@ ModelImporter:
     - name: LowerThumb.R
       parentName: Palm.R
       position: {x: 0.000065552464, y: 0.0009001184, z: 0.00066899345}
-      rotation: {x: 0.37287349, y: -0.07216092, z: -0.042267006, w: 0.9241058}
-      scale: {x: 1.0000004, y: 0.9999995, z: 1.0000006}
+      rotation: {x: 0.37287518, y: -0.07216035, z: -0.0422674, w: 0.9241053}
+      scale: {x: 1.0000007, y: 1.000001, z: 0.9999996}
     - name: MiddleThumb.R
       parentName: LowerThumb.R
       position: {x: 3.7428718e-10, y: 0.0003707842, z: -3.1664968e-10}
-      rotation: {x: -0.032304425, y: -0.0074954676, z: -0.01546165, w: 0.9993304}
-      scale: {x: 1.000001, y: 1.0000007, z: 1.0000002}
+      rotation: {x: -0.032307327, y: -0.0074951355, z: -0.015464276, w: 0.9993303}
+      scale: {x: 1.0000023, y: 1.0000015, z: 1.0000002}
     - name: EndThumb.R
       parentName: MiddleThumb.R
       position: {x: 8.7796756e-11, y: 0.0003084245, z: 6.984919e-12}
       rotation: {x: -0.016769836, y: 0.0012418083, z: -0.026888905, w: 0.99949706}
-      scale: {x: 1.000001, y: 1.000001, z: 1.0000001}
+      scale: {x: 1.0000007, y: 1.0000002, z: 1.0000001}
     - name: EndThumb.R_end
       parentName: EndThumb.R
       position: {x: -0, y: 0.0003186071, z: 0}
@@ -962,19 +1051,20 @@ ModelImporter:
       position: {x: -0, y: 0, z: 0}
       rotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071067}
       scale: {x: 100, y: 100, z: 100}
-    armTwist: 0.5
-    foreArmTwist: 0.5
-    upperLegTwist: 0.5
-    legTwist: 0.5
-    armStretch: 0.05
-    legStretch: 0.05
+    armTwist: 1
+    foreArmTwist: 1
+    upperLegTwist: 1
+    legTwist: 1
+    armStretch: 1
+    legStretch: 0
     feetSpacing: 0
-    rootMotionBoneName: 
+    rootMotionBoneName: PositionLocator
     rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
     hasTranslationDoF: 0
-    hasExtraRoot: 1
-    skeletonHasParents: 1
-  lastHumanDescriptionAvatarSource: {instanceID: 0}
+    hasExtraRoot: 0
+    skeletonHasParents: 0
+  lastHumanDescriptionAvatarSource: {fileID: 9000000, guid: e42d9259129992a4d95e0b320ca2a43d,
+    type: 3}
   animationType: 3
   humanoidOversampling: 1
   additionalBone: 0
