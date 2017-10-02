@@ -24,7 +24,11 @@ public class PlayerInventory : MonoBehaviour
             inputManagerDatabase = (InputManager)Resources.Load ("InputManager");
         if (inventory == null) {
             inventory = GameObject.FindGameObjectWithTag ("MainInventory");
-            inventory.SetActive (false);
+            if (inventory) {
+                inventory.SetActive (false);
+            } else {
+                Debug.Log ("MainInventory not found", gameObject);
+            }
         }
 
         stats = GetComponent<PlayerStats> ();

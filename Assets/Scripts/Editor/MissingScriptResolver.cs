@@ -12,6 +12,8 @@
 
 using UnityEngine;
 using UnityEditor;
+using UnityEngine.SceneManagement;
+using UnityEditor.SceneManagement;
 using System.Collections;
 using System.Collections.Generic;
 using System;
@@ -232,18 +234,19 @@ This component's properties are shown below to help you determine which script i
 #if UNITY_4_3
 				Undo.RegisterCompleteObjectUndo( target, "Assign missing script" );
 #else
-				Undo.RegisterSceneUndo( "Assign missing script" );
+				//Undo.RegisterSceneUndo( "Assign missing script" );
+                Undo.RegisterCompleteObjectUndo (SceneManager.GetActiveScene ().GetRootGameObjects (), "Assign missing script");
 #endif
 
-				// Assign the selected MonoScript 
-				scriptProperty.objectReferenceValue = candidate.Matcher.Script;
+                // Assign the selected MonoScript 
+                scriptProperty.objectReferenceValue = candidate.Matcher.Script;
 				scriptProperty.serializedObject.ApplyModifiedProperties();
 				scriptProperty.serializedObject.Update();
 
 				// Save the scene in case Unity crashes
 				EditorUtility.SetDirty( this.target );
-				EditorApplication.SaveScene();
-				AssetDatabase.SaveAssets();
+                EditorSceneManager.SaveScene (SceneManager.GetActiveScene ());  //  EditorApplication.SaveScene() is deprecated.
+                AssetDatabase.SaveAssets();
 
 				// Check for more objects with missing scripts
 				if( Selection.activeGameObject.activeInHierarchy )
