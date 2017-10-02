@@ -7,15 +7,15 @@ public class IslandMeshGenerator : MonoBehaviour {
     SquareGrid squareGrid;
     List<Vector3> vertices = new List<Vector3> ();
     List<int> triangles = new List<int> ();
-    MeshRegion meshRegion;
+    IsleMeshDetail meshDetail;
 
-    public List<Mesh> GenerateMesh (MapRegion region, IsleInfo info, float squareSize, float depth) {
+    public List<Mesh> GenerateIslandMesh (MapRegion region, IsleInfo info, float squareSize, float depth) {
         
         squareGrid = new SquareGrid (region, squareSize);
         vertices.Clear ();
         triangles.Clear ();
 
-        meshRegion = new MeshRegion ();
+        meshDetail = new IsleMeshDetail ();
 
         for (int x = 0; x < squareGrid.squares.GetLength (0); x++) {
             for (int y = 0; y < squareGrid.squares.GetLength (1); y++) {
@@ -40,19 +40,39 @@ public class IslandMeshGenerator : MonoBehaviour {
         meshList.Add (CreateWallMesh (depth));
         meshList.Add (undersideMesh);
         
-        info.surfaceMeshRegion = meshRegion;
+        info.surfaceMeshDetail = meshDetail;
         return meshList;
     }
 
+    public Mesh GenerateZoneMesh (MapRegion region, float squareSize) {
+
+        squareGrid = new SquareGrid (region, squareSize);
+        vertices.Clear ();
+        triangles.Clear ();
+
+        for (int x = 0; x < squareGrid.squares.GetLength (0); x++) {
+            for (int y = 0; y < squareGrid.squares.GetLength (1); y++) {
+                TriangulateSquare (squareGrid.squares[x, y]);
+            }
+        }
+
+        Mesh regionMesh = new Mesh ();
+        regionMesh.vertices = vertices.ToArray ();
+        regionMesh.triangles = triangles.ToArray ();
+        regionMesh.RecalculateNormals ();
+
+        return regionMesh;
+    }
+
     Mesh CreateWallMesh(float wallHeight) {
-        meshRegion.Vertices = vertices;
-        meshRegion.CalculateMeshOutlines ();
+        meshDetail.Vertices = vertices;
+        meshDetail.CalculateGradientMap ();
 
         List<Vector3> wallVertices = new List<Vector3> ();
         List<int> wallTriangles = new List<int> ();
         Mesh wallMesh = new Mesh ();
-
-        foreach (List<int> outline in meshRegion.outlines) {
+        
+        foreach (List<int> outline in meshDetail.outlines) {
             for (int i = 0; i < outline.Count - 1; i++) {
                 int startIndex = wallVertices.Count;
                 wallVertices.Add (vertices[outline[i]]);        // left
@@ -134,12 +154,6 @@ public class IslandMeshGenerator : MonoBehaviour {
             // 4 points
             case 15:
                 MeshFromPoints (square.topLeft, square.topRight, square.bottomRight, square.bottomLeft);
-
-                // for optimization of MeshRegion calculating outlines
-                meshRegion.CheckVertex (square.topLeft.vertexIndex);
-                meshRegion.CheckVertex (square.topRight.vertexIndex);
-                meshRegion.CheckVertex (square.bottomRight.vertexIndex);
-                meshRegion.CheckVertex (square.bottomLeft.vertexIndex);
                 break;
         }
     }
@@ -176,8 +190,8 @@ public class IslandMeshGenerator : MonoBehaviour {
         triangles.Add (c.vertexIndex);
 
         Triangle triangle = new Triangle (a.vertexIndex, b.vertexIndex, c.vertexIndex);
-        meshRegion.AddTriangleToDictionary (triangle.vertices[0], triangle);
-        meshRegion.AddTriangleToDictionary (triangle.vertices[1], triangle);
-        meshRegion.AddTriangleToDictionary (triangle.vertices[2], triangle);
+        meshDetail.AddTriangleToDictionary (triangle.vertices[0], triangle);
+        meshDetail.AddTriangleToDictionary (triangle.vertices[1], triangle);
+        meshDetail.AddTriangleToDictionary (triangle.vertices[2], triangle);
     }
 }

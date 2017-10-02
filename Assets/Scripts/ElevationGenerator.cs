@@ -12,14 +12,14 @@ public class ElevationGenerator : MonoBehaviour {
         foreach (IsleInfo island in islands) {
             MeshFilter mf = island.GetSurfaceMesh (surfaceIndex);
 
-            List<Vector3> verts = ApplyHeight (island.surfaceMeshRegion, altitude, curve, noiseData, seed);
+            List<Vector3> verts = ApplyHeight (island.surfaceMeshDetail, altitude, curve, noiseData, seed);
 
             mf.sharedMesh.vertices = verts.ToArray ();
             mf.sharedMesh.RecalculateNormals ();
         }
     }
 
-	List<Vector3> ApplyHeight (MeshRegion meshReg, float altitude, AnimationCurve curve, NoiseData noiseData, int seed) {
+	List<Vector3> ApplyHeight (IsleMeshDetail meshReg, float altitude, AnimationCurve curve, NoiseData noiseData, int seed) {
 		List<Vector3> newVertices = new List<Vector3> ();
 
 		// Get the rectangle region of the island
