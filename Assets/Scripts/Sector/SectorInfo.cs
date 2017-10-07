@@ -7,6 +7,8 @@ public class SectorInfo {
 
     public GameObject gameObject;
 
+    public Vector3 offset;
+
     public List<Vector3> GetVertices () {
         MeshFilter meshFilter = gameObject.GetComponent<MeshFilter> ();
         return new List<Vector3> (meshFilter.sharedMesh.vertices);

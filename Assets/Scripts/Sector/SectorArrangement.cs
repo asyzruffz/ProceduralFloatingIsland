@@ -13,7 +13,7 @@ public class SectorArrangement : ScriptableObject {
         type = SectorType.Blank;
     }
 
-    public virtual void Setup (List<Vector3> points, Transform parent) {
+    public virtual void Setup (SectorInfo sector, TerrainVerticesDatabase vertDatabase, Transform parent) {
 
     }
 }

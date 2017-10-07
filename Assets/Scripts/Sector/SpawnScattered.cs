@@ -14,8 +14,10 @@ public class SpawnScattered : SectorArrangement {
         type = SectorType.SpawnScattered;
     }
 
-    public override void Setup (List<Vector3> points, Transform parent) {
-        base.Setup (points, parent);
+    public override void Setup (SectorInfo sector, TerrainVerticesDatabase vertDatabase, Transform parent) {
+        base.Setup (sector, vertDatabase, parent);
+
+        List<Vector3> points = sector.GetVertices ();
 
         int quantity = (int)Random.Range (amount.x, amount.y);
         for (int i = 0; i < quantity; i++) {

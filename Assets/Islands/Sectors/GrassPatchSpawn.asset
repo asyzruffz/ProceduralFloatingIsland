@@ -16,4 +16,4 @@ MonoBehaviour:
   objectsToSpawn:
   - {fileID: 1345925438495090, guid: 89bb9061f7ddbda4caff21ff57c627af, type: 2}
   amount: {x: 5, y: 10}
-  offset: {x: 0, y: 1, z: 0}
+  offset: {x: 0, y: 0, z: 0}

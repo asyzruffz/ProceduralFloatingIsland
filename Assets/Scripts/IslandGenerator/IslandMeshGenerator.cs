@@ -9,7 +9,7 @@ public class IslandMeshGenerator : MonoBehaviour {
     List<int> triangles = new List<int> ();
     IsleMeshDetail meshDetail;
 
-    public List<Mesh> GenerateIslandMesh (MapRegion region, IsleInfo info, float squareSize, float depth) {
+    public List<Mesh> GenerateIslandMesh (MapRegion region, IsleInfo info, float squareSize, float depth, TerrainVerticesDatabase vertDatabase) {
         
         squareGrid = new SquareGrid (region, squareSize);
         vertices.Clear ();
@@ -23,7 +23,7 @@ public class IslandMeshGenerator : MonoBehaviour {
             }
         }
 
-        List<Mesh> meshList = new List<Mesh> ();
+        vertDatabase.AddVertices (vertices, transform.position + info.offset);
 
         Mesh surfaceMesh = new Mesh ();
         surfaceMesh.vertices = vertices.ToArray ();
@@ -36,6 +36,7 @@ public class IslandMeshGenerator : MonoBehaviour {
         undersideMesh.triangles = triangles.ToArray ();
         undersideMesh.RecalculateNormals ();
 
+        List<Mesh> meshList = new List<Mesh> ();
         meshList.Add (surfaceMesh);
         meshList.Add (CreateWallMesh (depth));
         meshList.Add (undersideMesh);
@@ -44,7 +45,7 @@ public class IslandMeshGenerator : MonoBehaviour {
         return meshList;
     }
 
-    public Mesh GenerateZoneMesh (MapRegion region, float squareSize) {
+    public Mesh GenerateZoneMesh (MapRegion region, SectorInfo sector, float squareSize, TerrainVerticesDatabase vertDatabase) {
 
         squareGrid = new SquareGrid (region, squareSize);
         vertices.Clear ();
@@ -55,6 +56,8 @@ public class IslandMeshGenerator : MonoBehaviour {
                 TriangulateSquare (squareGrid.squares[x, y]);
             }
         }
+
+        vertDatabase.SetVerticesSector (vertices, transform.position + sector.offset, sector.id);
 
         Mesh regionMesh = new Mesh ();
         regionMesh.vertices = vertices.ToArray ();

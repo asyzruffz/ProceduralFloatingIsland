@@ -31,6 +31,7 @@ public class IslandGenerator : MonoBehaviour {
     LandMap map;
     List<IsleInfo> islands = new List<IsleInfo>();
     List<SectorInfo> sectors = new List<SectorInfo> ();
+    TerrainVerticesDatabase vertDatabase = new TerrainVerticesDatabase ();
     bool finished = false;
 
     public void GenerateIsland (bool inGame = true) {
@@ -89,8 +90,8 @@ public class IslandGenerator : MonoBehaviour {
                 }
 
                 ElevationGenerator elevGen = GetComponent<ElevationGenerator> ();
-                elevGen.elevateSurface (islands, islandData.altitude, islandData.mountainCurve, surfaceNoiseData, seedHash, 0); // elevate hills on the surface
-                elevGen.elevateSurface (islands, -islandData.stalactite, islandData.bellyCurve, undersideNoiseData, seedHash, 2); // extend stakes at surface below
+                elevGen.elevateSurface (islands, islandData.altitude, islandData.mountainCurve, surfaceNoiseData, seedHash, 0, vertDatabase);   // elevate hills on the surface
+                elevGen.elevateSurface (islands, -islandData.stalactite, islandData.bellyCurve, undersideNoiseData, seedHash, 2, vertDatabase); // extend stakes at surface below
             }
 
             // Find strategic locations in each region
@@ -102,10 +103,10 @@ public class IslandGenerator : MonoBehaviour {
             PlacementGenerator placement = GetComponent<PlacementGenerator> ();
             if (placement && decorateTerrain) {
                 placement.GenerateTrees (islands);
-                placement.GenerateSectorsContent (sectors);
+                placement.GenerateSectorsContent (sectors, vertDatabase);
             } else if (placement) {
                 //placement.GeneratePlacements (islands);
-                placement.GenerateSectorsContent (sectors);
+                placement.GenerateSectorsContent (sectors, vertDatabase);
             }
 
             if (flatShading) {
@@ -176,8 +177,8 @@ public class IslandGenerator : MonoBehaviour {
             }
 
             ElevationGenerator elevGen = GetComponent<ElevationGenerator> ();
-            elevGen.elevateSurface (islands, islandData.altitude, islandData.mountainCurve, surfaceNoiseData, seedHash, 0); // elevate hills on the surface
-            elevGen.elevateSurface (islands, -islandData.stalactite, islandData.bellyCurve, undersideNoiseData, seedHash, 2); // extend stakes at surface below
+            elevGen.elevateSurface (islands, islandData.altitude, islandData.mountainCurve, surfaceNoiseData, seedHash, 0, vertDatabase);   // elevate hills on the surface
+            elevGen.elevateSurface (islands, -islandData.stalactite, islandData.bellyCurve, undersideNoiseData, seedHash, 2, vertDatabase); // extend stakes at surface below
         }
 
         yield return new WaitForEndOfFrame ();
@@ -195,10 +196,10 @@ public class IslandGenerator : MonoBehaviour {
         PlacementGenerator placement = GetComponent<PlacementGenerator> ();
         if (placement && decorateTerrain) {
             placement.GenerateTrees (islands);
-            placement.GenerateSectorsContent (sectors);
+            placement.GenerateSectorsContent (sectors, vertDatabase);
         } else if (placement) {
             //placement.GeneratePlacements (islands);
-            placement.GenerateSectorsContent (sectors);
+            placement.GenerateSectorsContent (sectors, vertDatabase);
         }
 
         yield return new WaitForEndOfFrame ();
@@ -268,7 +269,7 @@ public class IslandGenerator : MonoBehaviour {
             GameObject underside = AddChildMesh ("Underside", isle.gameObject.transform);
             underside.transform.position += Vector3.up * -islandData.depth;
 
-            List<Mesh> meshes = meshGen.GenerateIslandMesh (region, isle, islandData.tileSize, islandData.depth);
+            List<Mesh> meshes = meshGen.GenerateIslandMesh (region, isle, islandData.tileSize, islandData.depth, vertDatabase);
 
             // Mesh for surface
             surface.GetComponent<MeshFilter> ().mesh = meshes[0];
@@ -315,21 +316,21 @@ public class IslandGenerator : MonoBehaviour {
         foreach (MapRegion zone in zones) {
             SectorInfo sector = new SectorInfo ();
             sector.id = zoneCount;
+            sector.offset = zone.GetCentre () * islandData.tileSize;
 
             sector.gameObject = AddChildMesh ("Zone " + sector.id, territories.transform);
-            sector.gameObject.transform.localPosition = zone.GetCentre () * islandData.tileSize;
+            sector.gameObject.transform.localPosition = sector.offset;
 
-            sector.gameObject.GetComponent<MeshFilter> ().mesh = meshGen.GenerateZoneMesh (zone, islandData.tileSize);
+            sector.gameObject.GetComponent<MeshFilter> ().mesh = meshGen.GenerateZoneMesh (zone, sector, islandData.tileSize, vertDatabase);
             sector.gameObject.GetComponent<MeshRenderer> ().material = islandData.invisibleMaterial;
-            // #TODO  Elevate region mesh
-
+            
             cakeslice.Outline outlineComponent = sector.gameObject.AddComponent<cakeslice.Outline> ();
             outlineComponent.color = zoneCount % 3;
 
             sectors.Add (sector);
             zoneCount++;
         }
-
+        
         territories.AddComponent<CycleRegionOutline> ();
     }
 

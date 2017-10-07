@@ -13,11 +13,14 @@ public class SpawnPoint : SectorArrangement {
         type = SectorType.SpawnPoint;
     }
 
-    public override void Setup (List<Vector3> points, Transform parent) {
-        base.Setup (points, parent);
+    public override void Setup (SectorInfo sector, TerrainVerticesDatabase vertDatabase, Transform parent) {
+        base.Setup (sector, vertDatabase, parent);
+
+        TerrainVertData vertData = vertDatabase.GetNearestVertData (parent.position);
+        Vector3 spawnPos = vertData.coordinate + (Vector3.up * vertData.altitude);
 
         GameObject spawn = Instantiate (objectToSpawn, childOfLevel ? parent : null);
         spawn.name = objectToSpawn.name;
-        spawn.transform.localPosition = offset + (childOfLevel ? Vector3.zero : parent.position);
+        spawn.transform.localPosition = offset + (childOfLevel ? parent.InverseTransformPoint (spawnPos) : parent.position);
     }
 }
