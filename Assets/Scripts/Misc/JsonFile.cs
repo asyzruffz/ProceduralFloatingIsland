@@ -21,9 +21,13 @@ public class JsonFile {
 
     public static bool FilesExistIn (string folder) {
         string folderPath = Application.persistentDataPath + "/" + folder;
+        if (!Directory.Exists (folderPath)) {
+            return false;
+        }
+
         string[] files = Directory.GetFiles (folderPath, "*.json");
         bool IsAnyFile = (files != null) && (files.Length > 0);
-        return Directory.Exists (folderPath) && IsAnyFile;
+        return IsAnyFile;
     }
 
     public static void Save<T> (string fileName, string folder, T saveData) {
@@ -44,6 +48,16 @@ public class JsonFile {
         if (File.Exists (path)) {
             string jsonData = File.ReadAllText (path);
             saveData = JsonUtility.FromJson<T> (jsonData);
+        } else {
+            Debug.LogWarning (fileName + " not found in the " + folder + " folder!");
+        }
+    }
+
+    public static void Delete (string fileName, string folder) {
+        string path = Application.persistentDataPath + "/" + folder + "/" + fileName;
+
+        if (File.Exists (path)) {
+            File.Delete (path);
         } else {
             Debug.LogWarning (fileName + " not found in the " + folder + " folder!");
         }

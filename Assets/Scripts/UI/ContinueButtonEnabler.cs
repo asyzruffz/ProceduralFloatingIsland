@@ -5,6 +5,10 @@ using UnityEngine.UI;
 public class ContinueButtonEnabler : MonoBehaviour {
 
     void Start () {
-        GetComponent<Button> ().interactable = JsonFile.FilesExistIn (GameController.Instance.saveFolder);
+        CheckAnySaveFile ();
 	}
+
+    public void CheckAnySaveFile () {
+        GetComponent<Button> ().interactable = JsonFile.FilesExistIn (GameController.Instance.saveFolder);
+    }
 }

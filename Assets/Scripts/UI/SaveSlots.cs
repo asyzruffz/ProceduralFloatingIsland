@@ -36,6 +36,8 @@ public class SaveSlots : MonoBehaviour {
                 AddExistingSlotButton (slotData, isSaving);
             }
         }
+
+        SortSlots ();
     }
 
     public void AddFurtherAction (UnityAction calledFunction) {
@@ -52,6 +54,8 @@ public class SaveSlots : MonoBehaviour {
 
         Button slotButton = newSlot.GetComponent<Button> ();
         slotButton.onClick.AddListener (() => { SaveToFile (CreateFileName ()); });
+
+        Destroy (newSlot.GetComponentsInChildren<Button> ()[1].gameObject); // Remove the delete button for this slot
 
         slots.Add (newSlot);
     }
@@ -78,6 +82,35 @@ public class SaveSlots : MonoBehaviour {
             Destroy (slot);
         }
         slots.Clear ();
+    }
+
+    void SortSlots () {
+        GameObject temp = new GameObject ("Temp");
+        temp.transform.SetParent (transform, false);
+
+        for (int i = 0; i < slots.Count; i++) {
+            slots[i].transform.SetParent (temp.transform, false);
+        }
+
+        slots.Sort (delegate (GameObject a, GameObject b) {
+            if (string.IsNullOrEmpty (a.GetComponent<SaveSlotInfo> ().slotData.timeLastSaved) &&
+                string.IsNullOrEmpty (b.GetComponent<SaveSlotInfo> ().slotData.timeLastSaved)) {
+                return 0;
+            } else if (string.IsNullOrEmpty (a.GetComponent<SaveSlotInfo> ().slotData.timeLastSaved)) {
+                return -1;
+            } else if (string.IsNullOrEmpty (b.GetComponent<SaveSlotInfo> ().slotData.timeLastSaved)) {
+                return 1;
+            } else {
+                return b.GetComponent<SaveSlotInfo> ().slotData.GetLastSavedDateTime ().CompareTo (
+                       a.GetComponent<SaveSlotInfo> ().slotData.GetLastSavedDateTime ());
+            }
+        });
+
+        for (int i = 0; i < slots.Count; i++) {
+            slots[i].transform.SetParent (transform, false);
+        }
+
+        Destroy (temp);
     }
 
     string CreateFileName () {

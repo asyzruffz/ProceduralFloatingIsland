@@ -15,5 +15,11 @@ EditorBuildSettings:
     path: Assets/Scenes/LoadingScreen.unity
     guid: 2c4e3a30e5680c7409a9e9462d84b630
   - enabled: 1
+    path: Assets/Scenes/Tutorial.unity
+    guid: 6873678b8e9a02c478c40ad78a92d503
+  - enabled: 1
     path: Assets/Scenes/GameplayTest.unity
+    guid: 55398f594f1145947b725ca0b33248be
+  - enabled: 1
+    path: Assets/Scenes/Prototype.unity
     guid: 00000000000000000000000000000000

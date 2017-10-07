@@ -18,10 +18,7 @@ public class ScrollView : MonoBehaviour {
     float timer = 0;
 
     void Start () {
-		if (viewList.Count > 0) {
-            targetIndex = 0;
-            ShiftView (false);
-        }
+        SetViewAt (0);
 
         timer = autoDelay - 1;
     }
@@ -90,6 +87,14 @@ public class ScrollView : MonoBehaviour {
 
     public int GetCurrentIndexViewed () {
         return currentIndex;
+    }
+
+    public void SetViewAt (int target) {
+        if (viewList.Count > 0 && target >= 0 && target < viewList.Count) {
+            targetIndex = target;
+            currentIndex = targetIndex;
+            ShiftView (false);
+        }
     }
 }
 

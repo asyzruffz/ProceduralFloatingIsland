@@ -6,14 +6,22 @@ public class LevelSelectHandler : MonoBehaviour {
 
     void Start () {
         view = GetComponent<ScrollView> ();
+
+        if (GameController.Instance) {
+            view.SetViewAt(GameController.Instance.level);
+        }
     }
 
 	public void BackToMenu () {
-        GameController.Instance.BackToMenu ();
+        if (GameController.Instance) {
+            GameController.Instance.BackToMenu ();
+        }
     }
 
     public void GoToIsland () {
-        GameController.Instance.level = view.GetCurrentIndexViewed () + 1;
-        GameController.Instance.GoToIsland ();
+        if (GameController.Instance) {
+            GameController.Instance.level = view.GetCurrentIndexViewed ();
+            GameController.Instance.GoToIsland ();
+        }
     }
 }

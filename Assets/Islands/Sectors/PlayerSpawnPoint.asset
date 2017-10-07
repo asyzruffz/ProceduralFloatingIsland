@@ -13,6 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   description: Spawns player
   type: 1
-  objectToSpawn: {fileID: 100000, guid: 5e9e851c0e142814dac026a256ba2ac0, type: 2}
-  offset: {x: 0, y: 10, z: 0}
+  objectToSpawn: {fileID: 1047326384599882, guid: 81969300f5e3a204e9613c82a51e441b,
+    type: 2}
+  offset: {x: 0, y: 30, z: 0}
   childOfLevel: 0

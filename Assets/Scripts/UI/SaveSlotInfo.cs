@@ -4,7 +4,11 @@ using UnityEngine;
 public class SaveSlotInfo : MonoBehaviour {
 
     public SlotData slotData;
-
+    
+    public void DeleteThisSlot () {
+        JsonFile.Delete (slotData.fileName, GameController.Instance.saveFolder);
+        Destroy (gameObject);
+    }
 }
 
 [System.Serializable]
