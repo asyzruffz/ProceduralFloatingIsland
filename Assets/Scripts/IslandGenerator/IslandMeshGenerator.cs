@@ -23,7 +23,7 @@ public class IslandMeshGenerator : MonoBehaviour {
             }
         }
 
-        vertDatabase.AddVertices (vertices, transform.position + info.offset);
+        vertDatabase.AddVertices (vertices, transform.position + info.offset, info.id);
 
         Mesh surfaceMesh = new Mesh ();
         surfaceMesh.vertices = vertices.ToArray ();

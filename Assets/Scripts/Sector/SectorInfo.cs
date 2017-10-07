@@ -13,4 +13,16 @@ public class SectorInfo {
         MeshFilter meshFilter = gameObject.GetComponent<MeshFilter> ();
         return new List<Vector3> (meshFilter.sharedMesh.vertices);
     }
+
+    public List<TerrainVertData> GetTerrainVerts (TerrainVerticesDatabase vertDatabase) {
+        List<TerrainVertData> sectorVerts = new List<TerrainVertData> ();
+
+        foreach (var vertPair in vertDatabase.verticesDictionary) {
+            if (vertPair.Value.sectorId == id) {
+                sectorVerts.Add (vertPair.Value);
+            }
+        }
+
+        return sectorVerts;
+    }
 }

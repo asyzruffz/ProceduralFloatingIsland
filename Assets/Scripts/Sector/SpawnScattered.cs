@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu (fileName = "SpawnScattered", menuName = "Procedural/Sector/Spawn Scattered")]
@@ -8,6 +7,8 @@ public class SpawnScattered : SectorArrangement {
     public GameObject[] objectsToSpawn;
     [MinMax]
     public Vector2 amount;
+    [MinMaxSlider(0,1)]
+    public Vector2 inlandRange;
     public Vector3 offset;
 
     public SpawnScattered () {
@@ -17,8 +18,14 @@ public class SpawnScattered : SectorArrangement {
     public override void Setup (SectorInfo sector, TerrainVerticesDatabase vertDatabase, Transform parent) {
         base.Setup (sector, vertDatabase, parent);
 
-        List<Vector3> points = sector.GetVertices ();
-
+        List<TerrainVertData> verts = sector.GetTerrainVerts (vertDatabase);
+        List<Vector3> points = new List<Vector3> ();
+        foreach (TerrainVertData point in verts) {
+            if (point.inlandPosition >= inlandRange.x && point.inlandPosition <= inlandRange.y) {
+                points.Add (point.GetSurfacePos () - parent.transform.position);
+            }
+        }
+        
         int quantity = (int)Random.Range (amount.x, amount.y);
         for (int i = 0; i < quantity; i++) {
             GameObject spawn = Instantiate (objectsToSpawn[Random.Range (0, objectsToSpawn.Length)], parent);

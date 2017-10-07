@@ -72,6 +72,7 @@ public class IslandGenerator : MonoBehaviour {
             map.SmoothMap (5);
 
             meshGen = GetComponent<IslandMeshGenerator> ();
+            vertDatabase.Clear ();
 
             // Find separated regions to form an island
             List<MapRegion> regions = map.GetRegions ();
@@ -88,6 +89,8 @@ public class IslandGenerator : MonoBehaviour {
                 foreach (IsleInfo island in islands) {
                     island.surfaceMeshDetail.NormalizeGradientMap (highestPeak);
                 }
+
+                vertDatabase.SetVerticesInlandPos (islands);
 
                 ElevationGenerator elevGen = GetComponent<ElevationGenerator> ();
                 elevGen.elevateSurface (islands, islandData.altitude, islandData.mountainCurve, surfaceNoiseData, seedHash, 0, vertDatabase);   // elevate hills on the surface
@@ -155,6 +158,7 @@ public class IslandGenerator : MonoBehaviour {
         yield return new WaitForEndOfFrame ();
 
         meshGen = GetComponent<IslandMeshGenerator> ();
+        vertDatabase.Clear ();
 
         // Find separated regions to form an island
         List<MapRegion> regions = map.GetRegions ();
@@ -175,6 +179,8 @@ public class IslandGenerator : MonoBehaviour {
             foreach (IsleInfo island in islands) {
                 island.surfaceMeshDetail.NormalizeGradientMap (highestPeak);
             }
+
+            vertDatabase.SetVerticesInlandPos (islands);
 
             ElevationGenerator elevGen = GetComponent<ElevationGenerator> ();
             elevGen.elevateSurface (islands, islandData.altitude, islandData.mountainCurve, surfaceNoiseData, seedHash, 0, vertDatabase);   // elevate hills on the surface
@@ -249,7 +255,7 @@ public class IslandGenerator : MonoBehaviour {
 #endif
         }
 
-        int islandCount = 1;
+        int islandCount = 0;
         foreach (MapRegion region in islandRegions) {
             IsleInfo isle = new IsleInfo ();
             isle.id = islandCount;

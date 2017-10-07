@@ -6,7 +6,7 @@ public class TerrainVerticesDatabase {
 
     public Dictionary<Vector2, TerrainVertData> verticesDictionary = new Dictionary<Vector2, TerrainVertData> ();
 
-    public void AddVertices (List<Vector3> vertices, Vector3 origin) {
+    public void AddVertices (List<Vector3> vertices, Vector3 origin, int isleId) {
         for (int i = 0; i < vertices.Count; i++) {
             Vector2 key = (vertices[i] + origin).ToXZ ();
 
@@ -14,8 +14,9 @@ public class TerrainVerticesDatabase {
                 verticesDictionary.Add (key, new TerrainVertData ());
             }
 
+            verticesDictionary[key].isleId = isleId;
             verticesDictionary[key].surfaceVertIndex = i;
-            verticesDictionary[key].coordinate = vertices[i];
+            verticesDictionary[key].coordinate = vertices[i] + origin;
         }
     }
 
@@ -60,6 +61,12 @@ public class TerrainVerticesDatabase {
         }
     }
 
+    public void SetVerticesInlandPos (List<IsleInfo> islands) {
+        foreach (var vertPair in verticesDictionary) {
+            vertPair.Value.inlandPosition = islands[vertPair.Value.isleId].surfaceMeshDetail.gradientMap[vertPair.Value.surfaceVertIndex];
+        }
+    }
+
     public TerrainVertData GetNearestVertData (Vector3 position) {
         Vector2 hPos = position.ToXZ ();
 
@@ -81,15 +88,26 @@ public class TerrainVerticesDatabase {
 
         return verticesDictionary[resultKey];
     }
+
+    public void Clear () {
+        verticesDictionary.Clear ();
+    }
 }
 
 public class TerrainVertData {
+    public int isleId = -1;
     public int surfaceVertIndex = -1;
+
     public Vector3 coordinate = new Vector3 ();
 
     public float altitude = 0;
     public float bottomPoint = 0;
+    public float inlandPosition = -1;
 
     public int sectorId = 0;
     public int sectorVertIndex = -1;
+
+    public Vector3 GetSurfacePos () {
+        return new Vector3 (coordinate.x, altitude, coordinate.z);
+    }
 }

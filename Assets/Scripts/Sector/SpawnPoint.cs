@@ -17,10 +17,10 @@ public class SpawnPoint : SectorArrangement {
         base.Setup (sector, vertDatabase, parent);
 
         TerrainVertData vertData = vertDatabase.GetNearestVertData (parent.position);
-        Vector3 spawnPos = vertData.coordinate + (Vector3.up * vertData.altitude);
-
+        Vector3 spawnPos = vertData.GetSurfacePos () - parent.position;
+        
         GameObject spawn = Instantiate (objectToSpawn, childOfLevel ? parent : null);
         spawn.name = objectToSpawn.name;
-        spawn.transform.localPosition = offset + (childOfLevel ? parent.InverseTransformPoint (spawnPos) : parent.position);
+        spawn.transform.localPosition = offset + (childOfLevel ? spawnPos : parent.position);
     }
 }
