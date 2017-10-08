@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0d3bd3822fd5b2c49bc5a7a3614b62a6, type: 3}
+  m_Name: TreesSpawn
+  m_EditorClassIdentifier: 
+  description: 
+  type: 2
+  objectsToSpawn:
+  - {fileID: 106782, guid: 1d605f00ad99f2940b7ce236b8b85b1b, type: 2}
+  - {fileID: 169886, guid: 932ba6a9fb6dff447bb4d3eaf88640fd, type: 2}
+  - {fileID: 126124, guid: 13b01f66b5834b54ab62e863b7018650, type: 2}
+  - {fileID: 143294, guid: 784735d69a6e7fe4aa1621e746da4280, type: 2}
+  - {fileID: 185402, guid: 479f85e594bb22c4bb41190a5adb6374, type: 2}
+  - {fileID: 120114, guid: cd19ed57c2e67c548ba0c6febfda6585, type: 2}
+  amount: {x: 5, y: 10}
+  inlandRange: {x: 0.08, y: 0.6}
+  offset: {x: 0, y: 0, z: 0}

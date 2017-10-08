@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Name: DefaultSurfaceNoise
   m_EditorClassIdentifier: 
   autoUpdate: 0
-  scale: 10
+  scale: 15
   octave: 3
   lacunarity: 2
   persistance: 0.8

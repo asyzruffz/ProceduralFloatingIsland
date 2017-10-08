@@ -11,8 +11,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 680d863eef139f9488672a3d2e1f1196, type: 3}
   m_Name: DefaultUndersideNoise
   m_EditorClassIdentifier: 
-  autoUpdate: 1
-  scale: 5
+  autoUpdate: 0
+  scale: 8
   octave: 1
   lacunarity: 1
   persistance: 0.8

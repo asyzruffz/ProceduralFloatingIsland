@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0d3bd3822fd5b2c49bc5a7a3614b62a6, type: 3}
+  m_Name: GrassPatchSpawn
+  m_EditorClassIdentifier: 
+  description: 
+  type: 2
+  objectsToSpawn:
+  - {fileID: 1345925438495090, guid: 89bb9061f7ddbda4caff21ff57c627af, type: 2}
+  amount: {x: 5, y: 10}
+  inlandRange: {x: 0.03, y: 0.3}
+  offset: {x: 0, y: 0, z: 0}

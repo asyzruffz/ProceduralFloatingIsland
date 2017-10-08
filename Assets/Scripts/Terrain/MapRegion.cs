@@ -4,8 +4,7 @@ using System.Linq;
 using UnityEngine;
 
 public class MapRegion {
-
-	public int id; 
+    
 	public List<Coord> turf;
 
 	int horizontalMaxRange;
