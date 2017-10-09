@@ -1,11 +1,11 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 [System.Serializable]
 public class SectorArrangement : ScriptableObject {
 
     public string description;
+    public Vector3 offset;
+
     [HideInInspector]
     public SectorType type;
 

@@ -123,18 +123,24 @@ public class LandMap {
 	}
 
     public List<MapRegion> GetZones (List<MapRegion> regions) {
-        int zoneNum = ClusterLocationsInRegions (regions);
+        //int zoneNum = ClusterLocationsInRegions (regions);
+
+        Cluster cl = new Cluster (regions);
+        int zoneNum = cl.ClusterLocationsInRegions (5, 55, spots);
 
         // Initialize list to prepare zones
         List<List<Coord>> zoneTiles = new List<List<Coord>> ();
-        for (int i = 0; i < zoneNum; i++) {
+        for (int i = 0; i <= zoneNum; i++) {
             zoneTiles.Add (new List<Coord> ());
         }
+
+        Debug.Log ("ZoneNum: " + zoneNum);
 
         // Fill the lists
         for (int x = 0; x < width; x++) {
             for (int y = 0; y < length; y++) {
                 if (spots[x, y].filled) {
+                    spots[x, y].areaValue = (spots[x, y].areaValue != -1) ? spots[x, y].areaValue : (zoneNum - 1);
                     zoneTiles[spots[x, y].areaValue].Add (new Coord (x, y));
                 }
             }
@@ -148,7 +154,7 @@ public class LandMap {
         return zones;
     }
 
-    // Called by GetSubRegions (), retruns number of subregions
+    // Called by GetSubRegions (), returns number of subregions
     int ClusterLocationsInRegions (List<MapRegion> regions) {
         // K-means cluster algorithm to separate locations in the regions
 
@@ -250,17 +256,4 @@ public class LandMap {
 public struct MapPoint {
 	public bool filled;
 	public int areaValue;
-}
-
-public struct Coord {
-	public int x, y;
-
-	public Coord (int tileX, int tileY) {
-		x = tileX;
-		y = tileY;
-	}
-
-	public Vector2 ToVector2 () {
-		return new Vector2 (x, y);
-	}
 }
