@@ -9,6 +9,8 @@ public class IslandData : UpdatableData {
 
     public float tileSize = 1;
     public float depth = 5;
+
+	[Header("Shape")]
     public float altitude = 5;
 	public AnimationCurve mountainCurve;
 	public float stalactite = 8;
@@ -16,6 +18,8 @@ public class IslandData : UpdatableData {
 
 	[Range (0, 100)]
     public float randomFillPercent = 50;
+
+	public Texture2D baseShape;
 
     [Header ("Materials")]
     public Material grassMaterial;

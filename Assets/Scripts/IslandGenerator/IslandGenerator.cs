@@ -68,6 +68,11 @@ public class IslandGenerator : MonoBehaviour {
             // Fill the map randomly with 0s and 1s based on percentage fill
             map.RandomFillMap (islandData.randomFillPercent);
 
+			// Mold to the base shape
+			if (islandData.baseShape) {
+				map.makeBaseShape (islandData.baseShape);
+			}
+
             // Smooth the map 5 times
             map.SmoothMap (5);
 
@@ -152,8 +157,13 @@ public class IslandGenerator : MonoBehaviour {
         // Fill the map randomly with 0s and 1s based on percentage fill
         map.RandomFillMap (islandData.randomFillPercent);
 
-        // Smooth the map 5 times
-        map.SmoothMap (5);
+		// Mold to the base shape
+		if (islandData.baseShape) {
+			map.makeBaseShape (islandData.baseShape);
+		}
+
+		// Smooth the map 5 times
+		map.SmoothMap (5);
 
         yield return new WaitForEndOfFrame ();
 

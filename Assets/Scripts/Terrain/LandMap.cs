@@ -30,6 +30,21 @@ public class LandMap {
 		}
 	}
 
+	public void makeBaseShape (Texture2D shapeTexture) {
+		shapeTexture.Resize (width, length);
+
+		for (int x = 0; x < width; x++) {
+			for (int y = 0; y < length; y++) {
+				Color colour = shapeTexture.GetPixel (x, y);
+				bool blank = (colour.grayscale < 0.1f);
+
+				if (blank) {
+					spots[x, y].filled = false;
+				}
+			}
+		}
+	}
+
 	public void SmoothMap (int passes) {
         // Change the state in each cell within the cellular automaton based on its neighbour
 
