@@ -30,7 +30,7 @@ public class GameController : Singleton<GameController> {
 	}
     
     void Start () {
-		
+		LoggerTool.Instance.Post ("Test logging..");
 	}
 	
 	void Update () {
