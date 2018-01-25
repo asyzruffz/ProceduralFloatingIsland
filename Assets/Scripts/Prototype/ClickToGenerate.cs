@@ -8,7 +8,8 @@ public class ClickToGenerate : MonoBehaviour {
 
 	void Update () {
         if (Input.GetButtonDown ("Fire1")) {
-            bool prevRandSet = islandGenerator.useRandomSeed;
+			LoggerTool.Post ("Generate island from click");
+			bool prevRandSet = islandGenerator.useRandomSeed;
             islandGenerator.useRandomSeed = true;
             islandGenerator.GenerateIsland ();
             islandGenerator.useRandomSeed = prevRandSet;

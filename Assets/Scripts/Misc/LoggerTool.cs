@@ -11,7 +11,7 @@ public class LoggerTool : Singleton<LoggerTool> {
 	[SerializeField]
 	private bool debugMode = true;
 
-	LogTracker defaultLogger;
+	private static LogTracker defaultLogger;
 
 	// whether debug is on
 	public static bool debug {
@@ -29,12 +29,19 @@ public class LoggerTool : Singleton<LoggerTool> {
 	/// log some message and post it.
 	/// </summary>
 	/// <param name="logMsg"></param>
-	public void Post (object logMsg) {
+	public static void Post (object logMsg, bool printInConsole = true, bool printInLogfile = true) {
 		if (!debug) {
 			return;
 		}
 
+		if (!printInConsole || !printInLogfile) {
+			defaultLogger.Configure (printInConsole, printInLogfile);
+		}
+
 		defaultLogger.Log (logMsg);
 		defaultLogger.Save ();
+
+		// Reset logger to print everywhere
+		defaultLogger.Configure (true, true);
 	}
 }

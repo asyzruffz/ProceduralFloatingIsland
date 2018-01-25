@@ -9,13 +9,15 @@ public class IslandGeneratorEditor : Editor {
 
         if(DrawDefaultInspector ()) {
             if(islandGen.autoUpdate) {
-                islandGen.GenerateIsland (false);
+				LoggerTool.Post ("Generate island from Editor");
+				islandGen.GenerateIsland (false);
             }
         }
 
 		GUILayout.Space (10);
 		if (GUILayout.Button("Generate")) {
-            islandGen.GenerateIsland (false);
+			LoggerTool.Post ("Generate island from Editor");
+			islandGen.GenerateIsland (false);
         }
     }
 }

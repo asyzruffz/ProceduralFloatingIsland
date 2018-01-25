@@ -32,7 +32,9 @@ public class LogTracker {
 	public void Log (object logMsg) {
 		if (debug) {
 			string msgString = LogFormat (logMsg.ToString ());
-			WriteToStream (data, msgString + "\n");
+			if (printToFile) {
+				WriteToStream (data, msgString + "\n");
+			}
 			
 			Flush (msgString);
 		}
@@ -62,7 +64,7 @@ public class LogTracker {
 	}
 
 	protected virtual string GetFileFullPath (string name) {
-		return Application.dataPath + "/" + LoggerTool.Instance.savePath + "/" + name + "__" + System.DateTime.Now.ToString ("dd-MM-yyyy") + ".txt";
+		return Application.dataPath + "/" + LoggerTool.Instance.savePath + "/" + name + "__" + System.DateTime.Now.ToString ("dd-MM-yyyy") + ".log";
 	}
 
 	protected virtual void CheckDirectory () {

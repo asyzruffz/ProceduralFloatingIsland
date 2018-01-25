@@ -149,7 +149,7 @@ public class LandMap {
             zoneTiles.Add (new List<Coord> ());
         }
 
-        Debug.Log ("ZoneNum: " + zoneNum);
+		LoggerTool.Post ("ZoneNum: " + zoneNum);
 
         // Fill the lists
         for (int x = 0; x < width; x++) {

@@ -46,7 +46,7 @@ public class NameGenerator : MonoBehaviour {
         }
 
         SaveDatabase ();
-        Debug.Log ("Finished building database!");
+		LoggerTool.Post ("Finished building database!");
     }
 
     char CheckCharOf (char input) {

@@ -19,7 +19,7 @@ public class Cluster {
                 if (!clusteredPts.ContainsKey (tile)) {
                     clusteredPts.Add (tile, new ClusterPoint ());
                 } else {
-                    Debug.Log ("DBSCAN: Duplicate of tile found! (" + tile.x + "," + tile.y + ")");
+					LoggerTool.Post ("DBSCAN: Duplicate of tile found! (" + tile.x + "," + tile.y + ")");
                 }
             }
         }
@@ -39,10 +39,10 @@ public class Cluster {
                     points[tile.x, tile.y].areaValue = -1;
                     cPt.done = true;
                     clusteredPts[tile] = cPt;
-                    Debug.Log ("Outlier");
+					LoggerTool.Post ("Outlier", true, false);
                     continue;
                 } else {
-                    Debug.Log ("Zone " + regionId);
+					LoggerTool.Post ("Zone " + regionId);
                     cPt = clusteredPts[tile];
                     cPt.regionNumber = regionId;
                     points[tile.x, tile.y].areaValue = regionId;

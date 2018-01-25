@@ -25,7 +25,7 @@ public class TerrainVerticesDatabase {
             Vector2 key = (vertices[i] + origin).ToXZ ();
 
             if (!verticesDictionary.ContainsKey (key)) {
-                Debug.Log (key.ToString () + " is not found while setting altitude!");
+				LoggerTool.Post (key.ToString () + " is not found while setting altitude!");
                 continue;
             }
 
@@ -38,7 +38,7 @@ public class TerrainVerticesDatabase {
             Vector2 key = (vertices[i] + origin).ToXZ ();
 
             if (!verticesDictionary.ContainsKey (key)) {
-                Debug.Log (key.ToString () + " is not found while setting bottom point!");
+				LoggerTool.Post (key.ToString () + " is not found while setting bottom point!");
                 continue;
             }
 

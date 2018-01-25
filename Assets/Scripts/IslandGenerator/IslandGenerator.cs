@@ -372,6 +372,7 @@ public class IslandGenerator : MonoBehaviour {
 
     void OnValuesUpdated () {
         if(!Application.isPlaying) {
+			LoggerTool.Post ("Generate island from Editor");
             GenerateIsland ();
         }
     }
