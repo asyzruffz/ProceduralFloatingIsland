@@ -53,10 +53,11 @@ public class LogTracker {
 			string filePath = GetFileFullPath (name);
 			fileWriter = File.Open (filePath, FileMode.Append);
 			data.WriteTo (fileWriter);
+			data = new MemoryStream ();
 			fileWriter.Close ();
 		}
 	}
-
+	
 
 	#region virtual functions
 	protected virtual string LogFormat (string msg) {

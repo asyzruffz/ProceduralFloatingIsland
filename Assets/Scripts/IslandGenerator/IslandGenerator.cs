@@ -21,6 +21,7 @@ public class IslandGenerator : MonoBehaviour {
     public bool shouldElevate;
     public bool decorateTerrain;
     public bool debug;
+	public CAMethod clusterAnalysis;
 
     [Header ("Data")]
     public IslandData islandData;
@@ -103,10 +104,10 @@ public class IslandGenerator : MonoBehaviour {
             }
 
             // Find strategic locations in each region
-            List<MapRegion> zones = map.GetZones (regions);
-            SpliceTerritory (zones);
+            List<MapRegion> zones = map.GetZones (regions, clusterAnalysis);
+			SpliceTerritory (zones);
 
-            SetColliders ();
+			SetColliders ();
 
             PlacementGenerator placement = GetComponent<PlacementGenerator> ();
             if (placement && decorateTerrain) {
@@ -199,8 +200,8 @@ public class IslandGenerator : MonoBehaviour {
 
         yield return new WaitForEndOfFrame ();
 
-        // Find strategic locations in each region
-        List<MapRegion> zones = map.GetZones (regions);
+		// Find strategic locations in each region
+		List<MapRegion> zones = map.GetZones (regions, clusterAnalysis);
         SpliceTerritory (zones);
 
         yield return new WaitForEndOfFrame ();
@@ -395,6 +396,7 @@ public class IslandGenerator : MonoBehaviour {
             int width = map.spots.GetLength (0);
             int length = map.spots.GetLength (1);
 			
+			// Draw black & white
 			/*for (int x = 0; x < width; x ++) {
 				for (int y = 0; y < length; y ++) {
 					Gizmos.color = map.spots[x, y].filled ? Color.black : Color.white;
@@ -403,6 +405,7 @@ public class IslandGenerator : MonoBehaviour {
 				}
 			}*/
 			
+			// Draw colour for clusters
             for (int x = 0; x < width; x++) {
                 for (int y = 0; y < length; y++) {
                     Gizmos.color = !map.spots[x, y].filled ? Color.white : randCol[(map.spots[x, y].areaValue % 20)];

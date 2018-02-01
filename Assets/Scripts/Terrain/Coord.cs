@@ -39,7 +39,23 @@ public struct Coord {
         return !(a == b);
     }
 
-    public override bool Equals(object other) {
+	public static Coord operator +(Coord a, Coord b) {
+		return new Coord (a.x + b.x, a.y + b.y);
+	}
+
+	public static Coord operator -(Coord a, Coord b) {
+		return new Coord (a.x - b.x, a.y - b.y);
+	}
+
+	public static Coord operator *(Coord a, int b) {
+		return new Coord (a.x * b, a.y * b);
+	}
+
+	public static Coord operator /(Coord a, int b) {
+		return new Coord (a.x / b, a.y / b);
+	}
+
+	public override bool Equals(object other) {
         // If parameter is null return false:
         if (other == null) {
             return false;
