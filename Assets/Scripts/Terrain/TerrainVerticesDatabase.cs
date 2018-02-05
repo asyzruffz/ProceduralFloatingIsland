@@ -8,7 +8,7 @@ public class TerrainVerticesDatabase {
 
     public void AddVertices (List<Vector3> vertices, Vector3 origin, int isleId) {
         for (int i = 0; i < vertices.Count; i++) {
-            Vector2 key = (vertices[i] + origin).ToXZ ();
+            Vector2 key = (vertices[i] + origin).ToVec2FromXZ ();
 
             if (!verticesDictionary.ContainsKey (key)) {
                 verticesDictionary.Add (key, new TerrainVertData ());
@@ -16,13 +16,14 @@ public class TerrainVerticesDatabase {
 
             verticesDictionary[key].isleId = isleId;
             verticesDictionary[key].surfaceVertIndex = i;
-            verticesDictionary[key].coordinate = vertices[i] + origin;
+            verticesDictionary[key].localOrigin = origin;
+			verticesDictionary[key].coordinate = vertices[i] + origin;
         }
     }
 
     public void SetVerticesAltitude (List<Vector3> vertices, Vector3 origin) {
         for (int i = 0; i < vertices.Count; i++) {
-            Vector2 key = (vertices[i] + origin).ToXZ ();
+            Vector2 key = (vertices[i] + origin).ToVec2FromXZ ();
 
             if (!verticesDictionary.ContainsKey (key)) {
 				LoggerTool.Post (key.ToString () + " is not found while setting altitude!");
@@ -35,7 +36,7 @@ public class TerrainVerticesDatabase {
 
     public void SetVerticesBottomPoint (List<Vector3> vertices, Vector3 origin) {
         for (int i = 0; i < vertices.Count; i++) {
-            Vector2 key = (vertices[i] + origin).ToXZ ();
+            Vector2 key = (vertices[i] + origin).ToVec2FromXZ ();
 
             if (!verticesDictionary.ContainsKey (key)) {
 				LoggerTool.Post (key.ToString () + " is not found while setting bottom point!");
@@ -48,7 +49,7 @@ public class TerrainVerticesDatabase {
 
     public void SetVerticesSector (List<Vector3> vertices, Vector3 origin, int sectorId) {
         for (int i = 0; i < vertices.Count; i++) {
-            Vector2 key = (vertices[i] + origin).ToXZ ();
+            Vector2 key = (vertices[i] + origin).ToVec2FromXZ ();
 
             if (!verticesDictionary.ContainsKey (key)) {
                 continue;
@@ -67,29 +68,54 @@ public class TerrainVerticesDatabase {
         }
     }
 
-    public TerrainVertData GetNearestVertData (Vector3 position) {
-        Vector2 hPos = position.ToXZ ();
+	public TerrainVertData GetNearestVertData (Vector2 position) {
+		Vector2 resultKey = new Vector2 ();
+		float minDist = float.MaxValue;
 
-        Vector2 resultKey = new Vector2 ();
-        float minDist = float.MaxValue;
+		foreach (var vertPair in verticesDictionary) {
+			float distance = Vector2.Distance (position, vertPair.Key);
 
-        foreach (var vertPair in verticesDictionary) {
-            float distance = Vector2.Distance (hPos, vertPair.Key);
+			if (distance < minDist) {
+				minDist = distance;
+				resultKey = vertPair.Key;
 
-            if (distance < minDist) {
-                minDist = distance;
-                resultKey = vertPair.Key;
-            }
+				if (minDist < 0.1f) {
+					return vertPair.Value;
+				}
+			}
+		}
 
-            if (minDist < 0.1f) {
-                return verticesDictionary[resultKey];
-            }
-        }
+		return verticesDictionary[resultKey];
+	}
 
-        return verticesDictionary[resultKey];
+	public TerrainVertData GetNearestVertData (Vector3 position) {
+        Vector2 hPos = position.ToVec2FromXZ ();
+		return GetNearestVertData (hPos);
     }
 
-    public void Clear () {
+	public TerrainVertData GetVertDataFromRegionTile (Coord tile, float tileSize) {
+		Vector2 hPos = tile.ToVector2 () * tileSize;
+		float minDist = float.MaxValue;
+		Vector2 resultKey = new Vector2 ();
+
+		foreach (var vertPair in verticesDictionary) {
+			Vector2 vertex = (vertPair.Value.coordinate - vertPair.Value.localOrigin).ToVec2FromXZ ();
+			float distance = Vector2.Distance (hPos, vertex);
+
+			if (distance < minDist) {
+				minDist = distance;
+				resultKey = vertPair.Key;
+
+				if (minDist < 0.1f) {
+					return vertPair.Value;
+				}
+			}
+		}
+
+		return verticesDictionary[resultKey];
+	}
+
+	public void Clear () {
         verticesDictionary.Clear ();
     }
 }
@@ -98,9 +124,10 @@ public class TerrainVertData {
     public int isleId = -1;
     public int surfaceVertIndex = -1;
 
-    public Vector3 coordinate = new Vector3 ();
+    public Vector3 localOrigin;
+    public Vector3 coordinate;
 
-    public float altitude = 0;
+	public float altitude = 0;
     public float bottomPoint = 0;
     public float inlandPosition = -1;
 
@@ -109,5 +136,9 @@ public class TerrainVertData {
 
     public Vector3 GetSurfacePos () {
         return new Vector3 (coordinate.x, altitude, coordinate.z);
-    }
+	}
+
+	public Vector3 GetSurfacePosNormalized () {
+		return new Vector3 (coordinate.x, inlandPosition, coordinate.z);
+	}
 }

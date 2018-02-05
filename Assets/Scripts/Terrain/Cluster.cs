@@ -6,9 +6,11 @@ using UnityEngine;
 public class Cluster {
 
     List<MapRegion> regions;
+	float tileSize;
     
-    public Cluster (List<MapRegion> regs) {
+    public Cluster (List<MapRegion> regs, float tlSize) {
         regions = regs;
+		tileSize = tlSize;
     }
 	
 	// Called by LandMap.GetZones (), returns number of subregions
@@ -17,7 +19,7 @@ public class Cluster {
 
 		int regionId = 0;
 		foreach (MapRegion region in regions) {
-			int k = Mathf.RoundToInt (Mathf.Sqrt (region.turf.Count / 16.0f));
+			int k = Mathf.RoundToInt (Mathf.Sqrt (region.turf.Count / 9.0f));
 			k = Mathf.Max (1, k);
 			//Debug.Log (k + " centroid(s)");
 
@@ -67,6 +69,95 @@ public class Cluster {
 				iter++;
 			}
 			//Debug.Log ("Iteration: " + iter);
+			regionId += k;
+		}
+
+		return regionId;
+	}
+
+	// Called by LandMap.GetZones (), returns number of subregions
+	public int ClusterLocationsKMeans (MapPoint[,] points, TerrainVerticesDatabase vertDatabase) {
+		// K-means cluster algorithm to separate locations in the regions
+
+		int regionId = 0;
+		foreach (MapRegion region in regions) {
+			Vector3[] tileLocations = new Vector3[region.turf.Count];
+			for (int i = 0; i < tileLocations.Length; i++) {
+				TerrainVertData vertData = vertDatabase.GetVertDataFromRegionTile (region.turf[i], tileSize);
+				if (vertData != null) {
+					tileLocations[i] = new Vector3 (region.turf[i].x, vertData.inlandPosition, region.turf[i].y);
+				} else {
+					LoggerTool.Post ("Null from VertDB for " + region.turf[i].ToString ());
+				}
+			}
+
+			int k = Mathf.RoundToInt (Mathf.Sqrt (tileLocations.Length / 16.0f));
+			k = Mathf.Max (1, k);
+			Debug.Log (k + " centroid(s)");
+
+			Vector3[] centroids = new Vector3[k];
+			for (int i = 0; i < k; i++) {
+				// Assign centroid to first k data points
+				centroids[i] = tileLocations[i * (tileLocations.Length / k)];
+				//centroids[i] = tileLocations[i];
+			}
+
+			// Loop until converged
+			int changes = -1;
+			int iter = 0;
+			while (changes != 0 && iter < 1) {
+				changes = 0;
+
+				for (int tIndex = 0; tIndex < tileLocations.Length; tIndex++) {
+					Coord tile = region.turf[tIndex];
+
+					int initialArea = points[tile.x, tile.y].areaValue;
+					float distanceToCentroid = float.MaxValue;
+
+					for (int i = 0; i < k; i++) {
+						//float currDistToCentroid = centroids[i].ManhattanDist (tileLocations[tIndex]);
+						//float currDistToCentroid = Vector3.Distance (centroids[i], tileLocations[tIndex]);
+						float currDistToCentroid = Vector2.Distance (centroids[i].ToVec2FromXZ (), tileLocations[tIndex].ToVec2FromXZ ());
+						if (currDistToCentroid < distanceToCentroid) {
+							distanceToCentroid = currDistToCentroid;
+							points[tile.x, tile.y].areaValue = regionId + i;
+						}
+					}
+
+					if (initialArea != points[tile.x, tile.y].areaValue) {
+						changes++;
+					}
+				}
+
+				int[] frequency = new int[k];
+				Vector3[] cumulativeCentroids = new Vector3[k];
+				for (int i = 0; i < k; i++) {
+					frequency[i] = 0;
+					cumulativeCentroids[i] = Vector3.zero;
+				}
+
+				for (int i = 0; i < tileLocations.Length; i++) {
+					Coord tile = region.turf[i];
+					cumulativeCentroids[Mathf.Max (0, points[tile.x, tile.y].areaValue - regionId)] += tileLocations[i];
+					frequency[Mathf.Max (0, points[tile.x, tile.y].areaValue - regionId)]++;
+				}
+
+				for (int i = 0; i < k; i++) {
+					if (frequency[i] != 0) {
+						centroids[i] = cumulativeCentroids[i] / frequency[i];
+					} else {
+						centroids[i] = tileLocations[Random.Range (0, tileLocations.Length)];
+					}
+				}
+
+				iter++;
+			}
+
+			for (int i = 0; i < k; i++) {
+				Debug.Log ("Centroid " + (regionId + i) + " at " + centroids[i].ToString ());
+			}
+
+			LoggerTool.Post ("No of iteration: " + iter);
 			regionId += k;
 		}
 
@@ -316,38 +407,7 @@ public class Cluster {
         }
         return neighbours;
     }
-
-	// Helper func for K-Means
-	/*float ObtainDistancePenalty (Coord a, Coord b, float penalty) {
-        // Using line drawing algorithm to find obstacle along the line
-
-        int h = b.y - a.y;
-        int w = b.x - a.x;
-
-        int incrIfFNegative = 2 * h;
-        int incrIfFNotNegative = 2 * (h - w);
-
-        int F = 2 * h - w;
-        float totalPenalty = 0;
-
-        int y = a.y;
-        for (int x = a.x; x <= b.x; x++) {
-            // Add penalty if there is a hole along the line
-            if (!spots[x, y].filled) {
-                totalPenalty += penalty;
-            }
-
-            if (F < 0)
-                F += incrIfFNegative;
-            else {
-                y++;
-                F += incrIfFNotNegative;
-            }
-        }
-
-        if (totalPenalty > 0) Debug.Log ("Penalty: " + totalPenalty);
-        return totalPenalty;
-    }*/
+	
 }
 
 public enum CAMethod {

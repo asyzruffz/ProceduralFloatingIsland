@@ -82,9 +82,10 @@ public class IslandGenerator : MonoBehaviour {
 
             // Find separated regions to form an island
             List<MapRegion> regions = map.GetRegions ();
+			map.SetTileSize (islandData.tileSize);
 
-            // Create separate islands
-            SeparateIslands (regions);
+			// Create separate islands
+			SeparateIslands (regions);
 
             if (shouldElevate) {
                 int highestPeak = 0;
@@ -104,7 +105,7 @@ public class IslandGenerator : MonoBehaviour {
             }
 
             // Find strategic locations in each region
-            List<MapRegion> zones = map.GetZones (regions, clusterAnalysis);
+            List<MapRegion> zones = map.GetZones (regions, vertDatabase, clusterAnalysis);
 			SpliceTerritory (zones);
 
 			SetColliders ();
@@ -173,6 +174,7 @@ public class IslandGenerator : MonoBehaviour {
 
         // Find separated regions to form an island
         List<MapRegion> regions = map.GetRegions ();
+		map.SetTileSize (islandData.tileSize);
 
         yield return new WaitForEndOfFrame ();
 
@@ -201,7 +203,7 @@ public class IslandGenerator : MonoBehaviour {
         yield return new WaitForEndOfFrame ();
 
 		// Find strategic locations in each region
-		List<MapRegion> zones = map.GetZones (regions, clusterAnalysis);
+		List<MapRegion> zones = map.GetZones (regions, vertDatabase, clusterAnalysis);
         SpliceTerritory (zones);
 
         yield return new WaitForEndOfFrame ();
@@ -340,8 +342,9 @@ public class IslandGenerator : MonoBehaviour {
 
             sector.gameObject.GetComponent<MeshFilter> ().mesh = meshGen.GenerateZoneMesh (zone, sector, islandData.tileSize, vertDatabase);
             sector.gameObject.GetComponent<MeshRenderer> ().material = islandData.invisibleMaterial;
-            
-            cakeslice.Outline outlineComponent = sector.gameObject.AddComponent<cakeslice.Outline> ();
+			sector.gameObject.GetComponent<MeshRenderer> ().material.color = randCol[(zoneCount % 20)];
+
+			cakeslice.Outline outlineComponent = sector.gameObject.AddComponent<cakeslice.Outline> ();
             outlineComponent.color = zoneCount % 3;
 
             sectors.Add (sector);

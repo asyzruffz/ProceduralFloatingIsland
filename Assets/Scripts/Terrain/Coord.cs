@@ -68,4 +68,8 @@ public struct Coord {
     public override int GetHashCode () {
         return x ^ y;
     }
+
+	public override string ToString () {
+		return "[" + x + ", " + y + "]";
+	}
 }

@@ -8,6 +8,7 @@ public class LandMap {
 
 	int width;
 	int length;
+	float tileSize;
 
 	public LandMap (int width, int length) {
 		this.width = width;
@@ -137,14 +138,14 @@ public class LandMap {
 		return tiles;
 	}
 
-    public List<MapRegion> GetZones (List<MapRegion> regions, CAMethod clusteringAlgo) {
+    public List<MapRegion> GetZones (List<MapRegion> regions, TerrainVerticesDatabase vertDatabase, CAMethod clusteringAlgo) {
 		int zoneNum;
-		Cluster cl = new Cluster (regions);
+		Cluster cl = new Cluster (regions, tileSize);
 		switch (clusteringAlgo) {
 			default:
 			case CAMethod.KMeans:
 				LoggerTool.Post ("Using K-Means.");
-				zoneNum = cl.ClusterLocationsKMeans (spots);
+				zoneNum = cl.ClusterLocationsKMeans (spots, vertDatabase);
 				break;
 			case CAMethod.DBSCAN:
 				LoggerTool.Post ("Using DBSCAN.");
@@ -181,13 +182,21 @@ public class LandMap {
 
         List<MapRegion> zones = new List<MapRegion> ();
         for (int i = 0; i < zoneNum; i++) {
-            zones.Add (new MapRegion (zoneTiles[i], width, length));
+			if (zoneTiles[i].Count > 0) {
+				zones.Add (new MapRegion (zoneTiles[i], width, length));
+			} else {
+				LoggerTool.Post ("Zone " + (i + 1) + " is empty, skip creating zone region.");
+			}
         }
 
         return zones;
     }
 	
-    public bool IsInMapRange (int x, int y) {
+	public void SetTileSize (float tilSize) {
+		tileSize = tilSize;
+	}
+	
+	public bool IsInMapRange (int x, int y) {
 		return x >= 0 && y >= 0 && x < width && y < length;
 	}
 
