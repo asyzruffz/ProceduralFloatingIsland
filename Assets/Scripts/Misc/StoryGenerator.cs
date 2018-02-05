@@ -58,8 +58,8 @@ public class StoryGenerator : MonoBehaviour {
         }
 
         SaveDatabase ();
-        Debug.Log ("Finished building database!");
-    }
+		LoggerTool.Post ("Finished building story database!");
+	}
     
     void AddToDatabase (PrefixWord prefix, SuffixWord suffix) {
         string prefixValue = prefix.GetConcatenatedPrefix ();

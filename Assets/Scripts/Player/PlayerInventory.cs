@@ -27,7 +27,7 @@ public class PlayerInventory : MonoBehaviour
             if (inventory) {
                 inventory.SetActive (false);
             } else {
-                Debug.Log ("MainInventory not found", gameObject);
+				LoggerTool.Post (gameObject.name + ": MainInventory not found");
             }
         }
 

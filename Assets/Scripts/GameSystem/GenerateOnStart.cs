@@ -10,14 +10,14 @@ public class GenerateOnStart : MonoBehaviour {
     ExecutionTimer clock = new ExecutionTimer ();
 
     void Start () {
-        clock.Start ();
         SetLevelSeed ();
-        generator.GenerateIsland ();
+		clock.Start ();
+		generator.GenerateIsland ();
     }
 
     void Update () {
         if (!readyPlaying && generator.IsDone ()) {
-            Debug.Log ("Generated with " + clock.Elapsed () + " seconds.");
+			LoggerTool.Post ("Generated with " + clock.Elapsed () + " seconds.");
             readyPlaying = true;
 
             if (overviewCam) {

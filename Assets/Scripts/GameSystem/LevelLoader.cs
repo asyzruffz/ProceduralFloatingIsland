@@ -29,11 +29,11 @@ public class LevelLoader : MonoBehaviour {
         loadingOperation.allowSceneActivation = false;
 
         while (!loadingOperation.isDone) {
-            Debug.Log ("Progress " + (loadingOperation.progress * 100) + "%");
+			LoggerTool.Post ("Loading progress " + (loadingOperation.progress * 100) + "%");
 
             if (loadingOperation.progress >= 0.9f) {
                 loadingOperation.allowSceneActivation = true;
-                Debug.Log ("Load with " + clock.Elapsed () + " seconds.");
+				LoggerTool.Post ("Loaded level [" + levelName + "] with " + clock.Elapsed () + " seconds.");
             }
 
             yield return null;

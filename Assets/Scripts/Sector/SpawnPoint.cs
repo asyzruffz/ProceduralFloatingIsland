@@ -6,7 +6,6 @@ using UnityEngine;
 public class SpawnPoint : SectorArrangement {
     
     public GameObject objectToSpawn;
-    public Vector3 offset;
     public bool childOfLevel = true;
 
     public SpawnPoint () {

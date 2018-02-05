@@ -9,7 +9,6 @@ public class SpawnScattered : SectorArrangement {
     public Vector2 amount;
     [MinMaxSlider(0,1)]
     public Vector2 inlandRange;
-    public Vector3 offset;
 
     public SpawnScattered () {
         type = SectorType.SpawnScattered;

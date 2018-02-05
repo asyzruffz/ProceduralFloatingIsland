@@ -21,6 +21,7 @@ public class IslandGenerator : MonoBehaviour {
     public bool shouldElevate;
     public bool decorateTerrain;
     public bool debug;
+	public CAMethod clusterAnalysis;
 
     [Header ("Data")]
     public IslandData islandData;
@@ -68,6 +69,11 @@ public class IslandGenerator : MonoBehaviour {
             // Fill the map randomly with 0s and 1s based on percentage fill
             map.RandomFillMap (islandData.randomFillPercent);
 
+			// Mold to the base shape
+			if (islandData.baseShape) {
+				map.makeBaseShape (islandData.baseShape);
+			}
+
             // Smooth the map 5 times
             map.SmoothMap (5);
 
@@ -98,10 +104,10 @@ public class IslandGenerator : MonoBehaviour {
             }
 
             // Find strategic locations in each region
-            List<MapRegion> zones = map.GetZones (regions);
-            SpliceTerritory (zones);
+            List<MapRegion> zones = map.GetZones (regions, clusterAnalysis);
+			SpliceTerritory (zones);
 
-            SetColliders ();
+			SetColliders ();
 
             PlacementGenerator placement = GetComponent<PlacementGenerator> ();
             if (placement && decorateTerrain) {
@@ -152,8 +158,13 @@ public class IslandGenerator : MonoBehaviour {
         // Fill the map randomly with 0s and 1s based on percentage fill
         map.RandomFillMap (islandData.randomFillPercent);
 
-        // Smooth the map 5 times
-        map.SmoothMap (5);
+		// Mold to the base shape
+		if (islandData.baseShape) {
+			map.makeBaseShape (islandData.baseShape);
+		}
+
+		// Smooth the map 5 times
+		map.SmoothMap (5);
 
         yield return new WaitForEndOfFrame ();
 
@@ -189,8 +200,8 @@ public class IslandGenerator : MonoBehaviour {
 
         yield return new WaitForEndOfFrame ();
 
-        // Find strategic locations in each region
-        List<MapRegion> zones = map.GetZones (regions);
+		// Find strategic locations in each region
+		List<MapRegion> zones = map.GetZones (regions, clusterAnalysis);
         SpliceTerritory (zones);
 
         yield return new WaitForEndOfFrame ();
@@ -362,6 +373,7 @@ public class IslandGenerator : MonoBehaviour {
 
     void OnValuesUpdated () {
         if(!Application.isPlaying) {
+			LoggerTool.Post ("Generate island from Editor");
             GenerateIsland ();
         }
     }
@@ -384,6 +396,7 @@ public class IslandGenerator : MonoBehaviour {
             int width = map.spots.GetLength (0);
             int length = map.spots.GetLength (1);
 			
+			// Draw black & white
 			/*for (int x = 0; x < width; x ++) {
 				for (int y = 0; y < length; y ++) {
 					Gizmos.color = map.spots[x, y].filled ? Color.black : Color.white;
@@ -392,6 +405,7 @@ public class IslandGenerator : MonoBehaviour {
 				}
 			}*/
 			
+			// Draw colour for clusters
             for (int x = 0; x < width; x++) {
                 for (int y = 0; y < length; y++) {
                     Gizmos.color = !map.spots[x, y].filled ? Color.white : randCol[(map.spots[x, y].areaValue % 20)];

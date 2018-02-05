@@ -30,7 +30,7 @@ public class GameController : Singleton<GameController> {
 	}
     
     void Start () {
-		
+		LoggerTool.Post ("GameController: Started game.");
 	}
 	
 	void Update () {
@@ -42,8 +42,8 @@ public class GameController : Singleton<GameController> {
     void InitializeDatabase () {
         NameGenerator nameGen = GetComponent<NameGenerator> ();
         if (!JsonFile.FilesExistIn ("NameGenerator")) {
-            Debug.Log ("Initializing Database");
-            nameGen.BuildDatabase ();
+			LoggerTool.Post ("Initializing Database");
+			nameGen.BuildDatabase ();
         }
     }
 

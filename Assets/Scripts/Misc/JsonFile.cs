@@ -8,7 +8,8 @@ public class JsonFile {
 
         if (!Directory.Exists (folderPath)) {
             Debug.LogWarning (folder + " folder not found!");
-            return null;
+			LoggerTool.Post (folder + " folder not found!", false);
+			return null;
         }
 
         string[] files = Directory.GetFiles (folderPath, "*.json");
@@ -50,7 +51,8 @@ public class JsonFile {
             saveData = JsonUtility.FromJson<T> (jsonData);
         } else {
             Debug.LogWarning (fileName + " not found in the " + folder + " folder!");
-        }
+			LoggerTool.Post (fileName + " not found in the " + folder + " folder!", false);
+		}
     }
 
     public static void Delete (string fileName, string folder) {
@@ -60,7 +62,8 @@ public class JsonFile {
             File.Delete (path);
         } else {
             Debug.LogWarning (fileName + " not found in the " + folder + " folder!");
-        }
+			LoggerTool.Post (fileName + " not found in the " + folder + " folder!", false);
+		}
     }
 
 }
