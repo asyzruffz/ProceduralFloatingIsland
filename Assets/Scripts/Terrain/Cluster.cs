@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
+using Accord.MachineLearning;
 
 public class Cluster {
 
@@ -85,13 +86,13 @@ public class Cluster {
 			for (int i = 0; i < tileLocations.Length; i++) {
 				TerrainVertData vertData = vertDatabase.GetVertDataFromRegionTile (region.turf[i], tileSize);
 				if (vertData != null) {
-					tileLocations[i] = new Vector3 (region.turf[i].x, vertData.inlandPosition, region.turf[i].y);
+					tileLocations[i] = new Vector3 (region.turf[i].x, vertData.surfaceElevatedCurve, region.turf[i].y);
 				} else {
 					LoggerTool.Post ("Null from VertDB for " + region.turf[i].ToString ());
 				}
 			}
 
-			int k = Mathf.RoundToInt (Mathf.Sqrt (tileLocations.Length / 16.0f));
+			int k = Mathf.RoundToInt (Mathf.Sqrt (tileLocations.Length / 2.0f));
 			k = Mathf.Max (1, k);
 			Debug.Log (k + " centroid(s)");
 
@@ -105,7 +106,7 @@ public class Cluster {
 			// Loop until converged
 			int changes = -1;
 			int iter = 0;
-			while (changes != 0 && iter < 1) {
+			while (changes != 0/* && iter < 1*/) {
 				changes = 0;
 
 				for (int tIndex = 0; tIndex < tileLocations.Length; tIndex++) {
@@ -158,6 +159,50 @@ public class Cluster {
 			}
 
 			LoggerTool.Post ("No of iteration: " + iter);
+			regionId += k;
+		}
+
+		return regionId;
+	}
+
+	// Called by LandMap.GetZones (), returns number of subregions
+	public int ClusterLocationsAccordKMeans (MapPoint[,] points, TerrainVerticesDatabase vertDatabase) {
+		// K-means cluster algorithm to separate locations in the regions
+
+		int regionId = 0;
+		foreach (MapRegion region in regions) {
+
+			double[][] tileLocations = new double[region.turf.Count][];
+
+			for (int i = 0; i < tileLocations.Length; i++) {
+				tileLocations[i] = new double[3];
+
+				TerrainVertData vertData = vertDatabase.GetVertDataFromRegionTile (region.turf[i], tileSize);
+				if (vertData != null) {
+					tileLocations[i][0] = region.turf[i].x;
+					tileLocations[i][1] = vertData.inlandPosition;
+					tileLocations[i][2] = region.turf[i].y;
+				} else {
+					LoggerTool.Post ("Null from VertDB for " + region.turf[i].ToString ());
+				}
+			}
+
+			int k = Mathf.RoundToInt (Mathf.Sqrt (tileLocations.Length / 2.0f));
+			k = Mathf.Max (1, k);
+			Debug.Log (k + " centroid(s)");
+
+			KMeans kmeans = new KMeans (k);
+			KMeansClusterCollection clusters = kmeans.Learn (tileLocations);
+
+			int[] labels = clusters.Decide (tileLocations);
+
+			Debug.Log ("Number of labels = " + labels.Length);
+			for (int i = 0; i < labels.Length; i++) {
+				points[(int)tileLocations[i][0], (int)tileLocations[i][2]].areaValue = regionId + labels[i];
+			}
+
+			//points[tile.x, tile.y].areaValue = regionId + i;
+
 			regionId += k;
 		}
 
@@ -397,6 +442,94 @@ public class Cluster {
 		return regionId;
 	}
 
+	// Called by LandMap.GetZones (), returns number of subregions
+	public int ClusterLocationsAccordKMedoidsPAM (MapPoint[,] points, TerrainVerticesDatabase vertDatabase) {
+		// K-means cluster algorithm to separate locations in the regions
+
+		int regionId = 0;
+		foreach (MapRegion region in regions) {
+
+			double[][] tileLocations = new double[region.turf.Count][];
+
+			for (int i = 0; i < tileLocations.Length; i++) {
+				tileLocations[i] = new double[3];
+
+				TerrainVertData vertData = vertDatabase.GetVertDataFromRegionTile (region.turf[i], tileSize);
+				if (vertData != null) {
+					tileLocations[i][0] = region.turf[i].x;
+					tileLocations[i][1] = vertData.inlandPosition;
+					tileLocations[i][2] = region.turf[i].y;
+				} else {
+					LoggerTool.Post ("Null from VertDB for " + region.turf[i].ToString ());
+				}
+			}
+
+			int k = Mathf.RoundToInt (Mathf.Sqrt (tileLocations.Length / 2.0f));
+			k = Mathf.Max (1, k);
+			Debug.Log (k + " centroid(s)");
+
+			KMedoids kmedoidsPam = new KMedoids (k);
+			kmedoidsPam.MaxIterations = 100;
+
+			KMedoidsClusterCollection<double> clusters = kmedoidsPam.Learn (tileLocations);
+
+			int[] labels = clusters.Decide (tileLocations);
+
+			Debug.Log ("Number of labels = " + labels.Length);
+			for (int i = 0; i < labels.Length; i++) {
+				points[(int)tileLocations[i][0], (int)tileLocations[i][2]].areaValue = regionId + labels[i];
+			}
+			
+			regionId += k;
+		}
+
+		return regionId;
+	}
+	
+	// Called by LandMap.GetZones (), returns number of subregions
+	public int ClusterLocationsAccordKMedoidsVoronoi (MapPoint[,] points, TerrainVerticesDatabase vertDatabase) {
+		// K-means cluster algorithm to separate locations in the regions
+
+		int regionId = 0;
+		foreach (MapRegion region in regions) {
+
+			double[][] tileLocations = new double[region.turf.Count][];
+
+			for (int i = 0; i < tileLocations.Length; i++) {
+				tileLocations[i] = new double[3];
+
+				TerrainVertData vertData = vertDatabase.GetVertDataFromRegionTile (region.turf[i], tileSize);
+				if (vertData != null) {
+					tileLocations[i][0] = region.turf[i].x;
+					tileLocations[i][1] = vertData.inlandPosition;
+					tileLocations[i][2] = region.turf[i].y;
+				} else {
+					LoggerTool.Post ("Null from VertDB for " + region.turf[i].ToString ());
+				}
+			}
+
+			int k = Mathf.RoundToInt (Mathf.Sqrt (tileLocations.Length / 2.0f));
+			k = Mathf.Max (1, k);
+			Debug.Log (k + " centroid(s)");
+
+			VoronoiIteration kmedoidsVoronoi = new VoronoiIteration (k);
+			//kmedoidsVoronoi.MaxIterations = 100;
+
+			KMedoidsClusterCollection<double> clusters = kmedoidsVoronoi.Learn (tileLocations);
+
+			int[] labels = clusters.Decide (tileLocations);
+
+			Debug.Log ("Number of labels = " + labels.Length);
+			for (int i = 0; i < labels.Length; i++) {
+				points[(int)tileLocations[i][0], (int)tileLocations[i][2]].areaValue = regionId + labels[i];
+			}
+			
+			regionId += k;
+		}
+
+		return regionId;
+	}
+
 	// Helper func for DBSCAN
 	List<Coord> RangeQueries (List<Coord> db, Coord t, float eps) {
         List<Coord> neighbours = new List<Coord> ();
@@ -411,10 +544,14 @@ public class Cluster {
 }
 
 public enum CAMethod {
-	KMeans,
-	DBSCAN,
-	KMedoidsPAM,
-	KMedoidsVoronoi
+	KMeans3D,
+	KMeans3DAccord,
+	KMeans2D,
+	DBSCAN2D,
+	KMedoidsPam3DAccord,
+	KMedoidsVoronoi3DAccord,
+	KMedoidsPam2D,
+	KMedoidsVoronoi2D
 }
 
 public struct ClusterPoint {

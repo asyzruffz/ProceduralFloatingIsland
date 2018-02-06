@@ -8,7 +8,6 @@ public class LandMap {
 
 	int width;
 	int length;
-	float tileSize;
 
 	public LandMap (int width, int length) {
 		this.width = width;
@@ -138,30 +137,8 @@ public class LandMap {
 		return tiles;
 	}
 
-    public List<MapRegion> GetZones (List<MapRegion> regions, TerrainVerticesDatabase vertDatabase, CAMethod clusteringAlgo) {
-		int zoneNum;
-		Cluster cl = new Cluster (regions, tileSize);
-		switch (clusteringAlgo) {
-			default:
-			case CAMethod.KMeans:
-				LoggerTool.Post ("Using K-Means.");
-				zoneNum = cl.ClusterLocationsKMeans (spots, vertDatabase);
-				break;
-			case CAMethod.DBSCAN:
-				LoggerTool.Post ("Using DBSCAN.");
-				zoneNum = cl.ClusterLocationsDBSCAN (6, 20, spots);
-				break;
-			case CAMethod.KMedoidsPAM:
-				LoggerTool.Post ("Using K-Medoids with PAM.");
-				zoneNum = cl.ClusterLocationsKMedoidsPAM (spots);
-				break;
-			case CAMethod.KMedoidsVoronoi:
-				LoggerTool.Post ("Using K-Medoids with voronoi iteration.");
-				zoneNum = cl.ClusterLocationsKMedoidsVoronoi (spots);
-				break;
-		}
-
-
+    public List<MapRegion> GetZones (int zoneNum) {
+		
         // Initialize list to prepare zones
         List<List<Coord>> zoneTiles = new List<List<Coord>> ();
         for (int i = 0; i <= zoneNum; i++) {
@@ -191,10 +168,6 @@ public class LandMap {
 
         return zones;
     }
-	
-	public void SetTileSize (float tilSize) {
-		tileSize = tilSize;
-	}
 	
 	public bool IsInMapRange (int x, int y) {
 		return x >= 0 && y >= 0 && x < width && y < length;

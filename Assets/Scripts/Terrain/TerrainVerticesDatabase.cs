@@ -62,10 +62,11 @@ public class TerrainVerticesDatabase {
         }
     }
 
-    public void SetVerticesInlandPos (List<IsleInfo> islands) {
+    public void SetVerticesInlandPos (List<IsleInfo> islands, AnimationCurve curve) {
         foreach (var vertPair in verticesDictionary) {
             vertPair.Value.inlandPosition = islands[vertPair.Value.isleId].surfaceMeshDetail.gradientMap[vertPair.Value.surfaceVertIndex];
-        }
+            vertPair.Value.surfaceElevatedCurve = curve.Evaluate (vertPair.Value.inlandPosition);
+		}
     }
 
 	public TerrainVertData GetNearestVertData (Vector2 position) {
@@ -130,6 +131,7 @@ public class TerrainVertData {
 	public float altitude = 0;
     public float bottomPoint = 0;
     public float inlandPosition = -1;
+	public float surfaceElevatedCurve = 0;
 
     public int sectorId = 0;
     public int sectorVertIndex = -1;

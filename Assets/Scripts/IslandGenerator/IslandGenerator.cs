@@ -82,7 +82,6 @@ public class IslandGenerator : MonoBehaviour {
 
             // Find separated regions to form an island
             List<MapRegion> regions = map.GetRegions ();
-			map.SetTileSize (islandData.tileSize);
 
 			// Create separate islands
 			SeparateIslands (regions);
@@ -97,15 +96,17 @@ public class IslandGenerator : MonoBehaviour {
                     island.surfaceMeshDetail.NormalizeGradientMap (highestPeak);
                 }
 
-                vertDatabase.SetVerticesInlandPos (islands);
+                vertDatabase.SetVerticesInlandPos (islands, islandData.mountainCurve);
 
                 ElevationGenerator elevGen = GetComponent<ElevationGenerator> ();
                 elevGen.elevateSurface (islands, islandData.altitude, islandData.mountainCurve, surfaceNoiseData, seedHash, 0, vertDatabase);   // elevate hills on the surface
                 elevGen.elevateSurface (islands, -islandData.stalactite, islandData.bellyCurve, undersideNoiseData, seedHash, 2, vertDatabase); // extend stakes at surface below
             }
 
-            // Find strategic locations in each region
-            List<MapRegion> zones = map.GetZones (regions, vertDatabase, clusterAnalysis);
+			int zoneNum = DoClustering (regions, map.spots, vertDatabase, clusterAnalysis);
+
+			// Find strategic locations in each region
+			List<MapRegion> zones = map.GetZones (zoneNum);
 			SpliceTerritory (zones);
 
 			SetColliders ();
@@ -174,8 +175,6 @@ public class IslandGenerator : MonoBehaviour {
 
         // Find separated regions to form an island
         List<MapRegion> regions = map.GetRegions ();
-		map.SetTileSize (islandData.tileSize);
-
         yield return new WaitForEndOfFrame ();
 
         // Create separate islands
@@ -193,7 +192,7 @@ public class IslandGenerator : MonoBehaviour {
                 island.surfaceMeshDetail.NormalizeGradientMap (highestPeak);
             }
 
-            vertDatabase.SetVerticesInlandPos (islands);
+            vertDatabase.SetVerticesInlandPos (islands, islandData.mountainCurve);
 
             ElevationGenerator elevGen = GetComponent<ElevationGenerator> ();
             elevGen.elevateSurface (islands, islandData.altitude, islandData.mountainCurve, surfaceNoiseData, seedHash, 0, vertDatabase);   // elevate hills on the surface
@@ -202,8 +201,12 @@ public class IslandGenerator : MonoBehaviour {
 
         yield return new WaitForEndOfFrame ();
 
+		int zoneNum = DoClustering (regions, map.spots, vertDatabase, clusterAnalysis);
+		
+		yield return new WaitForEndOfFrame ();
+
 		// Find strategic locations in each region
-		List<MapRegion> zones = map.GetZones (regions, vertDatabase, clusterAnalysis);
+		List<MapRegion> zones = map.GetZones (zoneNum);
         SpliceTerritory (zones);
 
         yield return new WaitForEndOfFrame ();
@@ -370,6 +373,50 @@ public class IslandGenerator : MonoBehaviour {
 		}
 	}
 	
+	int DoClustering (List<MapRegion> regions, MapPoint[,] spots, TerrainVerticesDatabase vertDatabase, CAMethod clusteringAlgo) {
+		
+		Cluster cl = new Cluster (regions, islandData.tileSize);
+		int numOfCluster;
+
+		switch (clusteringAlgo) {
+			default:
+			case CAMethod.KMeans3D:
+				LoggerTool.Post ("Using K-Means inclusive heights.");
+				numOfCluster = cl.ClusterLocationsKMeans (spots, vertDatabase);
+				break;
+			case CAMethod.KMeans3DAccord:
+				LoggerTool.Post ("Using K-Means inclusive heights with Accord library.");
+				numOfCluster = cl.ClusterLocationsAccordKMeans (spots, vertDatabase);
+				break;
+			case CAMethod.KMeans2D:
+				LoggerTool.Post ("Using K-Means straightforward.");
+				numOfCluster = cl.ClusterLocationsKMeans (spots);
+				break;
+			case CAMethod.DBSCAN2D:
+				LoggerTool.Post ("Using DBSCAN straightforward.");
+				numOfCluster = cl.ClusterLocationsDBSCAN (6, 20, spots);
+				break;
+			case CAMethod.KMedoidsPam2D:
+				LoggerTool.Post ("Using K-Medoids (PAM) straightforward.");
+				numOfCluster = cl.ClusterLocationsKMedoidsPAM (spots);
+				break;
+			case CAMethod.KMedoidsVoronoi2D:
+				LoggerTool.Post ("Using K-Medoids (voronoi iteration) straightforward.");
+				numOfCluster = cl.ClusterLocationsKMedoidsVoronoi (spots);
+				break;
+			case CAMethod.KMedoidsPam3DAccord:
+				LoggerTool.Post ("Using K-Medoid inclusive heights (PAM) with Accord library.");
+				numOfCluster = cl.ClusterLocationsAccordKMedoidsPAM (spots, vertDatabase);
+				break;
+			case CAMethod.KMedoidsVoronoi3DAccord:
+				LoggerTool.Post ("Using K-Medoid inclusive heights (voronoi iteration) with Accord library.");
+				numOfCluster = cl.ClusterLocationsAccordKMedoidsVoronoi (spots, vertDatabase);
+				break;
+		}
+
+		return numOfCluster;
+	}
+
     public bool IsDone () {
         return finished;
     }

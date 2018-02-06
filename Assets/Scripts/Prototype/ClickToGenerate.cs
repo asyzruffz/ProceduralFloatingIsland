@@ -12,7 +12,7 @@ public class ClickToGenerate : MonoBehaviour {
 
 	void Update () {
         if (Input.GetButtonDown ("Fire1")) {
-			LoggerTool.Post ("Generate island from click");
+			LoggerTool.Post ("Start generating island from a click");
 			bool prevRandSet = islandGenerator.useRandomSeed;
             islandGenerator.useRandomSeed = useRandomSeed;
 			startedRecording = true;
@@ -24,6 +24,7 @@ public class ClickToGenerate : MonoBehaviour {
 		if (startedRecording && islandGenerator.IsDone()) {
 			startedRecording = false;
 			LoggerTool.Post ("Generated with " + clock.Elapsed () + " seconds.");
+			LoggerTool.Post (" ----------------------- ");
 		}
     }
 }
