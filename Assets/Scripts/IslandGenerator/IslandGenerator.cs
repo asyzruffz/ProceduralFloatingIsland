@@ -34,8 +34,9 @@ public class IslandGenerator : MonoBehaviour {
     List<SectorInfo> sectors = new List<SectorInfo> ();
     TerrainVerticesDatabase vertDatabase = new TerrainVerticesDatabase ();
     bool finished = false;
+	ExecutionTimer clk = new ExecutionTimer ();
 
-    public void GenerateIsland (bool inGame = true) {
+	public void GenerateIsland (bool inGame = true) {
         #region Generate in Editor
 #if UNITY_EDITOR
         if (!inGame) {
@@ -79,6 +80,7 @@ public class IslandGenerator : MonoBehaviour {
 
             meshGen = GetComponent<IslandMeshGenerator> ();
             vertDatabase.Clear ();
+			vertDatabase.tileSize = islandData.tileSize;
 
             // Find separated regions to form an island
             List<MapRegion> regions = map.GetRegions ();
@@ -86,7 +88,11 @@ public class IslandGenerator : MonoBehaviour {
 			// Create separate islands
 			SeparateIslands (regions);
 
-            if (shouldElevate) {
+			clk.Start ();
+			vertDatabase.SetCoordDB ();
+			Debug.Log ("Indexing takes " + clk.Elapsed () + " seconds.");
+
+			if (shouldElevate) {
                 int highestPeak = 0;
                 foreach (IsleInfo island in islands) {
                     int peak = island.surfaceMeshDetail.localPeak;
@@ -102,8 +108,10 @@ public class IslandGenerator : MonoBehaviour {
                 elevGen.elevateSurface (islands, islandData.altitude, islandData.mountainCurve, surfaceNoiseData, seedHash, 0, vertDatabase);   // elevate hills on the surface
                 elevGen.elevateSurface (islands, -islandData.stalactite, islandData.bellyCurve, undersideNoiseData, seedHash, 2, vertDatabase); // extend stakes at surface below
             }
-
+			
+			clk.Start ();
 			int zoneNum = DoClustering (regions, map.spots, vertDatabase, clusterAnalysis);
+			Debug.Log ("Clustering takes " + clk.Elapsed() + " seconds.");
 
 			// Find strategic locations in each region
 			List<MapRegion> zones = map.GetZones (zoneNum);
@@ -172,15 +180,22 @@ public class IslandGenerator : MonoBehaviour {
 
         meshGen = GetComponent<IslandMeshGenerator> ();
         vertDatabase.Clear ();
+		vertDatabase.tileSize = islandData.tileSize;
 
-        // Find separated regions to form an island
-        List<MapRegion> regions = map.GetRegions ();
+		// Find separated regions to form an island
+		List<MapRegion> regions = map.GetRegions ();
         yield return new WaitForEndOfFrame ();
 
         // Create separate islands
         SeparateIslands (regions);
 
-        yield return new WaitForEndOfFrame ();
+		yield return new WaitForEndOfFrame ();
+
+		clk.Start ();
+		vertDatabase.SetCoordDB ();
+		LoggerTool.Post ("Indexing takes " + clk.Elapsed () + " seconds.");
+
+		yield return new WaitForEndOfFrame ();
 
         if (shouldElevate) {
             int highestPeak = 0;
@@ -201,8 +216,10 @@ public class IslandGenerator : MonoBehaviour {
 
         yield return new WaitForEndOfFrame ();
 
+		clk.Start ();
 		int zoneNum = DoClustering (regions, map.spots, vertDatabase, clusterAnalysis);
-		
+		LoggerTool.Post ("Clustering takes " + clk.Elapsed () + " seconds.");
+
 		yield return new WaitForEndOfFrame ();
 
 		// Find strategic locations in each region

@@ -26,7 +26,8 @@ public class SquareGrid {
         int minY = region.GetRangeInfo (Ranges.MinY) - 1;
         foreach (Coord coord in region.turf) {
             controlNodes[coord.x - minX, coord.y - minY].active = true;
-        }
+			controlNodes[coord.x - minX, coord.y - minY].srcCoord = coord;
+		}
 
         squares = new Square[nodeCountX - 1, nodeCountY - 1];
 		for (int x = 0; x < nodeCountX - 1; x++) {

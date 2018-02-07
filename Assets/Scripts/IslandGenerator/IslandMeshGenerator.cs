@@ -8,14 +8,16 @@ public class IslandMeshGenerator : MonoBehaviour {
     List<Vector3> vertices = new List<Vector3> ();
     List<int> triangles = new List<int> ();
     IsleMeshDetail meshDetail;
+	List<Coord> coords = new List<Coord> ();
 
     public List<Mesh> GenerateIslandMesh (MapRegion region, IsleInfo info, float squareSize, float depth, TerrainVerticesDatabase vertDatabase) {
         
         squareGrid = new SquareGrid (region, squareSize);
         vertices.Clear ();
         triangles.Clear ();
+		coords.Clear ();
 
-        meshDetail = new IsleMeshDetail ();
+		meshDetail = new IsleMeshDetail ();
 
         for (int x = 0; x < squareGrid.squares.GetLength (0); x++) {
             for (int y = 0; y < squareGrid.squares.GetLength (1); y++) {
@@ -23,7 +25,7 @@ public class IslandMeshGenerator : MonoBehaviour {
             }
         }
 
-        vertDatabase.AddVertices (vertices, transform.position + info.offset, info.id);
+        vertDatabase.AddVertices (vertices, coords, transform.position + info.offset, info.id);
 
         Mesh surfaceMesh = new Mesh ();
         surfaceMesh.vertices = vertices.ToArray ();
@@ -183,7 +185,8 @@ public class IslandMeshGenerator : MonoBehaviour {
             if(points[i].vertexIndex == -1) {
                 points[i].vertexIndex = vertices.Count;
                 vertices.Add (points[i].position);
-            }
+				coords.Add (points[i].srcCoord);
+			}
         }
     }
 

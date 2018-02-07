@@ -7,11 +7,10 @@ using Accord.MachineLearning;
 public class Cluster {
 
     List<MapRegion> regions;
-	float tileSize;
-    
-    public Cluster (List<MapRegion> regs, float tlSize) {
+	ExecutionTimer clock = new ExecutionTimer ();
+
+	public Cluster (List<MapRegion> regs, float tlSize) {
         regions = regs;
-		tileSize = tlSize;
     }
 	
 	// Called by LandMap.GetZones (), returns number of subregions
@@ -19,10 +18,11 @@ public class Cluster {
 		// K-means cluster algorithm to separate locations in the regions
 
 		int regionId = 0;
-		foreach (MapRegion region in regions) {
-			int k = Mathf.RoundToInt (Mathf.Sqrt (region.turf.Count / 9.0f));
-			k = Mathf.Max (1, k);
-			//Debug.Log (k + " centroid(s)");
+		for (int isleId = 0; isleId < regions.Count; isleId++) {
+			MapRegion region = regions[isleId];
+
+			int k = InitializeNumOfK (region.turf.Count);
+			Debug.Log (k + " centroid(s)");
 
 			Vector2[] centroids = new Vector2[k];
 			for (int i = 0; i < k; i++) {
@@ -81,10 +81,12 @@ public class Cluster {
 		// K-means cluster algorithm to separate locations in the regions
 
 		int regionId = 0;
-		foreach (MapRegion region in regions) {
+		for (int isleId = 0; isleId < regions.Count; isleId++) {
+			MapRegion region = regions[isleId];
+
 			Vector3[] tileLocations = new Vector3[region.turf.Count];
 			for (int i = 0; i < tileLocations.Length; i++) {
-				TerrainVertData vertData = vertDatabase.GetVertDataFromRegionTile (region.turf[i], tileSize);
+				TerrainVertData vertData = vertDatabase.GetVertDataFromRegionTile (region.turf[i], isleId);
 				if (vertData != null) {
 					tileLocations[i] = new Vector3 (region.turf[i].x, vertData.surfaceElevatedCurve, region.turf[i].y);
 				} else {
@@ -92,8 +94,7 @@ public class Cluster {
 				}
 			}
 
-			int k = Mathf.RoundToInt (Mathf.Sqrt (tileLocations.Length / 2.0f));
-			k = Mathf.Max (1, k);
+			int k = InitializeNumOfK (tileLocations.Length);
 			Debug.Log (k + " centroid(s)");
 
 			Vector3[] centroids = new Vector3[k];
@@ -170,38 +171,40 @@ public class Cluster {
 		// K-means cluster algorithm to separate locations in the regions
 
 		int regionId = 0;
-		foreach (MapRegion region in regions) {
+		for (int isleId = 0; isleId < regions.Count; isleId++) {
+			MapRegion region = regions[isleId];
 
 			double[][] tileLocations = new double[region.turf.Count][];
-
+			
 			for (int i = 0; i < tileLocations.Length; i++) {
 				tileLocations[i] = new double[3];
-
-				TerrainVertData vertData = vertDatabase.GetVertDataFromRegionTile (region.turf[i], tileSize);
+				
+				TerrainVertData vertData = vertDatabase.GetVertDataFromRegionTile (region.turf[i], isleId);
+				//LoggerTool.Post ("Requesting " + region.turf[i].ToString ());
 				if (vertData != null) {
 					tileLocations[i][0] = region.turf[i].x;
 					tileLocations[i][1] = vertData.inlandPosition;
 					tileLocations[i][2] = region.turf[i].y;
 				} else {
 					LoggerTool.Post ("Null from VertDB for " + region.turf[i].ToString ());
+					tileLocations[i][0] = 0;
+					tileLocations[i][1] = 0;
+					tileLocations[i][2] = 0;
 				}
 			}
-
-			int k = Mathf.RoundToInt (Mathf.Sqrt (tileLocations.Length / 2.0f));
-			k = Mathf.Max (1, k);
+			
+			int k = InitializeNumOfK (tileLocations.Length);
 			Debug.Log (k + " centroid(s)");
 
 			KMeans kmeans = new KMeans (k);
 			KMeansClusterCollection clusters = kmeans.Learn (tileLocations);
 
 			int[] labels = clusters.Decide (tileLocations);
-
+			
 			Debug.Log ("Number of labels = " + labels.Length);
 			for (int i = 0; i < labels.Length; i++) {
 				points[(int)tileLocations[i][0], (int)tileLocations[i][2]].areaValue = regionId + labels[i];
 			}
-
-			//points[tile.x, tile.y].areaValue = regionId + i;
 
 			regionId += k;
 		}
@@ -291,8 +294,7 @@ public class Cluster {
 
 		int regionId = 0;
 		foreach (MapRegion region in regions) {
-			int k = Mathf.RoundToInt (Mathf.Sqrt (region.turf.Count / 16.0f));
-			k = Mathf.Max (1, k);
+			int k = InitializeNumOfK (region.turf.Count);
 			Debug.Log (k + " medoid(s)");
 
 			Coord[] medoids = new Coord[k];
@@ -368,13 +370,10 @@ public class Cluster {
 
 	public int ClusterLocationsKMedoidsVoronoi (MapPoint[,] points) {
 		// K-medoids cluster algorithm to separate locations in the regions
-
-		ExecutionTimer clock = new ExecutionTimer ();
-
+		
 		int regionId = 0;
 		foreach (MapRegion region in regions) {
-			int k = Mathf.RoundToInt (Mathf.Sqrt (region.turf.Count / 16.0f));
-			k = Mathf.Max (1, k);
+			int k = InitializeNumOfK (region.turf.Count);
 			Debug.Log (k + " medoid(s)");
 
 			Coord[] medoids = new Coord[k];
@@ -405,7 +404,8 @@ public class Cluster {
 					float distanceToMedoid = float.MaxValue;
 
 					for (int i = 0; i < k; i++) {
-						float currDistToMedoid = tile.ManhattanDist (medoids[i]);
+						//float currDistToMedoid = tile.ManhattanDist (medoids[i]);
+						float currDistToMedoid = tile.Dist (medoids[i]);
 						if (currDistToMedoid < distanceToMedoid) {
 							distanceToMedoid = currDistToMedoid;
 							points[tile.x, tile.y].areaValue = regionId + i;
@@ -447,14 +447,15 @@ public class Cluster {
 		// K-means cluster algorithm to separate locations in the regions
 
 		int regionId = 0;
-		foreach (MapRegion region in regions) {
+		for (int isleId = 0; isleId < regions.Count; isleId++) {
+			MapRegion region = regions[isleId];
 
 			double[][] tileLocations = new double[region.turf.Count][];
 
 			for (int i = 0; i < tileLocations.Length; i++) {
 				tileLocations[i] = new double[3];
 
-				TerrainVertData vertData = vertDatabase.GetVertDataFromRegionTile (region.turf[i], tileSize);
+				TerrainVertData vertData = vertDatabase.GetVertDataFromRegionTile (region.turf[i], isleId);
 				if (vertData != null) {
 					tileLocations[i][0] = region.turf[i].x;
 					tileLocations[i][1] = vertData.inlandPosition;
@@ -464,7 +465,7 @@ public class Cluster {
 				}
 			}
 
-			int k = Mathf.RoundToInt (Mathf.Sqrt (tileLocations.Length / 2.0f));
+			int k = InitializeNumOfK (tileLocations.Length);
 			k = Mathf.Max (1, k);
 			Debug.Log (k + " centroid(s)");
 
@@ -491,14 +492,15 @@ public class Cluster {
 		// K-means cluster algorithm to separate locations in the regions
 
 		int regionId = 0;
-		foreach (MapRegion region in regions) {
+		for (int isleId = 0; isleId < regions.Count; isleId++) {
+			MapRegion region = regions[isleId];
 
 			double[][] tileLocations = new double[region.turf.Count][];
 
 			for (int i = 0; i < tileLocations.Length; i++) {
 				tileLocations[i] = new double[3];
 
-				TerrainVertData vertData = vertDatabase.GetVertDataFromRegionTile (region.turf[i], tileSize);
+				TerrainVertData vertData = vertDatabase.GetVertDataFromRegionTile (region.turf[i], isleId);
 				if (vertData != null) {
 					tileLocations[i][0] = region.turf[i].x;
 					tileLocations[i][1] = vertData.inlandPosition;
@@ -508,7 +510,7 @@ public class Cluster {
 				}
 			}
 
-			int k = Mathf.RoundToInt (Mathf.Sqrt (tileLocations.Length / 2.0f));
+			int k = InitializeNumOfK (tileLocations.Length);
 			k = Mathf.Max (1, k);
 			Debug.Log (k + " centroid(s)");
 
@@ -528,6 +530,13 @@ public class Cluster {
 		}
 
 		return regionId;
+	}
+
+	int InitializeNumOfK (float n) {
+		// Using rule of thumb
+		int k = Mathf.RoundToInt (Mathf.Sqrt (n / 2.0f));
+		k = Mathf.Max (1, k);
+		return k;
 	}
 
 	// Helper func for DBSCAN

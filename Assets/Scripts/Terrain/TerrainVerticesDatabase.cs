@@ -1,13 +1,15 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 public class TerrainVerticesDatabase {
 
-    public Dictionary<Vector2, TerrainVertData> verticesDictionary = new Dictionary<Vector2, TerrainVertData> ();
+	public Dictionary<Vector2, TerrainVertData> verticesDictionary = new Dictionary<Vector2, TerrainVertData> ();
+    public Dictionary<UniqueCoord, TerrainVertData> coordDictionary = new Dictionary<UniqueCoord, TerrainVertData> ();
+	public float tileSize;
 
-    public void AddVertices (List<Vector3> vertices, Vector3 origin, int isleId) {
-        for (int i = 0; i < vertices.Count; i++) {
+    public void AddVertices (List<Vector3> vertices, List<Coord> coords, Vector3 origin, int isleId) {
+
+		for (int i = 0; i < vertices.Count; i++) {
             Vector2 key = (vertices[i] + origin).ToVec2FromXZ ();
 
             if (!verticesDictionary.ContainsKey (key)) {
@@ -18,10 +20,25 @@ public class TerrainVerticesDatabase {
             verticesDictionary[key].surfaceVertIndex = i;
             verticesDictionary[key].localOrigin = origin;
 			verticesDictionary[key].coordinate = vertices[i] + origin;
-        }
+			verticesDictionary[key].tileCoord = coords[i];
+		}
     }
 
-    public void SetVerticesAltitude (List<Vector3> vertices, Vector3 origin) {
+	public void SetCoordDB () {
+		coordDictionary.Clear ();
+		foreach (var vertPair in verticesDictionary) {
+			UniqueCoord keyCoord;
+			keyCoord.value = vertPair.Value.tileCoord;
+			keyCoord.id = vertPair.Value.isleId;
+
+			if (!coordDictionary.ContainsKey (keyCoord)) {
+				coordDictionary.Add (keyCoord, vertPair.Value);
+				//LoggerTool.Post (vertPair.Value.tileCoord.ToString () + " added as key.");
+			}
+		}
+	}
+
+	public void SetVerticesAltitude (List<Vector3> vertices, Vector3 origin) {
         for (int i = 0; i < vertices.Count; i++) {
             Vector2 key = (vertices[i] + origin).ToVec2FromXZ ();
 
@@ -94,11 +111,11 @@ public class TerrainVerticesDatabase {
 		return GetNearestVertData (hPos);
     }
 
-	public TerrainVertData GetVertDataFromRegionTile (Coord tile, float tileSize) {
-		Vector2 hPos = tile.ToVector2 () * tileSize;
+	public TerrainVertData GetVertDataFromRegionTile (Coord tile, int isleId) {
+		/*Vector2 hPos = tile.ToVector2 () * tileSize;
 		float minDist = float.MaxValue;
 		Vector2 resultKey = new Vector2 ();
-
+		
 		foreach (var vertPair in verticesDictionary) {
 			Vector2 vertex = (vertPair.Value.coordinate - vertPair.Value.localOrigin).ToVec2FromXZ ();
 			float distance = Vector2.Distance (hPos, vertex);
@@ -113,7 +130,18 @@ public class TerrainVerticesDatabase {
 			}
 		}
 
-		return verticesDictionary[resultKey];
+		return verticesDictionary[resultKey];*/
+
+		UniqueCoord keyCoord;
+		keyCoord.value = tile;
+		keyCoord.id = isleId;
+
+		TerrainVertData result;
+		if (coordDictionary.TryGetValue(keyCoord, out result)) {
+			return result;
+		} else {
+			return null;
+		}
 	}
 
 	public void Clear () {
@@ -127,6 +155,7 @@ public class TerrainVertData {
 
     public Vector3 localOrigin;
     public Vector3 coordinate;
+	public Coord tileCoord;
 
 	public float altitude = 0;
     public float bottomPoint = 0;
@@ -143,4 +172,9 @@ public class TerrainVertData {
 	public Vector3 GetSurfacePosNormalized () {
 		return new Vector3 (coordinate.x, inlandPosition, coordinate.z);
 	}
+}
+
+public struct UniqueCoord {
+	public Coord value;
+	public int id;
 }

@@ -5,6 +5,7 @@ using UnityEngine;
 public class Node {
 	public Vector3 position;
 	public int vertexIndex = -1;
+	public Coord srcCoord = new Coord (9999, 9999);
 
 	public Node (Vector3 pos) {
 		position = pos;
