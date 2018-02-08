@@ -27,13 +27,9 @@ public class TerrainVerticesDatabase {
 	public void SetCoordDB () {
 		coordDictionary.Clear ();
 		foreach (var vertPair in verticesDictionary) {
-			UniqueCoord keyCoord;
-			keyCoord.value = vertPair.Value.tileCoord;
-			keyCoord.id = vertPair.Value.isleId;
-
+			UniqueCoord keyCoord = new UniqueCoord (vertPair.Value.tileCoord, vertPair.Value.isleId);
 			if (!coordDictionary.ContainsKey (keyCoord)) {
 				coordDictionary.Add (keyCoord, vertPair.Value);
-				//LoggerTool.Post (vertPair.Value.tileCoord.ToString () + " added as key.");
 			}
 		}
 	}
@@ -132,11 +128,9 @@ public class TerrainVerticesDatabase {
 
 		return verticesDictionary[resultKey];*/
 
-		UniqueCoord keyCoord;
-		keyCoord.value = tile;
-		keyCoord.id = isleId;
-
+		UniqueCoord keyCoord = new UniqueCoord(tile, isleId);
 		TerrainVertData result;
+
 		if (coordDictionary.TryGetValue(keyCoord, out result)) {
 			return result;
 		} else {
@@ -175,6 +169,11 @@ public class TerrainVertData {
 }
 
 public struct UniqueCoord {
-	public Coord value;
-	public int id;
+	Coord value;
+	int id;
+
+	public UniqueCoord (Coord val, int idNum) {
+		value = val;
+		id = idNum;
+	}
 }
