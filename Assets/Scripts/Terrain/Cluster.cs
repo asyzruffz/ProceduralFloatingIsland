@@ -201,7 +201,7 @@ public class Cluster {
 
 			int[] labels = clusters.Decide (tileLocations);
 			
-			Debug.Log ("Number of labels = " + labels.Length);
+			Debug.Log ("Number of labels (clusters) = " + labels.Length);
 			for (int i = 0; i < labels.Length; i++) {
 				points[(int)tileLocations[i][0], (int)tileLocations[i][2]].areaValue = regionId + labels[i];
 			}

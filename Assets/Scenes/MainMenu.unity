@@ -463,6 +463,7 @@ MonoBehaviour:
   flatShading: 1
   shouldElevate: 1
   decorateTerrain: 0
+  clusterAnalysis: 1
   debug: 0
   islandData: {fileID: 11400000, guid: c0278bf7eceb716418b6579299190034, type: 2}
   surfaceNoiseData: {fileID: 11400000, guid: 2fb03d926254f7f488070424dd457ef2, type: 2}

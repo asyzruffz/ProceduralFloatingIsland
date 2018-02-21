@@ -20,10 +20,11 @@ public class IslandGenerator : MonoBehaviour {
     public bool flatShading;
     public bool shouldElevate;
     public bool decorateTerrain;
-    public bool debug;
-	public CAMethod clusterAnalysis;
+	public CAMethod clusterAnalysis = CAMethod.KMeans3DAccord;
 
-    [Header ("Data")]
+	public bool debug;
+
+	[Header ("Data")]
     public IslandData islandData;
     public NoiseData surfaceNoiseData;
     public NoiseData undersideNoiseData;
@@ -362,7 +363,9 @@ public class IslandGenerator : MonoBehaviour {
 
             sector.gameObject.GetComponent<MeshFilter> ().mesh = meshGen.GenerateZoneMesh (zone, sector, islandData.tileSize, vertDatabase);
             sector.gameObject.GetComponent<MeshRenderer> ().material = islandData.invisibleMaterial;
-			sector.gameObject.GetComponent<MeshRenderer> ().material.color = randCol[(zoneCount % 20)];
+			if (debug) {
+				sector.gameObject.GetComponent<MeshRenderer> ().material.color = randCol[(zoneCount % 20)];
+			}
 
 			cakeslice.Outline outlineComponent = sector.gameObject.AddComponent<cakeslice.Outline> ();
             outlineComponent.color = zoneCount % 3;
