@@ -111,7 +111,7 @@ public class IslandGenerator : MonoBehaviour {
             }
 			
 			clk.Start ();
-			int zoneNum = DoClustering (regions, map.spots, vertDatabase, clusterAnalysis);
+			int zoneNum = DoClustering (regions, map.spots, vertDatabase, clusterAnalysis, seedHash);
 			Debug.Log ("Clustering takes " + clk.Elapsed() + " seconds.");
 
 			// Find strategic locations in each region
@@ -218,7 +218,7 @@ public class IslandGenerator : MonoBehaviour {
         yield return new WaitForEndOfFrame ();
 
 		clk.Start ();
-		int zoneNum = DoClustering (regions, map.spots, vertDatabase, clusterAnalysis);
+		int zoneNum = DoClustering (regions, map.spots, vertDatabase, clusterAnalysis, seedHash);
 		LoggerTool.Post ("Clustering takes " + clk.Elapsed () + " seconds.");
 
 		yield return new WaitForEndOfFrame ();
@@ -393,9 +393,9 @@ public class IslandGenerator : MonoBehaviour {
 		}
 	}
 	
-	int DoClustering (List<MapRegion> regions, MapPoint[,] spots, TerrainVerticesDatabase vertDatabase, CAMethod clusteringAlgo) {
+	int DoClustering (List<MapRegion> regions, MapPoint[,] spots, TerrainVerticesDatabase vertDatabase, CAMethod clusteringAlgo, int seed) {
 		
-		Cluster cl = new Cluster (regions, islandData.tileSize);
+		Cluster cl = new Cluster (regions, islandData.tileSize, seed);
 		int numOfCluster;
 
 		switch (clusteringAlgo) {
@@ -412,6 +412,10 @@ public class IslandGenerator : MonoBehaviour {
 				LoggerTool.Post ("Using K-Means straightforward.");
 				numOfCluster = cl.ClusterLocationsKMeans (spots);
 				break;
+			case CAMethod.KMeans2DAccord:
+				LoggerTool.Post ("Using K-Means straightforward with Accord library.");
+				numOfCluster = cl.ClusterLocationsAccordKMeans (spots);
+				break;
 			case CAMethod.DBSCAN2D:
 				LoggerTool.Post ("Using DBSCAN straightforward.");
 				numOfCluster = cl.ClusterLocationsDBSCAN (6, 20, spots);
@@ -420,9 +424,17 @@ public class IslandGenerator : MonoBehaviour {
 				LoggerTool.Post ("Using K-Medoids (PAM) straightforward.");
 				numOfCluster = cl.ClusterLocationsKMedoidsPAM (spots);
 				break;
+			case CAMethod.KMedoidsPam2DAccord:
+				LoggerTool.Post ("Using K-Medoids (PAM) straightforward with Accord library.");
+				numOfCluster = cl.ClusterLocationsAccordKMedoidsPAM (spots);
+				break;
 			case CAMethod.KMedoidsVoronoi2D:
 				LoggerTool.Post ("Using K-Medoids (voronoi iteration) straightforward.");
 				numOfCluster = cl.ClusterLocationsKMedoidsVoronoi (spots);
+				break;
+			case CAMethod.KMedoidsVoronoi2DAccord:
+				LoggerTool.Post ("Using K-Medoids (voronoi iteration) straightforward with Accord library.");
+				numOfCluster = cl.ClusterLocationsAccordKMedoidsVoronoi (spots);
 				break;
 			case CAMethod.KMedoidsPam3DAccord:
 				LoggerTool.Post ("Using K-Medoid inclusive heights (PAM) with Accord library.");

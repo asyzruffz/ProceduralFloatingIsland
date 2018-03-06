@@ -9,9 +9,10 @@ public class Cluster {
     List<MapRegion> regions;
 	ExecutionTimer clock = new ExecutionTimer ();
 
-	public Cluster (List<MapRegion> regs, float tlSize) {
+	public Cluster (List<MapRegion> regs, float tlSize, int seed) {
         regions = regs;
-    }
+		Accord.Math.Random.Generator.Seed = seed;
+	}
 	
 	// Called by LandMap.GetZones (), returns number of subregions
 	public int ClusterLocationsKMeans (MapPoint[,] points) {
@@ -70,6 +71,41 @@ public class Cluster {
 				iter++;
 			}
 			//Debug.Log ("Iteration: " + iter);
+			regionId += k;
+		}
+
+		return regionId;
+	}
+
+	// Called by LandMap.GetZones (), returns number of subregions
+	public int ClusterLocationsAccordKMeans (MapPoint[,] points) {
+		// K-means cluster algorithm to separate locations in the regions
+
+		int regionId = 0;
+		for (int isleId = 0; isleId < regions.Count; isleId++) {
+			MapRegion region = regions[isleId];
+
+			double[][] tileLocations = new double[region.turf.Count][];
+
+			for (int i = 0; i < tileLocations.Length; i++) {
+				tileLocations[i] = new double[2];
+				tileLocations[i][0] = region.turf[i].x;
+				tileLocations[i][1] = region.turf[i].y;
+			}
+
+			int k = InitializeNumOfK (region.turf.Count);
+			Debug.Log (k + " centroid(s)");
+
+			KMeans kmeans = new KMeans (k);
+			KMeansClusterCollection clusters = kmeans.Learn (tileLocations);
+
+			int[] labels = clusters.Decide (tileLocations);
+
+			Debug.Log ("Number of labels (clusters) = " + labels.Length);
+			for (int i = 0; i < labels.Length; i++) {
+				points[(int)tileLocations[i][0], (int)tileLocations[i][1]].areaValue = regionId + labels[i];
+			}
+
 			regionId += k;
 		}
 
@@ -368,6 +404,43 @@ public class Cluster {
 		return regionId;
 	}
 
+	// Called by LandMap.GetZones (), returns number of subregions
+	public int ClusterLocationsAccordKMedoidsPAM (MapPoint[,] points) {
+		// K-medoids cluster algorithm to separate locations in the regions
+		
+		int regionId = 0;
+		for (int isleId = 0; isleId < regions.Count; isleId++) {
+			MapRegion region = regions[isleId];
+
+			double[][] tileLocations = new double[region.turf.Count][];
+
+			for (int i = 0; i < tileLocations.Length; i++) {
+				tileLocations[i] = new double[2];
+				tileLocations[i][0] = region.turf[i].x;
+				tileLocations[i][1] = region.turf[i].y;
+			}
+
+			int k = InitializeNumOfK (region.turf.Count);
+			Debug.Log (k + " centroid(s)");
+
+			KMedoids kmedoidsPam = new KMedoids (k);
+			kmedoidsPam.MaxIterations = 100;
+
+			KMedoidsClusterCollection<double> clusters = kmedoidsPam.Learn (tileLocations);
+
+			int[] labels = clusters.Decide (tileLocations);
+
+			Debug.Log ("Number of labels = " + labels.Length);
+			for (int i = 0; i < labels.Length; i++) {
+				points[(int)tileLocations[i][0], (int)tileLocations[i][1]].areaValue = regionId + labels[i];
+			}
+			
+			regionId += k;
+		}
+
+		return regionId;
+	}
+
 	public int ClusterLocationsKMedoidsVoronoi (MapPoint[,] points) {
 		// K-medoids cluster algorithm to separate locations in the regions
 		
@@ -436,6 +509,42 @@ public class Cluster {
 				//Debug.Log ("Iteration run with " + clock.Elapsed () + " seconds.");
 			}
 			Debug.Log ("Iteration: " + iter);
+			regionId += k;
+		}
+
+		return regionId;
+	}
+
+	public int ClusterLocationsAccordKMedoidsVoronoi (MapPoint[,] points) {
+		// K-medoids cluster algorithm to separate locations in the regions
+
+		int regionId = 0;
+		for (int isleId = 0; isleId < regions.Count; isleId++) {
+			MapRegion region = regions[isleId];
+
+			double[][] tileLocations = new double[region.turf.Count][];
+
+			for (int i = 0; i < tileLocations.Length; i++) {
+				tileLocations[i] = new double[2];
+				tileLocations[i][0] = region.turf[i].x;
+				tileLocations[i][1] = region.turf[i].y;
+			}
+
+			int k = InitializeNumOfK (region.turf.Count);
+			Debug.Log (k + " centroid(s)");
+
+			VoronoiIteration kmedoidsVoronoi = new VoronoiIteration (k);
+			kmedoidsVoronoi.MaxIterations = 100;
+
+			KMedoidsClusterCollection<double> clusters = kmedoidsVoronoi.Learn (tileLocations);
+
+			int[] labels = clusters.Decide (tileLocations);
+
+			Debug.Log ("Number of labels = " + labels.Length);
+			for (int i = 0; i < labels.Length; i++) {
+				points[(int)tileLocations[i][0], (int)tileLocations[i][1]].areaValue = regionId + labels[i];
+			}
+
 			regionId += k;
 		}
 
@@ -515,7 +624,7 @@ public class Cluster {
 			Debug.Log (k + " centroid(s)");
 
 			VoronoiIteration kmedoidsVoronoi = new VoronoiIteration (k);
-			//kmedoidsVoronoi.MaxIterations = 100;
+			kmedoidsVoronoi.MaxIterations = 100;
 
 			KMedoidsClusterCollection<double> clusters = kmedoidsVoronoi.Learn (tileLocations);
 
@@ -532,6 +641,7 @@ public class Cluster {
 		return regionId;
 	}
 
+	// Method to decide the number of sectors
 	int InitializeNumOfK (float n) {
 		// Using rule of thumb
 		int k = Mathf.RoundToInt (Mathf.Sqrt (n / 2.0f));
@@ -556,11 +666,14 @@ public enum CAMethod {
 	KMeans3D,
 	KMeans3DAccord,
 	KMeans2D,
+	KMeans2DAccord,
 	DBSCAN2D,
 	KMedoidsPam3DAccord,
 	KMedoidsVoronoi3DAccord,
 	KMedoidsPam2D,
-	KMedoidsVoronoi2D
+	KMedoidsPam2DAccord,
+	KMedoidsVoronoi2D,
+	KMedoidsVoronoi2DAccord
 }
 
 public struct ClusterPoint {
