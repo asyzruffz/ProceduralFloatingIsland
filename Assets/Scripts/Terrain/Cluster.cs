@@ -323,6 +323,48 @@ public class Cluster {
     }
 
 	// Called by LandMap.GetZones (), returns number of subregions
+	public int ClusterLocationsDBSCAN (float epsilon, int minPts, MapPoint[,] points, TerrainVerticesDatabase vertDatabase) {
+		// DBSCAN cluster algorithm to separate locations in the regions
+
+		int regionId = 0;
+		for (int isleId = 0; isleId < regions.Count; isleId++) {
+			MapRegion region = regions[isleId];
+
+			List<TilePoint> tileLocations = new List<TilePoint> ();
+
+			for (int i = 0; i < region.turf.Count; i++) {
+				
+				TerrainVertData vertData = vertDatabase.GetVertDataFromRegionTile (region.turf[i], isleId);
+				if (vertData != null) {
+					tileLocations.Add (new TilePoint (region.turf[i].x, vertData.inlandPosition, region.turf[i].y));
+				} else {
+					LoggerTool.Post ("Null from VertDB for " + region.turf[i].ToString ());
+				}
+			}
+			
+			HashSet<TilePoint[]> clusters;
+
+			var dbscan = new DbscanImplementation.DbscanAlgorithm<TilePoint> ((t1, t2) => TilePoint.Dist (t1, t2));
+			dbscan.ComputeClusterDbscan (allPoints: tileLocations.ToArray (), epsilon: epsilon, minPts: minPts, clusters: out clusters);
+
+			int k = clusters.Count;
+			Debug.Log ("Number of clusters = " + k);
+
+			int clstCount = 0;
+			foreach (var tiles in clusters) {
+				for (int i = 0; i < tiles.Length; i++) {
+					points[(int)tiles[i].X, (int)tiles[i].Z].areaValue = regionId + clstCount;
+				}
+				clstCount++;
+			}
+
+			regionId += k;
+		}
+
+		return regionId;
+	}
+
+	// Called by LandMap.GetZones (), returns number of subregions
 	public int ClusterLocationsKMedoidsPAM (MapPoint[,] points) {
 		// K-medoids cluster algorithm to separate locations in the regions
 
@@ -667,7 +709,8 @@ public enum CAMethod {
 	KMeans3DAccord,
 	KMeans2D,
 	KMeans2DAccord,
-	DBSCAN2D,
+	Dbscan2D,
+	Dbscan3D,
 	KMedoidsPam3DAccord,
 	KMedoidsVoronoi3DAccord,
 	KMedoidsPam2D,
@@ -679,4 +722,27 @@ public enum CAMethod {
 public struct ClusterPoint {
     public int regionNumber;
     public bool done;
+}
+
+public class TilePoint : DbscanImplementation.DatasetItemBase {
+
+	public float X;
+	public float Y;
+	public float Z;
+
+	public TilePoint (float x, float y) {
+		X = x;
+		Y = 0;
+		Z = y;
+	}
+
+	public TilePoint (float x, float y, float z) {
+		X = x;
+		Y = y;
+		Z = z;
+	}
+
+	public static float Dist (TilePoint t1, TilePoint t2) {
+		return Mathf.Sqrt (Mathf.Pow (t1.X - t2.X, 2) + Mathf.Pow (t1.Y - t2.Y, 2) + Mathf.Pow (t1.Z - t2.Z, 2));
+	}
 }

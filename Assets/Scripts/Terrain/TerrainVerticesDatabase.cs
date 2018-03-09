@@ -176,4 +176,8 @@ public struct UniqueCoord {
 		value = val;
 		id = idNum;
 	}
+
+	public bool Equals (UniqueCoord other) {
+		return (value == other.value) && (id == other.id);
+	}
 }

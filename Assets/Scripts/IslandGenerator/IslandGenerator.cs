@@ -416,9 +416,13 @@ public class IslandGenerator : MonoBehaviour {
 				LoggerTool.Post ("Using K-Means straightforward with Accord library.");
 				numOfCluster = cl.ClusterLocationsAccordKMeans (spots);
 				break;
-			case CAMethod.DBSCAN2D:
+			case CAMethod.Dbscan2D:
 				LoggerTool.Post ("Using DBSCAN straightforward.");
 				numOfCluster = cl.ClusterLocationsDBSCAN (6, 20, spots);
+				break;
+			case CAMethod.Dbscan3D:
+				LoggerTool.Post ("Using DBSCAN inclusive heights.");
+				numOfCluster = cl.ClusterLocationsDBSCAN (6, 20, spots, vertDatabase);
 				break;
 			case CAMethod.KMedoidsPam2D:
 				LoggerTool.Post ("Using K-Medoids (PAM) straightforward.");
