@@ -31,7 +31,7 @@ public class LandMap {
 	}
 
 	public void makeBaseShape (Texture2D shapeTexture) {
-		shapeTexture.Resize (width, length);
+		TextureScale.Bilinear (shapeTexture, width, length);
 
 		for (int x = 0; x < width; x++) {
 			for (int y = 0; y < length; y++) {

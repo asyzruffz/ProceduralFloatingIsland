@@ -8455,10 +8455,10 @@ MonoBehaviour:
   flatShading: 0
   shouldElevate: 1
   decorateTerrain: 0
-  debug: 1
   clusterAnalysis: 1
-  islandData: {fileID: 11400000, guid: c0278bf7eceb716418b6579299190034, type: 2}
-  surfaceNoiseData: {fileID: 11400000, guid: 2fb03d926254f7f488070424dd457ef2, type: 2}
+  debug: 1
+  islandData: {fileID: 11400000, guid: 66707a2bc38c65e4fabe44256196e715, type: 2}
+  surfaceNoiseData: {fileID: 11400000, guid: df3aad810cddb8c4d9864fe90bb5f7f0, type: 2}
   undersideNoiseData: {fileID: 11400000, guid: 806b8491b629aa744a7cd25d177e135a, type: 2}
 --- !u!4 &988232023
 Transform:
@@ -17146,7 +17146,7 @@ Camera:
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 60
-  orthographic: 1
+  orthographic: 0
   orthographic size: 150
   m_Depth: -1
   m_CullingMask:
@@ -17170,7 +17170,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1998004907}
   m_LocalRotation: {x: 0.4051889, y: -0.07962076, z: 0.03544945, w: 0.91006917}
-  m_LocalPosition: {x: 21, y: 131, z: -116}
+  m_LocalPosition: {x: 53.2, y: 257.5, z: -298.98}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}

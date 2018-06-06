@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Name: TestIsland
   m_EditorClassIdentifier: 
   autoUpdate: 0
-  maxWidth: 110
-  maxHeight: 120
-  tileSize: 2
+  maxWidth: 100
+  maxHeight: 100
+  tileSize: 4
   depth: 1
   altitude: 80
   mountainCurve:
@@ -23,26 +23,38 @@ MonoBehaviour:
     - serializedVersion: 2
       time: 0
       value: 0
-      inSlope: 0.31740192
-      outSlope: 0.31740192
+      inSlope: 2.7394228
+      outSlope: 2.7394228
       tangentMode: 0
     - serializedVersion: 2
-      time: 0.26681304
-      value: 0.01885643
-      inSlope: -0.0005878136
-      outSlope: -0.0005878136
+      time: 0.030592501
+      value: 0.024350245
+      inSlope: -0.028949121
+      outSlope: -0.028949121
       tangentMode: 0
     - serializedVersion: 2
-      time: 0.75872946
-      value: 0.53039354
-      inSlope: 2.4224367
-      outSlope: 2.4224367
+      time: 0.28611752
+      value: 0.0312561
+      inSlope: 0.032442845
+      outSlope: 0.032442845
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 0.6544761
+      value: 0.27415267
+      inSlope: 1.5049881
+      outSlope: 1.5049881
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 0.8312842
+      value: 0.8577139
+      inSlope: 2.1176276
+      outSlope: 2.1176276
       tangentMode: 0
     - serializedVersion: 2
       time: 1
       value: 1
-      inSlope: 0
-      outSlope: 0
+      inSlope: 0.03237543
+      outSlope: 0.03237543
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
@@ -66,8 +78,9 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 0
-  randomFillPercent: 54
-  grassMaterial: {fileID: 2100000, guid: bc6af6cb203edf64eb6deed573069006, type: 2}
-  wallMaterial: {fileID: 2100000, guid: 16e13b2712122104fbc36cce44b59899, type: 2}
-  dirtMaterial: {fileID: 2100000, guid: 16e13b2712122104fbc36cce44b59899, type: 2}
+  randomFillPercent: 53
+  baseShape: {fileID: 2800000, guid: 85481366a05256341b3cad7d5974f12e, type: 3}
+  grassMaterial: {fileID: 2100000, guid: 091113710c355394db9de3520b838bda, type: 2}
+  wallMaterial: {fileID: 2100000, guid: fe408af8463c0f2448824c5b470ecae4, type: 2}
+  dirtMaterial: {fileID: 2100000, guid: fe408af8463c0f2448824c5b470ecae4, type: 2}
   invisibleMaterial: {fileID: 2100000, guid: 8c59477d3c3621c45aa71d78df162759, type: 2}
