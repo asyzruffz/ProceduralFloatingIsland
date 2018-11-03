@@ -30,7 +30,11 @@ public class MapRegion {
 	}
 	
 	public int GetRangeInfo (Ranges rangeType) {
-		int minX = turf.Min (coord => coord.x);
+        if (!turf.Any ()) {
+            throw new System.Exception ("Region is empty!");
+        }
+
+        int minX = turf.Min (coord => coord.x);
 		int maxX = turf.Max (coord => coord.x);
 		int minY = turf.Min (coord => coord.y);
 		int maxY = turf.Max (coord => coord.y);

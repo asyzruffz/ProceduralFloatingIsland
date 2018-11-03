@@ -6,7 +6,7 @@ public class ElevationGenerator : MonoBehaviour {
 
 	List<IsleInfo> islands;
 
-    public void elevateSurface (List<IsleInfo> islandInfos, float altitude, AnimationCurve curve, NoiseData noiseData, int seed, int surfaceIndex) {
+    public void elevateSurface (List<IsleInfo> islandInfos, float altitude, AnimationCurve curve, NoiseData noiseData, int seed, int surfaceIndex, TerrainVerticesDatabase vertDatabase) {
         islands = islandInfos;
 
         foreach (IsleInfo island in islands) {
@@ -16,6 +16,12 @@ public class ElevationGenerator : MonoBehaviour {
 
             mf.sharedMesh.vertices = verts.ToArray ();
             mf.sharedMesh.RecalculateNormals ();
+
+            if (surfaceIndex == 0) {
+                vertDatabase.SetVerticesAltitude (verts, transform.position + island.offset);
+            } else if (surfaceIndex == 2) {
+                vertDatabase.SetVerticesBottomPoint (verts, transform.position + island.offset);
+            }
         }
     }
 

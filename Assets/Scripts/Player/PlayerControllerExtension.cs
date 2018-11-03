@@ -110,8 +110,8 @@ public class PlayerControllerExtension : MonoBehaviour {
 
     //Animation Events
     void Hit () {
-        Debug.Log ("PlayerControllerExtension: Hit! (Animation event)");
-    }
+        LoggerTool.Post ("PlayerControllerExtension: Hit! (Animation event)", true, false);
+	}
 
     void FootL () {
         PlayFootStepSound ();
@@ -122,11 +122,11 @@ public class PlayerControllerExtension : MonoBehaviour {
     }
 
     void Jump () {
-        Debug.Log ("PlayerControllerExtension: Jump! (Animation event)");
+		LoggerTool.Post ("PlayerControllerExtension: Jump! (Animation event)", true, false);
     }
 
     void Land () {
-        Debug.Log ("PlayerControllerExtension: Land! (Animation event)");
+		LoggerTool.Post ("PlayerControllerExtension: Land! (Animation event)", true, false);
     }
 
     //method to keep character from moveing while attacking, etc

@@ -54,12 +54,14 @@ public class MainPanel : MonoBehaviour {
     }
 
 	public void Randomize() {
+		LoggerTool.Post ("Generate a randomize island for preview");
 		generator.useRandomSeed = true;
 		UpdateInputValue ();
 		generator.GenerateIsland ();
 	}
 
 	public void GenerateWithSeed () {
+		LoggerTool.Post ("Generate a seeded island for preview");
 		generator.useRandomSeed = false;
 		generator.seed = seedInput.text;
 		UpdateInputValue ();

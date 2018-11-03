@@ -30,6 +30,21 @@ public class LandMap {
 		}
 	}
 
+	public void makeBaseShape (Texture2D shapeTexture) {
+		TextureScale.Bilinear (shapeTexture, width, length);
+
+		for (int x = 0; x < width; x++) {
+			for (int y = 0; y < length; y++) {
+				Color colour = shapeTexture.GetPixel (x, y);
+				bool blank = (colour.grayscale < 0.1f);
+
+				if (blank) {
+					spots[x, y].filled = false;
+				}
+			}
+		}
+	}
+
 	public void SmoothMap (int passes) {
         // Change the state in each cell within the cellular automaton based on its neighbour
 
@@ -122,19 +137,21 @@ public class LandMap {
 		return tiles;
 	}
 
-    public List<MapRegion> GetZones (List<MapRegion> regions) {
-        int zoneNum = ClusterLocationsInRegions (regions);
-
+    public List<MapRegion> GetZones (int zoneNum) {
+		
         // Initialize list to prepare zones
         List<List<Coord>> zoneTiles = new List<List<Coord>> ();
-        for (int i = 0; i < zoneNum; i++) {
+        for (int i = 0; i <= zoneNum; i++) {
             zoneTiles.Add (new List<Coord> ());
         }
+
+		LoggerTool.Post ("ZoneNum: " + zoneNum);
 
         // Fill the lists
         for (int x = 0; x < width; x++) {
             for (int y = 0; y < length; y++) {
                 if (spots[x, y].filled) {
+                    spots[x, y].areaValue = (spots[x, y].areaValue != -1) ? spots[x, y].areaValue : (zoneNum - 1);
                     zoneTiles[spots[x, y].areaValue].Add (new Coord (x, y));
                 }
             }
@@ -142,106 +159,17 @@ public class LandMap {
 
         List<MapRegion> zones = new List<MapRegion> ();
         for (int i = 0; i < zoneNum; i++) {
-            zones.Add (new MapRegion (zoneTiles[i], width, length));
+			if (zoneTiles[i].Count > 0) {
+				zones.Add (new MapRegion (zoneTiles[i], width, length));
+			} else {
+				LoggerTool.Post ("Zone " + (i + 1) + " is empty, skip creating zone region.");
+			}
         }
 
         return zones;
     }
-
-    // Called by GetSubRegions (), retruns number of subregions
-    int ClusterLocationsInRegions (List<MapRegion> regions) {
-        // K-means cluster algorithm to separate locations in the regions
-
-        int regionId = 0;
-        foreach (MapRegion region in regions) {
-			int k = Mathf.RoundToInt (Mathf.Sqrt (region.turf.Count / 16.0f));
-            k = Mathf.Max (1, k);
-			//Debug.Log (k + " centroid(s)");
-			
-			Vector2[] centroids = new Vector2[k];
-			for (int i = 0; i < k; i++) {
-				// Assign centroid to first three data points
-				centroids[i] = region.turf[i * (region.turf.Count / k)].ToVector2 ();
-			}
-
-			// Loop until converged
-			int changes = -1;
-            int iter = 0;
-			while (changes != 0) {
-				changes = 0;
-
-				foreach (Coord tile in region.turf) {
-					Vector2 tilePos = tile.ToVector2 ();
-
-					int initialArea = spots[tile.x, tile.y].areaValue;
-					float distanceToCentroid = float.MaxValue;
-
-					for (int i = 0; i < k; i++) {
-                        float currDistToCentroid = Vector2.SqrMagnitude (centroids[i] - tilePos);
-                        //currDistToCentroid += ObtainDistancePenalty (tile, new Coord (Mathf.RoundToInt(centroids[i].x), Mathf.RoundToInt (centroids[i].y)), 2);
-						if (currDistToCentroid < distanceToCentroid) {
-							distanceToCentroid = currDistToCentroid;
-							spots[tile.x, tile.y].areaValue = regionId + i;
-						}
-					}
-
-					if (initialArea != spots[tile.x, tile.y].areaValue) {
-						changes++;
-					}
-				}
-
-				Vector2[] cumulativeCentroids = new Vector2[k];
-				int[] frequency = new int[k];
-				foreach (Coord tile in region.turf) {
-					cumulativeCentroids[Mathf.Max (0, spots[tile.x, tile.y].areaValue - regionId)] += tile.ToVector2 ();
-					frequency[Mathf.Max(0, spots[tile.x, tile.y].areaValue - regionId)]++;
-				}
-
-				for (int i = 0; i < k; i++) {
-					centroids[i] = cumulativeCentroids[i] / frequency[i];
-				}
-                iter++;
-			}
-            //Debug.Log ("Iteration: " + iter);
-            regionId += k;
-		}
-
-        return regionId;
-    }
-
-    // Called by ClusterLocationsInRegions ()
-    /*float ObtainDistancePenalty (Coord a, Coord b, float penalty) {
-        // Using line drawing algorithm to find obstacle along the line
-
-        int h = b.y - a.y;
-        int w = b.x - a.x;
-
-        int incrIfFNegative = 2 * h;
-        int incrIfFNotNegative = 2 * (h - w);
-
-        int F = 2 * h - w;
-        float totalPenalty = 0;
-
-        int y = a.y;
-        for (int x = a.x; x <= b.x; x++) {
-            // Add penalty if there is a hole along the line
-            if (!spots[x, y].filled) {
-                totalPenalty += penalty;
-            }
-
-            if (F < 0)
-                F += incrIfFNegative;
-            else {
-                y++;
-                F += incrIfFNotNegative;
-            }
-        }
-
-        if (totalPenalty > 0) Debug.Log ("Penalty: " + totalPenalty);
-        return totalPenalty;
-    }*/
-
-    public bool IsInMapRange (int x, int y) {
+	
+	public bool IsInMapRange (int x, int y) {
 		return x >= 0 && y >= 0 && x < width && y < length;
 	}
 
@@ -250,17 +178,4 @@ public class LandMap {
 public struct MapPoint {
 	public bool filled;
 	public int areaValue;
-}
-
-public struct Coord {
-	public int x, y;
-
-	public Coord (int tileX, int tileY) {
-		x = tileX;
-		y = tileY;
-	}
-
-	public Vector2 ToVector2 () {
-		return new Vector2 (x, y);
-	}
 }

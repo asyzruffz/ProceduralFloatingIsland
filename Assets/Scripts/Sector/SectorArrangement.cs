@@ -1,11 +1,11 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 [System.Serializable]
 public class SectorArrangement : ScriptableObject {
 
     public string description;
+    public Vector3 offset;
+
     [HideInInspector]
     public SectorType type;
 
@@ -13,7 +13,7 @@ public class SectorArrangement : ScriptableObject {
         type = SectorType.Blank;
     }
 
-    public virtual void Setup (List<Vector3> points, Transform parent) {
+    public virtual void Setup (SectorInfo sector, TerrainVerticesDatabase vertDatabase, Transform parent) {
 
     }
 }

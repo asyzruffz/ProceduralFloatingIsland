@@ -20,9 +20,11 @@ public class IslandGenerator : MonoBehaviour {
     public bool flatShading;
     public bool shouldElevate;
     public bool decorateTerrain;
-    public bool debug;
+	public CAMethod clusterAnalysis = CAMethod.KMeans3DAccord;
 
-    [Header ("Data")]
+	public bool debug;
+
+	[Header ("Data")]
     public IslandData islandData;
     public NoiseData surfaceNoiseData;
     public NoiseData undersideNoiseData;
@@ -31,9 +33,11 @@ public class IslandGenerator : MonoBehaviour {
     LandMap map;
     List<IsleInfo> islands = new List<IsleInfo>();
     List<SectorInfo> sectors = new List<SectorInfo> ();
+    TerrainVerticesDatabase vertDatabase = new TerrainVerticesDatabase ();
     bool finished = false;
+	ExecutionTimer clk = new ExecutionTimer ();
 
-    public void GenerateIsland (bool inGame = true) {
+	public void GenerateIsland (bool inGame = true) {
         #region Generate in Editor
 #if UNITY_EDITOR
         if (!inGame) {
@@ -67,18 +71,29 @@ public class IslandGenerator : MonoBehaviour {
             // Fill the map randomly with 0s and 1s based on percentage fill
             map.RandomFillMap (islandData.randomFillPercent);
 
+			// Mold to the base shape
+			if (islandData.baseShape) {
+				map.makeBaseShape (islandData.baseShape);
+			}
+
             // Smooth the map 5 times
             map.SmoothMap (5);
 
             meshGen = GetComponent<IslandMeshGenerator> ();
+            vertDatabase.Clear ();
+			vertDatabase.tileSize = islandData.tileSize;
 
             // Find separated regions to form an island
             List<MapRegion> regions = map.GetRegions ();
 
-            // Create separate islands
-            SeparateIslands (regions);
+			// Create separate islands
+			SeparateIslands (regions);
 
-            if (shouldElevate) {
+			clk.Start ();
+			vertDatabase.SetCoordDB ();
+			Debug.Log ("Indexing takes " + clk.Elapsed () + " seconds.");
+
+			if (shouldElevate) {
                 int highestPeak = 0;
                 foreach (IsleInfo island in islands) {
                     int peak = island.surfaceMeshDetail.localPeak;
@@ -88,24 +103,30 @@ public class IslandGenerator : MonoBehaviour {
                     island.surfaceMeshDetail.NormalizeGradientMap (highestPeak);
                 }
 
+                vertDatabase.SetVerticesInlandPos (islands, islandData.mountainCurve);
+
                 ElevationGenerator elevGen = GetComponent<ElevationGenerator> ();
-                elevGen.elevateSurface (islands, islandData.altitude, islandData.mountainCurve, surfaceNoiseData, seedHash, 0); // elevate hills on the surface
-                elevGen.elevateSurface (islands, -islandData.stalactite, islandData.bellyCurve, undersideNoiseData, seedHash, 2); // extend stakes at surface below
+                elevGen.elevateSurface (islands, islandData.altitude, islandData.mountainCurve, surfaceNoiseData, seedHash, 0, vertDatabase);   // elevate hills on the surface
+                elevGen.elevateSurface (islands, -islandData.stalactite, islandData.bellyCurve, undersideNoiseData, seedHash, 2, vertDatabase); // extend stakes at surface below
             }
+			
+			clk.Start ();
+			int zoneNum = DoClustering (regions, map.spots, vertDatabase, clusterAnalysis, seedHash);
+			Debug.Log ("Clustering takes " + clk.Elapsed() + " seconds.");
 
-            // Find strategic locations in each region
-            List<MapRegion> zones = map.GetZones (regions);
-            SpliceTerritory (zones);
+			// Find strategic locations in each region
+			List<MapRegion> zones = map.GetZones (zoneNum);
+			SpliceTerritory (zones);
 
-            SetColliders ();
+			SetColliders ();
 
             PlacementGenerator placement = GetComponent<PlacementGenerator> ();
             if (placement && decorateTerrain) {
                 placement.GenerateTrees (islands);
-                placement.GenerateSectorsContent (sectors);
+                placement.GenerateSectorsContent (sectors, vertDatabase);
             } else if (placement) {
                 //placement.GeneratePlacements (islands);
-                placement.GenerateSectorsContent (sectors);
+                placement.GenerateSectorsContent (sectors, vertDatabase);
             }
 
             if (flatShading) {
@@ -148,22 +169,34 @@ public class IslandGenerator : MonoBehaviour {
         // Fill the map randomly with 0s and 1s based on percentage fill
         map.RandomFillMap (islandData.randomFillPercent);
 
-        // Smooth the map 5 times
-        map.SmoothMap (5);
+		// Mold to the base shape
+		if (islandData.baseShape) {
+			map.makeBaseShape (islandData.baseShape);
+		}
+
+		// Smooth the map 5 times
+		map.SmoothMap (5);
 
         yield return new WaitForEndOfFrame ();
 
         meshGen = GetComponent<IslandMeshGenerator> ();
+        vertDatabase.Clear ();
+		vertDatabase.tileSize = islandData.tileSize;
 
-        // Find separated regions to form an island
-        List<MapRegion> regions = map.GetRegions ();
-
+		// Find separated regions to form an island
+		List<MapRegion> regions = map.GetRegions ();
         yield return new WaitForEndOfFrame ();
 
         // Create separate islands
         SeparateIslands (regions);
 
-        yield return new WaitForEndOfFrame ();
+		yield return new WaitForEndOfFrame ();
+
+		clk.Start ();
+		vertDatabase.SetCoordDB ();
+		LoggerTool.Post ("Indexing takes " + clk.Elapsed () + " seconds.");
+
+		yield return new WaitForEndOfFrame ();
 
         if (shouldElevate) {
             int highestPeak = 0;
@@ -175,15 +208,23 @@ public class IslandGenerator : MonoBehaviour {
                 island.surfaceMeshDetail.NormalizeGradientMap (highestPeak);
             }
 
+            vertDatabase.SetVerticesInlandPos (islands, islandData.mountainCurve);
+
             ElevationGenerator elevGen = GetComponent<ElevationGenerator> ();
-            elevGen.elevateSurface (islands, islandData.altitude, islandData.mountainCurve, surfaceNoiseData, seedHash, 0); // elevate hills on the surface
-            elevGen.elevateSurface (islands, -islandData.stalactite, islandData.bellyCurve, undersideNoiseData, seedHash, 2); // extend stakes at surface below
+            elevGen.elevateSurface (islands, islandData.altitude, islandData.mountainCurve, surfaceNoiseData, seedHash, 0, vertDatabase);   // elevate hills on the surface
+            elevGen.elevateSurface (islands, -islandData.stalactite, islandData.bellyCurve, undersideNoiseData, seedHash, 2, vertDatabase); // extend stakes at surface below
         }
 
         yield return new WaitForEndOfFrame ();
 
-        // Find strategic locations in each region
-        List<MapRegion> zones = map.GetZones (regions);
+		clk.Start ();
+		int zoneNum = DoClustering (regions, map.spots, vertDatabase, clusterAnalysis, seedHash);
+		LoggerTool.Post ("Clustering takes " + clk.Elapsed () + " seconds.");
+
+		yield return new WaitForEndOfFrame ();
+
+		// Find strategic locations in each region
+		List<MapRegion> zones = map.GetZones (zoneNum);
         SpliceTerritory (zones);
 
         yield return new WaitForEndOfFrame ();
@@ -195,10 +236,10 @@ public class IslandGenerator : MonoBehaviour {
         PlacementGenerator placement = GetComponent<PlacementGenerator> ();
         if (placement && decorateTerrain) {
             placement.GenerateTrees (islands);
-            placement.GenerateSectorsContent (sectors);
+            placement.GenerateSectorsContent (sectors, vertDatabase);
         } else if (placement) {
             //placement.GeneratePlacements (islands);
-            placement.GenerateSectorsContent (sectors);
+            placement.GenerateSectorsContent (sectors, vertDatabase);
         }
 
         yield return new WaitForEndOfFrame ();
@@ -248,7 +289,7 @@ public class IslandGenerator : MonoBehaviour {
 #endif
         }
 
-        int islandCount = 1;
+        int islandCount = 0;
         foreach (MapRegion region in islandRegions) {
             IsleInfo isle = new IsleInfo ();
             isle.id = islandCount;
@@ -268,7 +309,7 @@ public class IslandGenerator : MonoBehaviour {
             GameObject underside = AddChildMesh ("Underside", isle.gameObject.transform);
             underside.transform.position += Vector3.up * -islandData.depth;
 
-            List<Mesh> meshes = meshGen.GenerateIslandMesh (region, isle, islandData.tileSize, islandData.depth);
+            List<Mesh> meshes = meshGen.GenerateIslandMesh (region, isle, islandData.tileSize, islandData.depth, vertDatabase);
 
             // Mesh for surface
             surface.GetComponent<MeshFilter> ().mesh = meshes[0];
@@ -315,21 +356,24 @@ public class IslandGenerator : MonoBehaviour {
         foreach (MapRegion zone in zones) {
             SectorInfo sector = new SectorInfo ();
             sector.id = zoneCount;
+            sector.offset = zone.GetCentre () * islandData.tileSize;
 
             sector.gameObject = AddChildMesh ("Zone " + sector.id, territories.transform);
-            sector.gameObject.transform.localPosition = zone.GetCentre () * islandData.tileSize;
+            sector.gameObject.transform.localPosition = sector.offset;
 
-            sector.gameObject.GetComponent<MeshFilter> ().mesh = meshGen.GenerateZoneMesh (zone, islandData.tileSize);
+            sector.gameObject.GetComponent<MeshFilter> ().mesh = meshGen.GenerateZoneMesh (zone, sector, islandData.tileSize, vertDatabase);
             sector.gameObject.GetComponent<MeshRenderer> ().material = islandData.invisibleMaterial;
-            // #TODO  Elevate region mesh
+			if (debug) {
+				sector.gameObject.GetComponent<MeshRenderer> ().material.color = randCol[(zoneCount % 20)];
+			}
 
-            cakeslice.Outline outlineComponent = sector.gameObject.AddComponent<cakeslice.Outline> ();
+			cakeslice.Outline outlineComponent = sector.gameObject.AddComponent<cakeslice.Outline> ();
             outlineComponent.color = zoneCount % 3;
 
             sectors.Add (sector);
             zoneCount++;
         }
-
+        
         territories.AddComponent<CycleRegionOutline> ();
     }
 
@@ -349,12 +393,73 @@ public class IslandGenerator : MonoBehaviour {
 		}
 	}
 	
+	int DoClustering (List<MapRegion> regions, MapPoint[,] spots, TerrainVerticesDatabase vertDatabase, CAMethod clusteringAlgo, int seed) {
+		
+		Cluster cl = new Cluster (regions, islandData.tileSize, seed);
+		int numOfCluster;
+
+		switch (clusteringAlgo) {
+			default:
+			case CAMethod.KMeans3D:
+				LoggerTool.Post ("Using K-Means inclusive heights.");
+				numOfCluster = cl.ClusterLocationsKMeans (spots, vertDatabase);
+				break;
+			case CAMethod.KMeans3DAccord:
+				LoggerTool.Post ("Using K-Means inclusive heights with Accord library.");
+				numOfCluster = cl.ClusterLocationsAccordKMeans (spots, vertDatabase);
+				break;
+			case CAMethod.KMeans2D:
+				LoggerTool.Post ("Using K-Means straightforward.");
+				numOfCluster = cl.ClusterLocationsKMeans (spots);
+				break;
+			case CAMethod.KMeans2DAccord:
+				LoggerTool.Post ("Using K-Means straightforward with Accord library.");
+				numOfCluster = cl.ClusterLocationsAccordKMeans (spots);
+				break;
+			case CAMethod.Dbscan2D:
+				LoggerTool.Post ("Using DBSCAN straightforward.");
+				numOfCluster = cl.ClusterLocationsDBSCAN (6, 20, spots);
+				break;
+			case CAMethod.Dbscan3D:
+				LoggerTool.Post ("Using DBSCAN inclusive heights.");
+				numOfCluster = cl.ClusterLocationsDBSCAN (6, 20, spots, vertDatabase);
+				break;
+			case CAMethod.KMedoidsPam2D:
+				LoggerTool.Post ("Using K-Medoids (PAM) straightforward.");
+				numOfCluster = cl.ClusterLocationsKMedoidsPAM (spots);
+				break;
+			case CAMethod.KMedoidsPam2DAccord:
+				LoggerTool.Post ("Using K-Medoids (PAM) straightforward with Accord library.");
+				numOfCluster = cl.ClusterLocationsAccordKMedoidsPAM (spots);
+				break;
+			case CAMethod.KMedoidsVoronoi2D:
+				LoggerTool.Post ("Using K-Medoids (voronoi iteration) straightforward.");
+				numOfCluster = cl.ClusterLocationsKMedoidsVoronoi (spots);
+				break;
+			case CAMethod.KMedoidsVoronoi2DAccord:
+				LoggerTool.Post ("Using K-Medoids (voronoi iteration) straightforward with Accord library.");
+				numOfCluster = cl.ClusterLocationsAccordKMedoidsVoronoi (spots);
+				break;
+			case CAMethod.KMedoidsPam3DAccord:
+				LoggerTool.Post ("Using K-Medoid inclusive heights (PAM) with Accord library.");
+				numOfCluster = cl.ClusterLocationsAccordKMedoidsPAM (spots, vertDatabase);
+				break;
+			case CAMethod.KMedoidsVoronoi3DAccord:
+				LoggerTool.Post ("Using K-Medoid inclusive heights (voronoi iteration) with Accord library.");
+				numOfCluster = cl.ClusterLocationsAccordKMedoidsVoronoi (spots, vertDatabase);
+				break;
+		}
+
+		return numOfCluster;
+	}
+
     public bool IsDone () {
         return finished;
     }
 
     void OnValuesUpdated () {
         if(!Application.isPlaying) {
+			LoggerTool.Post ("Generate island from Editor");
             GenerateIsland ();
         }
     }
@@ -377,6 +482,7 @@ public class IslandGenerator : MonoBehaviour {
             int width = map.spots.GetLength (0);
             int length = map.spots.GetLength (1);
 			
+			// Draw black & white
 			/*for (int x = 0; x < width; x ++) {
 				for (int y = 0; y < length; y ++) {
 					Gizmos.color = map.spots[x, y].filled ? Color.black : Color.white;
@@ -385,6 +491,7 @@ public class IslandGenerator : MonoBehaviour {
 				}
 			}*/
 			
+			// Draw colour for clusters
             for (int x = 0; x < width; x++) {
                 for (int y = 0; y < length; y++) {
                     Gizmos.color = !map.spots[x, y].filled ? Color.white : randCol[(map.spots[x, y].areaValue % 20)];

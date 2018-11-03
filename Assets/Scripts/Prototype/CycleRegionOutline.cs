@@ -13,6 +13,10 @@ public class CycleRegionOutline : MonoBehaviour {
             outlines = gameObject.GetComponentsInChildren<cakeslice.Outline> ();
         }
 
+		if (outlines.Length == 0) {
+			return;
+		}
+
         if (timer >= 0.8f) {
             timer = 0;
 

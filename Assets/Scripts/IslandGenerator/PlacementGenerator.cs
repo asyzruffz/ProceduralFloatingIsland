@@ -10,14 +10,14 @@ public class PlacementGenerator : MonoBehaviour {
 
     public List<SectorArrangement> sectorTypes = new List<SectorArrangement> ();
 
-    public void GenerateSectorsContent (List<SectorInfo> sectors) {
+    public void GenerateSectorsContent (List<SectorInfo> sectors, TerrainVerticesDatabase vertDatabase) {
         RandomSample rndSample = new RandomSample (sectors.Count);
 
         foreach (SectorArrangement sectorType in sectorTypes) {
             int rndIndex = rndSample.Next ();
-            List<Vector3> verts = sectors[rndIndex].GetVertices ();
+            SectorInfo sectorInfo = sectors[rndIndex];
 
-            sectorType.Setup (verts, sectors[rndIndex].gameObject.transform);
+            sectorType.Setup (sectorInfo, vertDatabase, sectorInfo.gameObject.transform);
         }
     }
 

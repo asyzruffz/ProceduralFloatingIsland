@@ -24,19 +24,22 @@ class MinMaxSliderDrawer : PropertyDrawer {
 			                           position.width,
 			                           componentHeight);
 
-			Rect lower = EditorGUI.PrefixLabel(sliderRect, label);
-			lower.y += componentHeight + verticalPadding;
-
-			Rect upper = new Rect(lower.x,
-			                      lower.y + componentHeight + verticalPadding,
-			                      lower.width,
-			                      componentHeight);
-
 			EditorGUI.BeginChangeCheck();
 			EditorGUI.MinMaxSlider(sliderRect, label, ref min, ref max, attr.min, attr.max);
 
-			min = EditorGUI.FloatField(lower, "Lower", min);
-			max = EditorGUI.FloatField(upper, "Upper", max);
+            Rect lower = EditorGUI.PrefixLabel (sliderRect, label);
+            lower.y += componentHeight + verticalPadding;
+            lower.width /= 2;
+
+            Rect upper = new Rect (lower.x + lower.width,
+                                  lower.y,
+                                  lower.width,
+                                  componentHeight);
+
+            EditorGUIUtility.labelWidth = 35f;
+            min = EditorGUI.FloatField(lower, "From", min);
+            EditorGUIUtility.labelWidth = 20f;
+            max = EditorGUI.FloatField(upper, "To", max);
 
 			if (EditorGUI.EndChangeCheck()) {
 				range.x = min;
@@ -52,6 +55,6 @@ class MinMaxSliderDrawer : PropertyDrawer {
 	}
 
 	override public float GetPropertyHeight(SerializedProperty property, GUIContent label) {
-		return base.GetPropertyHeight(property, label) + 18.0f + 18.0f;
+		return base.GetPropertyHeight(property, label) + 18.0f;
 	}
 }
