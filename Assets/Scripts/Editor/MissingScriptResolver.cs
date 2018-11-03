@@ -312,7 +312,7 @@ This component's properties are shown below to help you determine which script i
 
 		return
 			item != null &&
-			PrefabUtility.GetPrefabParent( item ) == null &&
+			PrefabUtility.GetCorrespondingObjectFromSource( item ) == null &&
 			PrefabUtility.GetPrefabObject( item ) != null;
 
 	}

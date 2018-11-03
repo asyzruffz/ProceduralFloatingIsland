@@ -8452,11 +8452,11 @@ MonoBehaviour:
   useRandomSeed: 0
   seed: 2/5/2018 2:25:07 PM
   withCollider: 0
-  flatShading: 0
+  flatShading: 1
   shouldElevate: 1
   decorateTerrain: 0
   clusterAnalysis: 1
-  debug: 1
+  debug: 0
   islandData: {fileID: 11400000, guid: 66707a2bc38c65e4fabe44256196e715, type: 2}
   surfaceNoiseData: {fileID: 11400000, guid: df3aad810cddb8c4d9864fe90bb5f7f0, type: 2}
   undersideNoiseData: {fileID: 11400000, guid: 806b8491b629aa744a7cd25d177e135a, type: 2}
